@@ -1,0 +1,458 @@
+body {
+    background-color: #EEE;
+}
+
+header, main, footer {
+    padding-left: 300px;
+}
+
+@media only screen and (max-width : 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+/* ===================================== */
+/* ==============LOGIN================== */
+.flex-container-column {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.flex-container-column .card {
+    width: 400px;
+}
+
+/* ===================================== */
+/* ===================================== */
+ul li a {
+    color: #000;
+}
+
+.nav-wrapper .brand-logo {
+    padding: 0 20px;
+    font-size: 1.8rem;
+}
+
+.sidenav .list-logo,
+.sidenav .list-logo a {
+    height: 100px;
+}
+
+.brand-logo-sidenav {
+    margin-top: 20px;
+    margin-bottom: 40px; 
+}
+
+.box-shadow-none {
+    box-shadow: none;
+    border-bottom: 1px solid #e6e5e5;
+}
+
+.sidenav {
+    background-color: #f5f5f5;
+    border-right: 1px solid #e3e3e3;
+}
+
+.sidenav li a,
+.sidenav li a i.material-icons {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.sidenav li a.subheader {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.sidenav li.active a,
+.sidenav li.active a i.material-icons {
+    color: #fff;
+}
+
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}
+
+main {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    /* min-height: calc(100vh - 64px); */
+}
+
+.card.box-shadow-md {
+    box-shadow: 0 0 4px 0 rgba(0,0,0,.04);
+    border-width: 0;
+    border-radius: 3px;
+}
+
+/* BUSCADOR DE REGISTROS */
+
+.card nav .nav-wrapper form i.material-icons {
+    color: #a1a1a1;
+}
+
+.card nav .nav-wrapper form i.material-icons.close {
+    color: #fff;
+}
+
+/* DISEÑO PARA TABLAS */
+table thead tr th {
+    border-bottom: 2px solid #DBDEE3;
+}
+
+/* table tbody tr td i.material-icons {
+    color: #a1a1a1;
+}
+
+table tbody tr td i.material-icons:hover {
+    color: #807f7f;
+} */
+
+table.dataTable thead th, table.dataTable thead td {
+    border-bottom: 1px solid #DBDEE3 !important;
+}
+
+table tbody tr td {
+    border-bottom: 1px solid #DBDEE3;
+}
+
+/* tabla con la clase truncate */
+table tbody tr td.truncate {
+    display: table-cell;
+}
+
+/* DATATABLES */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    border: 0;
+    background: #1e88e5;
+    color: #fff !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    color: #000 !important;
+    border: 1px solid #eeeeee;
+    background-color: #585858;
+    background: #eeeeee;
+}
+
+/* =========================================== */
+/* MODALES */
+/* =========================================== */
+.modal,
+.modal .modal-footer {
+    background-color: #fff;
+}
+
+.modal .modal-header {
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+
+.modal .modal-header i.material-icons {
+    cursor: pointer;
+    border-radius: 100%;
+    border-color: #000;
+}
+
+.modal .modal-header i.material-icons:hover {
+    color: rgba(0,0,0,.4);
+}
+
+.modal.modal-large-ence {
+    width: 60%;
+    max-height: 85%;
+    top: 7% !important;
+}
+
+.modal.modal-large {
+    width: 80%;
+}
+
+/* Por si se abre otro datepicker adentro de el */
+/*.modal.modal-large-in {
+    min-height: 50%;
+}
+
+@media screen and (min-width: 1024px) and (max-width: 1380px) {
+    .modal.modal-large-in {
+        min-width: 65%;
+    }
+}
+
+.modal.modal-large-in .modal-footer {
+    margin-top: 6.5em;
+}*/
+
+/* =================ALERTAS================= */
+/* ========================================= */
+.jconfirm-box {
+    width: 25% !important;
+}
+
+
+/* LIBRERIA SELECT2 */
+span.select2 {
+    margin-left: 0;
+    width: 100% !important;
+}
+
+label.label-select2 {
+    width: 100%;
+}
+
+label.label-select2 > span.select2 {
+    font-size: 1rem;
+}
+
+/* =========================================== */
+/* FORMULARIOS */
+/* =========================================== */
+/* label focus color */
+.input-field input[type=text]:focus + label,
+.input-field input[type=password]:focus + label,
+.input-field input[type=number]:focus + label,
+.input-field textarea:focus + label {
+    color: #1e88e5 ;
+}
+/* label underline focus color */
+.input-field input[type=text]:focus,
+.input-field input[type=password]:focus,
+.input-field input[type=number]:focus,
+.input-field textarea:focus {
+    border-bottom: 1px solid #1e88e5 ;
+    box-shadow: 0 1px 0 0 #1e88e5 ;
+}
+/* valid color */
+.input-field input[type=text].valid,
+.input-field input[type=password].valid,
+.input-field input[type=number].valid,
+.input-field textarea.valid {
+    border-bottom: 1px solid #4CAF50 ;
+    box-shadow: 0 1px 0 0 #4CAF50 ;
+}
+/* invalid color */
+.input-field input[type=text].invalid,
+.input-field input[type=password].invalid,
+.input-field input[type=number].invalid,
+.input-field textarea.invalid, {
+    border-bottom: 1px solid #F44336;
+    box-shadow: 0 1px 0 0 #F44336;
+}
+/* icon prefix focus color */
+.input-field .prefix.active {
+    color: #1e88e5;
+}
+/* Formulario para agregar */
+/* label focus color */
+form.add .input-field input[type=text]:focus + label,
+.input-field input[type=password]:focus + label,
+.input-field input[type=number]:focus + label,
+.input-field textarea:focus + label {
+    color: #4CAF50;
+}
+/* label underline focus color */
+form.add .input-field input[type=text]:focus,
+.input-field input[type=password]:focus,
+.input-field input[type=number]:focus,
+.input-field textarea:focus {
+    border-bottom: 1px solid #4CAF50  ;
+    box-shadow: 0 1px 0 0 #4CAF50  ;
+}
+/* valid color */
+form.add .input-field input[type=text].valid,
+.input-field input[type=password].valid,
+.input-field input[type=number].valid,
+.input-field textarea.valid {
+    border-bottom: 1px solid #4CAF50 ;
+    box-shadow: 0 1px 0 0 #4CAF50 ;
+}
+/* invalid color */
+form.add .input-field input[type=text].invalid,
+.input-field input[type=password].invalid,
+.input-field input[type=number].invalid,
+.input-field textarea.invalid {
+    border-bottom: 1px solid #F44336;
+    box-shadow: 0 1px 0 0 #F44336;
+}
+/* icon prefix focus color */
+form.add .input-field .prefix.active {
+    color: #43a047 ;
+}
+
+/* Formulario para modificar */
+form.update .input-field input[type=text]:focus + label,
+form.uppdate .unput-field input[type=email]:focus + label,
+form.update .input-field input[type=password]:focus + label {
+    color: #1e88e5 ;
+}
+/* label underline focus color */
+form.update .input-field input[type=text]:focus,
+form.uppdate .unput-field input[type=email]:focus,
+form.update .input-field input[type=password]:focus {
+    border-bottom: 1px solid #1e88e5 ;
+    box-shadow: 0 1px 0 0 #1e88e5 ;
+}
+/* valid color */
+form.update .input-field input[type=text].valid,
+form.uppdate .unput-field input[type=email].valid,
+form.update .input-field input[type=password].valid {
+    border-bottom: 1px solid #4CAF50;
+    box-shadow: 0 1px 0 0 #4CAF50;
+}
+/* invalid color */
+form.update .input-field input[type=text].invalid,
+form.uppdate .unput-field input[type=email].invalid,
+form.update .input-field input[type=password].invalid {
+    border-bottom: 1px solid #F44336;
+    box-shadow: 0 1px 0 0 #F44336;
+}
+form.update input[type="email"]:not(.browser-default):focus:not([readonly]){
+    border-bottom: 1px solid #1e88e5 ;
+    box-shadow: 0 1px 0 0 #1e88e5 ;
+}
+form.update input[type="email"]:not(.browser-default):focus:not([readonly]) + label{
+    color: #1e88e5;
+}
+form.update .input-field textarea:focus + label{
+    color: #1e88e5;
+}
+/* icon prefix focus color */
+form.update .input-field .prefix.active {
+    color: #1e88e5;
+}
+
+/* Formato de texto */
+.bold-text {
+    font-weight: bold;
+}
+
+/* ANCHO */
+.w-100 { width: 100% !important; }
+.w-75 { width: 75% !important; }
+
+/* MARGINS */
+.mt-1 { margin-top: 1.5rem; }
+.mt-2 { margin-top: 2rem; }
+
+/* ELIMINADO MARGIN A CLASES */
+.mt-none { margin-top: 0 !important; }
+.mr-none { margin-right: 0 !important; }
+.ml-none { margin-left: 0 !important; }
+.mb-none { margin-bottom: 0 !important; }
+
+ul.stepper .step.active::before {
+    position: absolute;
+    counter-increment: section;
+    content: counter(section);
+    height: 26px;
+    width: 26px;
+    color: white;
+    background-color: #757575;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 26px;
+    font-weight: 400;
+    transition: background-color 400ms cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 14px;
+    left: 1px;
+    top: 13px;
+}
+.sidenav .user-view .circle {
+    height: 90%;
+    width: 90%;
+}
+.modal .modal-header {
+    padding: 16px 20px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.modal .modal-content {
+    padding: 11px;
+}
+/*Estilos para el tab de cuenta*/
+.tabs .tab a:focus, .tabs .tab a:focus.active {
+    background-color: rgba(25,118,210,0.5);
+    outline: none;
+    color: white;
+}
+.tabs .tab a:hover, .tabs .tab a.active {
+    background-color: transparent;
+    color: #1976d2;
+}
+.tabs .indicator {
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    background-color: #1976d2;
+    will-change: left, right;
+}
+.tabs .tab a{
+    color: #1976d2;
+}
+.sidenav li.active a, .sidenav li.active a i.material-icons {
+    color: #1976d2;
+}
+.sidenav li.active #drop{
+    color: white;
+} 
+.sidenav .collapsible-header, .sidenav.fixed .collapsible-header {
+    background-color: transparent;
+    border: none;
+    line-height: inherit;
+    height: inherit;
+    padding: 0px 31px;
+}
+
+.center-btn { text-align: center }
+
+/*Apartado de disenios de formulario de informacion de cursos*/
+
+#tituloCurso{
+    font-size: 20px;
+    margin-bottom: -5px;
+}
+#categoriaCurso{
+    font-size: 15px;
+}
+#fechasCurso{
+    font-size: 15px;
+    margin-bottom: -10px;
+}
+#progresoCurso{
+    font-size: 17px;
+}
+#rowProgreso{
+    margin-bottom: -15px;
+}
+#progressAvance{
+    height: 8px;
+    border-radius: 30px;
+}
+.modal.modal-fixed-footer .modal-footer {
+
+    border-top: 1px solid rgba(0,0,0,0.1);
+    position: absolute;
+    bottom: 0;
+    background: white;
+}
+@media only screen and (max-width: 992px)
+.modal {
+    width: %;
+}
+@media only screen and (max-width: 1080px)
+.modal {
+    width: %;
+}
