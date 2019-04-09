@@ -6,7 +6,7 @@ require_once APP_PATH . '/app/models/IntermediaHorarioDocente.php';
 session_start();
 try {
     //inicializando la clase de categoria
-    $intermediaHorarioDocente = new Salon;
+    $intermediaHorarioDocente = new IntermediaHorarioDocente;
     //si el post es para una de las acciones del crud
     if (isset($_POST['accion'])) {
         //Validando las fotos del formulario
@@ -16,7 +16,7 @@ try {
             //en el caso que la accion sea de crear una nueva categoria
             case 'create':
                 //si se setea con exito el nombre de la categoria
-                if ($intermediaHorarioDocente->setCodiInteCursSalo($_POST['CodiInteCursSalo'])) {
+                if ($intermediaHorarioDocente->setCodiInteCursSalo($_POST['codiInteCursSalo'])) {
                     if ($intermediaHorarioDocente->setCodiHora($_POST['codiHora'])) {
                         if ($intermediaHorarioDocente->setCodiDoce($_POST['codiDoce'])) {
                             if ($intermediaHorarioDocente->createIntermediaHorarioDocente()) {
@@ -36,6 +36,29 @@ try {
                 }
 
                 break;
+                //en el caso que la accion sea de crear una nueva categoria
+                case 'createN':
+                    //si se setea con exito el nombre de la categoria
+                    if ($intermediaHorarioDocente->setCodiInteCursSalo($_POST['codiInteCursSaloN'])) {
+                        if ($intermediaHorarioDocente->setCodiHora($_POST['codiHoraN'])) {
+                            if ($intermediaHorarioDocente->setCodiDoce($_POST['codiDoceN'])) {
+                                if ($intermediaHorarioDocente->createIntermediaHorarioDocente()) {
+                                    throw new Exception("Exito");
+                                } else {
+                                    throw new Exception("No se pudo agregar el horario");
+                                }
+                            } else {
+                                throw new Exception("Debe seleccionar el docente");
+                            }
+                        } else {
+                            //se envia mensaje de error
+                            throw new Exception('Debe seleccionar el horario');
+                        }
+                    } else {
+                        throw new Exception('No se pudo');
+                    }
+
+                    break;
         }
     }
 

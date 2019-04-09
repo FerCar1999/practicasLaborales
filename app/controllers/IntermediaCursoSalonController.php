@@ -16,8 +16,8 @@ try {
             //en el caso que la accion sea de crear una nueva categoria
             case 'create':
                 //si se setea con exito el nombre de la categoria
-                if ($intermediaCursoSalon->setCodiCurs($_POST['codi_curs'])) {
-                    if ($intermediaCursoSalon->setCodiSalo($_SESSION['codi_salo'])) {
+                if ($intermediaCursoSalon->setCodiCurs($_POST['codiCurs'])) {
+                    if ($intermediaCursoSalon->setCodiSalo($_POST['codiSalo'])) {
                         if ($intermediaCursoSalon->createIntermediaCursoSalon()) {
                             throw new Exception($intermediaCursoSalon->obtenerIdUltimo());
                         } else {
@@ -31,6 +31,24 @@ try {
                     throw new Exception('No se encontro el curso');
                 }
                 break;
+                //en el caso que la accion sea de crear una nueva categoria
+                case 'createN':
+                    //si se setea con exito el nombre de la categoria
+                    if ($intermediaCursoSalon->setCodiCurs($_POST['codiCursN'])) {
+                        if ($intermediaCursoSalon->setCodiSalo($_POST['codiSaloN'])) {
+                            if ($intermediaCursoSalon->createIntermediaCursoSalon()) {
+                                throw new Exception($intermediaCursoSalon->obtenerIdUltimo());
+                            } else {
+                                throw new Exception("No se pudo agregar el curso");
+                            }
+                        } else {
+                            throw new Exception("No se encontro el salon");
+                        }
+                    } else {
+                        //se envia mensaje de error
+                        throw new Exception('No se encontro el curso');
+                    }
+                    break;
             //en el caso de que la accion sea de modificar la categoria
             case 'update':
                 //si se setea con exito el codigo del registro

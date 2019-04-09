@@ -35,6 +35,10 @@ try {
                     echo $dataC;
                 }
                 break;
+            case 'cursoHorario':
+                        $dataC = $curso->getCursoHorarioDia($_POST['codi_dia'], $_POST["codi_curs"]);
+                        echo $dataC;
+                    break;
         }
     }
     //si el post es para una de las acciones del crud

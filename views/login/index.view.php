@@ -5,7 +5,7 @@
             <div class="card-content center-align">
                 <div id="registro">
                     <span class="card-title">
-                        REGISTRESE
+                        PRIMER USUARIO
                     </span>
                     <ul class="stepper linear">
                         <li class="step active">
@@ -167,7 +167,7 @@
                                             </label>
                                         </input>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div class="col s6">

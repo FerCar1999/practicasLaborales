@@ -6,11 +6,11 @@ $page = "Docentes";
 //Nav activo
 $active = "docentes";
 ?>
-<?php 
+<?php
 //llamando el archivo head
 include APP_PATH . '/views/templates/head.view.php' ?>
 
-<?php 
+<?php
 //llamando al archivo sidebar que es el que trae las diferentes opciones para los usuarios y controla el tiempo de sesion
 include APP_PATH . '/views/templates/sidebar.view.php' ?>
 
@@ -21,15 +21,15 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                 <div class="card-content">
                     <div class="row">
                         <div class="col-sm-12 col-md-6 center">
-                            <span class="card-title">Registro de Categoría</span>
+                            <span class="card-title">Registro de Docentes</span>
                         </div>
                     </div>
                     <table id="table-docente" class="responsive-table hover no-wrap row-border striped" style="width:100%">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Nombre</th>
-                                <th>Apellido</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>

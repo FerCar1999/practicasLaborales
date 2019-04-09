@@ -1,7 +1,7 @@
 <div id="updaDocente" class="modal">
     <form id="frmUpdate" action="" class="update">
         <div class="modal-header blue darken-1 white-text">
-            <h5 class="mt-none mb-none">Modificar Categoría</h5>
+            <h5 class="mt-none mb-none">Modificar Docente</h5>
             <i class="material-icons modal-close">close</i>
         </div>
         <div class="modal-content">

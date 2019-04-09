@@ -13,7 +13,7 @@ $page = "Usuarios";
                 <div class="card-content">
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
-                            <span class="card-title">Registro de Usuarios</span>
+                            <span class="card-title center">Registro de Usuarios</span>
                         </div>
                     </div>
                     <table id="table-usuario" class="responsive-table hover no-wrap row-border striped" style="width:100%">

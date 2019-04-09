@@ -55,7 +55,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="modal-close waves-effect btn-flat">Cancelar</button>
-            <button type="button" class="waves-effect waves-green btn green darken-1" onclick="createHorario();">Agregar</button>
+            <button type="button" class="waves-effect waves-green btn green darken-1" onclick="agregarHorario();">Agregar</button>
         </div>
     </form>
 </div>

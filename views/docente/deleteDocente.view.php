@@ -1,7 +1,7 @@
 <div id="deleDocente" class="modal">
     <form id="frmDele" action="">
         <div class="modal-header red darken-1 white-text">
-            <h5 class="mt-none mb-none">Eliminar Categoría</h5>
+            <h5 class="mt-none mb-none">Eliminar Docente</h5>
             <i class="material-icons modal-close">close</i>
         </div>
         <div class="modal-content">
