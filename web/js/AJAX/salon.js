@@ -138,7 +138,7 @@ function create() {
                         //se muestra el preloader
                         $('#preloader').show();
                         //se muestra el mensaje de confirmación
-                        successAlert("Salon agregado con exito");
+                        M.toast({ html: 'Salon agregado con exito', classes: 'rounded' });
                         // Recargando la tabla datatable
                         table.ajax.reload();
                         // mostrando el footer del modal
@@ -153,13 +153,13 @@ function create() {
                         //se obtiene el texto del json del servidor
                         var message = JSON.parse(data);
                         //se crear el modal para mostrar el error
-                        errorAlert(message);
+                        M.toast({ html: message, classes: 'rounded' });
                     }
                 },
                 //funcion en el caso de que exista un error con el servidor
                 error: function() {
                     //creando toast para el error
-                    errorAlert("Error al contactar con el servidor");
+                    M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
                 }
             });
     }
@@ -194,7 +194,7 @@ function update() {
                         //mostrando el preloader
                         $('#preloader').show();
                         //creando modal para el mensaje de confirmación
-                        successAlert("Salon modificado con exito");
+                        M.toast({ html: 'Salon modificado con exito', classes: 'rounded' });
                         // Recargando la tabla
                         table.ajax.reload();
                         //Mostrando el footer del modal
@@ -209,13 +209,13 @@ function update() {
                         //obteniendo el mensaje de respuesta
                         var message = JSON.parse(data);
                         ///creando el mensaje de error
-                        errorAlert(message);
+                        M.toast({ html: message, classes: 'rounded' });
                     }
                 },
                 //funcion en el caso de que el servidor no responda
                 error: function() {
                     //creando modal de error
-                    errorAlert("No se pudo contactar con el servidor");
+                    M.toast({ html: 'Erro al contactar con el servidor', classes: 'rounded' });
                 }
             });
     }
@@ -245,7 +245,7 @@ function remove() {
                 //mostrando el preloader 
                 $('#preloader').show();
                 // Mensaje de confirmación
-                successAlert("Salon eliminado con exito");
+                M.toast({ html: 'Salon eliminado con exito', classes: 'rounded' });
                 // Recargando la tabla
                 table.ajax.reload();
                 //mostrando el footer del modal
@@ -260,13 +260,13 @@ function remove() {
                 //obteniendo valor de respuesta
                 var message = JSON.parse(data);
                 //crando el mensaje de error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que el servidor no responda
         error: function() {
             // Mensaje de confirmación
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
     });
 }

@@ -90,15 +90,15 @@
                                                 <input type="file" id="logoCasa">
                                             </div>
                                             <div class="file-path-wrapper">
-                                                <input class="file-path validate" type="text" id="nombLogoCasa">
+                                                <input class="file-path validate" type="text" id="nombLogoCasa" disabled >
                                             </div>
                                         </div>
                                     </div>
                                 </form>
-                                <div class="step-actions">
-                                <button class="waves-effect waves-dark btn next-step white-text" onClick="guardarUsuario()">
-                                Finalizar
-                                </button>
+                                <div class="step-actions" id="accionesRegistro"> 
+                                    <button class="waves-effect waves-dark btn next-step white-text" onClick="guardarUsuario()">
+                                    Finalizar
+                                    </button>
                                     <button class="waves-effect waves-dark btn-flat previous-step">
                                         ATRAS
                                     </button>
@@ -170,11 +170,18 @@
 
                                 </div>
                             </div>
-                            <div class="col s6">
-                                <a class="waves-effect waves-teal btn-flat right" onClick="recuperar();">REGRESAR</a>
+                            <div id="preloader">
+                                <div class="progress">
+                                    <div class="indeterminate"></div>
+                                </div>
                             </div>
-                            <div class="col s6">
-                                <a onClick="recuperando();" class="btn blue darken-1 waves-effect waves-light w-100">RECUPERAR</a>
+                            <div id="elementosRegisto">
+                                <div class="col s6">
+                                    <a class="waves-effect waves-teal btn-flat right" onClick="recuperar();">REGRESAR</a>
+                                </div>
+                                <div class="col s6">
+                                    <a onClick="recuperando();" class="btn blue darken-1 waves-effect waves-light w-100">RECUPERAR</a>
+                                </div>
                             </div>
                         </div>
                     </form>

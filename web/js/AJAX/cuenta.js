@@ -115,7 +115,7 @@ function create() {
             if (resp >= 0) {
                 //se oculta el footer del modal
                 //se muestra el mensaje de confirmación
-                successAlert("Telefono agregado con exito");
+                M.toast({ html: 'Telefono agregado con exito', classes: 'rounded' });
                 // Recargando la tabla datatable
                 table.ajax.reload();
                 // mostrando el footer del modal
@@ -133,13 +133,13 @@ function create() {
                 //se obtiene el texto del json del servidor
                 var message = JSON.parse(data);
                 //se crear el modal para mostrar el error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que exista un error con el servidor
         error: function() {
             //creando toast para el error
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
     });
 }
@@ -169,7 +169,7 @@ function update() {
             if (resp >= 0) {
                 //se oculta el footer del modal
                 //se muestra el mensaje de confirmación
-                successAlert("Telefono mofificado con exito");
+                M.toast({ html: 'Telefono modificado con exito', classes: 'rounded' });
                 // Recargando la tabla datatable
                 table.ajax.reload();
                 // mostrando el footer del modal
@@ -187,13 +187,13 @@ function update() {
                 //se obtiene el texto del json del servidor
                 var message = JSON.parse(data);
                 //se crear el modal para mostrar el error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que exista un error con el servidor
         error: function() {
             //creando toast para el error
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
     });
 }
@@ -222,7 +222,7 @@ function remove() {
                 //mostrando el preloader 
                 $('#preloader').show();
                 // Mensaje de confirmación
-                successAlert("Telefono eliminado con exito");
+                M.toast({ html: 'Telefono eliminado con exito', classes: 'rounded' });
                 // Recargando la tabla
                 table.ajax.reload();
                 //mostrando el footer del modal
@@ -240,13 +240,13 @@ function remove() {
                 //obteniendo valor de respuesta
                 var message = JSON.parse(data);
                 //crando el mensaje de error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que el servidor no responda
         error: function() {
             // Mensaje de confirmación
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
     });
 }
@@ -270,7 +270,7 @@ function selectTipoTele() {
             }
         },
         error: function(data) {
-            console.log("Error al traer datos");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
     });
 }
@@ -291,7 +291,7 @@ function updateInfo() {
             //si la respuesta del servidores mayor o igual a 0
             if (resp >= 0) {
                 //se muestra el mensaje de confirmación
-                successAlert("Informacion cambiada con exito");
+                M.toast({ html: 'Informacion cambiada con exito', classes: 'rounded' });
                 //reseteando el formulario para agregar categoria
                 $('#miCuenta')[0].reset();
                 $('.progress').hide();
@@ -303,13 +303,13 @@ function updateInfo() {
                 //se obtiene el texto del json del servidor
                 var message = JSON.parse(data);
                 //se crear el modal para mostrar el error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que exista un error con el servidor
         error: function() {
             //creando toast para el error
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
 	});
 }
@@ -333,7 +333,7 @@ function updateLogoCasa() {
             //si la respuesta del servidores mayor o igual a 0
             if (resp >= 0) {
                 //se muestra el mensaje de confirmación
-                successAlert("Informacion cambiada con exito");
+                M.toast({ html: 'Imagen cambiada con exito', classes: 'rounded' });
                 //reseteando el formulario para agregar categoria
                 $('#frmUpdateLogo')[0].reset();
                 $('.progress').hide();
@@ -346,13 +346,13 @@ function updateLogoCasa() {
                 //se obtiene el texto del json del servidor
                 var message = JSON.parse(data);
                 //se crear el modal para mostrar el error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que exista un error con el servidor
         error: function() {
             //creando toast para el error
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
 	});
 }
@@ -374,7 +374,7 @@ function updateInfoCasa() {
             //si la respuesta del servidores mayor o igual a 0
             if (resp >= 0) {
                 //se muestra el mensaje de confirmación
-                successAlert("Informacion cambiada con exito");
+                M.toast({ html: 'Informacion cambiada con exito', classes: 'rounded' });
                 //reseteando el formulario para agregar categoria
                 $('#infoCasa')[0].reset();
                 $('.progress').hide();
@@ -386,13 +386,13 @@ function updateInfoCasa() {
                 //se obtiene el texto del json del servidor
                 var message = JSON.parse(data);
                 //se crear el modal para mostrar el error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que exista un error con el servidor
         error: function() {
             //creando toast para el error
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
 	});
 }
@@ -413,7 +413,7 @@ function updateContra() {
             //si la respuesta del servidores mayor o igual a 0
             if (resp >= 0) {
                 //se muestra el mensaje de confirmación
-                successAlert("Informacion cambiada con exito");
+                M.toast({ html: 'Contraseña cambiada con exito', classes: 'rounded' });
                 //reseteando el formulario para agregar categoria
                 $('#miCuenta')[0].reset();
                 $('.progress').hide();
@@ -425,13 +425,13 @@ function updateContra() {
                 //se obtiene el texto del json del servidor
                 var message = JSON.parse(data);
                 //se crear el modal para mostrar el error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que exista un error con el servidor
         error: function() {
             //creando toast para el error
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
 	});
 }
@@ -453,7 +453,7 @@ function misDatos() {
     		$("#correUsuaUpda").val(data.corre_usua);
         },
         error: function(data) {
-        	errorAlert("Error al contactar con el servidor");
+        	M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
     });
 }
@@ -474,7 +474,7 @@ function datosCasa() {
 
         },
         error: function(data) {
-        	errorAlert("Error al contactar con el servidor");
+        	M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
     });
 }

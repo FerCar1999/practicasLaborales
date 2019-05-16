@@ -80,6 +80,7 @@ try {
                                                     throw new Exception('Exito');
                                                 }
                                             } else {
+                                                $user->eliminandoCasaDefinitivo();
                                                 throw new Exception('No se pudo agregar el usuario');
                                             }
                                         } else {
@@ -168,7 +169,7 @@ try {
                             if ($_POST['contNuev'] != $_POST['contAnti']) {
                                 if ($user->setContUsua($_POST['contNuev'])) {
                                     if ($user->updateContraUsuario()) {
-                                        if (enviandoCorreoCuenta($_POST['correUsuaUpda'], $_POST['nombUsuaUpda'] . ' ' . $_POST['apelUsuaUpda'], $_POST['contNuev'])) {
+                                        if (enviandoCorreoCuentaModificaContra($_POST['correUsuaUpda'], $_POST['nombUsuaUpda'] . ' ' . $_POST['apelUsuaUpda'], $_POST['contNuev'])) {
                                                     throw new Exception('Exito');
                                                 } else {
                                                     throw new Exception('Exito');
@@ -198,7 +199,7 @@ try {
                         $password = $pass->generator();
                         if ($user->setContUsua($password)) {
                             if ($user->updateContraUsuarioCorreo()) {
-                                if (enviandoCorreoCuenta($_POST['corrOlvi'], null, $password)) {
+                                if (enviandoCorreoCuentaCambioContrasenia($_POST['corrOlvi'], null, $password)) {
                                     throw new Exception("Exito");
                                 } else {
                                     throw new Exception("Hemos tenido un problema al enviarle el correo. Favor anote la contraseña : "+$password);

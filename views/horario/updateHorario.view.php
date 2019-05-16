@@ -1,5 +1,5 @@
 <div id="updaHorario" class="modal">
-    <form action="" class="update">
+    <form action="" class="update" id="frmUpdate">
         <div class="modal-header blue darken-1 white-text">
             <h5 class="mt-none mb-none">Modificar Horario</h5>
             <i class="material-icons modal-close">close</i>
@@ -7,7 +7,7 @@
         <div class="modal-content">
             <div class="row">
                 <div class="col s12">
-                <input type="hidden" id="horaCodiUpda">
+                <input type="hidden" id="codiHoraUpda" name="codiHoraUpda">
                     <div class="row">
                         <div class="col s12">
                             <select class="select2 w-100" id="codiDiaUpda" name="codiDiaUpda">

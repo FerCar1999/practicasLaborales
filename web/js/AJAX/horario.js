@@ -102,7 +102,7 @@ function getDataToUpdate(tbody, table) {
         var data = table.row($(this).parents("tr")).data();
         $("#horaInicUpda").next("label").addClass("active");
         $("#horaFinUpda").next("label").addClass("active");
-        var codi_hora = $("#codiDoceUpda").val(data.codi_hora),
+        var codi_hora = $("#codiHoraUpda").val(data.codi_hora),
             codi_dia = $("#codiDiaUpda").val(data.codi_dia),
             hora_inic = $("#horaInicUpda").val(data.hora_inic),
             hora_fin = $("#horaFinUpda").val(data.hora_fin);
@@ -123,7 +123,8 @@ function create() {
     var datos = $('#frmAdd').serialize();
     //agregando la accion que se va a realizar
     var accion = "create";
-    //realizando peticion ajax
+    if ($("#codiDia").val()>0) {
+        //realizando peticion ajax
     $.ajax({
         //metodo que se va a usar
         method: "POST",
@@ -142,7 +143,7 @@ function create() {
                 //se muestra el preloader
                 $('#preloader').show();
                 //se muestra el mensaje de confirmación
-                successAlert("Horario agregado con exito");
+                M.toast({ html: "Horario agregado con exito", classes: 'rounded' });
                 // Recargando la tabla datatable
                 table.ajax.reload();
                 // mostrando el footer del modal
@@ -157,15 +158,18 @@ function create() {
                 //se obtiene el texto del json del servidor
                 var message = JSON.parse(data);
                 //se crear el modal para mostrar el error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que exista un error con el servidor
         error: function() {
             //creando toast para el error
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
         }
     });
+    } else {
+        M.toast({ html: "Debe seleccionar un dia", classes: 'rounded' });
+    }
 }
 // Funcion para modificar
 function update() {
@@ -178,7 +182,7 @@ function update() {
         //metodo que se va a usar
         method: "POST",
         //ruta del controlador
-        url: "../app/controllers/DocenteController.php",
+        url: "../app/controllers/HorarioController.php",
         //datos que se enviaran por el post
         data: datos + '&accion=' + accion,
         //funcion en el caso de que responda correctamente el servidor
@@ -192,7 +196,7 @@ function update() {
                 //mostrando el preloader
                 $('#preloader').show();
                 //creando modal para el mensaje de confirmación
-                successAlert("Docente modificado con exito");
+                M.toast({ html: "Horario modificado con exito", classes: 'rounded' });
                 // Recargando la tabla
                 table.ajax.reload();
                 //Mostrando el footer del modal
@@ -200,20 +204,20 @@ function update() {
                 //ocultando el preloader
                 $('#preloader').hide();
                 //ocultando modal para modificar la categoria
-                $('#updaDocente').modal('close');
+                $('#updaHorario').modal('close');
                 //reseteando el formulario
                 $('#frmUpdate')[0].reset();
             } else {
                 //obteniendo el mensaje de respuesta
                 var message = JSON.parse(data);
                 ///creando el mensaje de error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que el servidor no responda
         error: function() {
             //creando modal de error
-            errorAlert("No se pudo contactar con el servidor");
+            M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
         }
     });
 }
@@ -242,7 +246,7 @@ function remove() {
                 //mostrando el preloader 
                 $('#preloader').show();
                 // Mensaje de confirmación
-                successAlert("Horario eliminado con exito");
+                M.toast({ html: "Horario eliminado con exito", classes: 'rounded' });
                 // Recargando la tabla
                 table.ajax.reload();
                 //mostrando el footer del modal
@@ -257,13 +261,13 @@ function remove() {
                 //obteniendo valor de respuesta
                 var message = JSON.parse(data);
                 //crando el mensaje de error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que el servidor no responda
         error: function() {
             // Mensaje de confirmación
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
     });
 }

@@ -32,6 +32,18 @@
                             <th>
                               codi_inte_curs_salo
                             </th>
+                            <th>
+                              codi_salo
+                            </th>
+                            <th>
+                              codi_doce
+                            </th>
+                            <th>
+                              codi_dia
+                            </th>
+                            <th>
+                              codi_hora
+                            </th>
                               <th>
                                   Hora Inicio
                               </th>

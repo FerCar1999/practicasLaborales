@@ -154,4 +154,11 @@ class Horario extends Validator
         $params = array($this->esta_hora, $this->codi_hora);
         return Database::executeRow($sql, $params);
     }
+    //Funcion para saber si se puede ingresar ese horario en ese dia
+    public function verificarHorarioDia()
+    {
+        $sql = "SELECT COUNT(codi_hora) as cant FROM horario WHERE codi_dia = ? AND codi_casa = ? AND esta_hora = 1 AND ? <(SELECT MAX(hf.hora_fin) FROM horario as hf WHERE hf.esta_hora=1 AND hf.codi_casa = ? AND hf.codi_dia = ?)";
+        $params = array($this->codi_dia, $this->codi_casa, $this->hora_inic, $this->codi_casa, $this->codi_dia);
+        return Database::getRow($sql, $params);
+    }
 }

@@ -42,10 +42,14 @@ try {
                         if (strtotime($_POST['horaInic'])<strtotime($_POST['horaFin'])) {
                             if ($horario->setCodiDia($_POST['codiDia'])) {
                                 if ($horario->setCodiCasa($_SESSION['codi_casa'])) {
-                                    if ($horario->createHorario()) {
-                                        throw new Exception("Exito");
+                                    if ($horario->verificarHorarioDia()['cant']<=0) {
+                                        if ($horario->createHorario()) {
+                                            throw new Exception("Exito");
+                                        } else {
+                                            throw new Exception("No se pudo agregar el horario");
+                                        }
                                     } else {
-                                        throw new Exception("No se pudo agregar el horario");
+                                        throw new Exception("La hora que ingreso choca con un horario que ha creado antes");
                                     }
                                 } else {
                                     throw new Exception("No se encontro la casa");

@@ -1,5 +1,5 @@
 var tableUno, tableDos, tableTres;
-$(document).ready(function() {
+$(document).ready(function () {
   $('.progress').hide();
   $('#progressAvance').show();
   $('#progressAvance2').show();
@@ -25,7 +25,6 @@ $(document).ready(function() {
   selectSalones();
   $("#tablaHoraN").hide();
 });
-
 //Funcion para saber si va a mostrar los cursos de las otras casas o solo los propios
 function verificarCursoMostrar() {
   $.ajax({
@@ -34,16 +33,16 @@ function verificarCursoMostrar() {
     data: {
       'accion': 'verificarInfo'
     },
-    success: function(data) {
+    success: function (data) {
       if (JSON.parse(data) == 'casa') {
-        $('#casas').hide();
+        $('[href="#casas"]').closest('li').hide();
         dataTableCursoCasa();
       } else {
         dataTableCursoCasa();
         dataTableCursoCasas();
       }
     },
-    error: function() {
+    error: function () {
       console.log("Error")
     }
   });
@@ -57,7 +56,7 @@ function selectCategorias() {
       type: 'categoria'
     },
     dataType: 'JSON',
-    success: function(data) {
+    success: function (data) {
       $("#codiCate").empty().append('whatever');
       $("#codiCate").append('<option value="0" selected disabled>Seleccione la categoria:</option>');
       $("#codiCateUpda").empty().append('whatever');
@@ -67,7 +66,7 @@ function selectCategorias() {
         $("#codiCateUpda").append('<option value=' + data[i].codi_cate + '>' + data[i].nomb_cate + '</option>');
       }
     },
-    error: function(data) {
+    error: function (data) {
       console.log("Error al traer datos");
     }
   });
@@ -83,17 +82,61 @@ function selectHorarios() {
       codiDia: codiDia
     },
     dataType: 'JSON',
-    success: function(data) {
+    success: function (data) {
       $("#codiHora").empty().append('whatever');
       $("#codiHora").append('<option value="0" selected disabled>Seleccione el horario:</option>');
+      //$("#codiHoraUpda").empty().append('whatever');
+      //$("#codiHoraUpda").append('<option value="0" selected disabled>Seleccione el horario:</option>');
+      for (var i = 0; i < data.length ; i++) {
+        $("#codiHora").append('<option value=' + data[i].codi_hora + '>' + data[i].hora_inic + ' - ' + data[i].hora_fin + '</option>');
+        //$("#codiHoraUpda").append('<option value=' + data[i].codi_hora + '>' + data[i].hora_inic + ' - ' + data[i].hora_fin + '</option>');
+      }
+    },
+    error: function (data) {
+      console.log("Error al traer datos");
+    }
+  });
+}
+function selectHorariosU() {
+  var codiDia = $('#codiDiaUpda').val();
+  $.ajax({
+    type: 'POST',
+    url: '../app/controllers/HorarioController',
+    data: {
+      type: 'categoria',
+      codiDia: codiDia
+    },
+    dataType: 'JSON',
+    success: function (data) {
       $("#codiHoraUpda").empty().append('whatever');
       $("#codiHoraUpda").append('<option value="0" selected disabled>Seleccione el horario:</option>');
-      for (var i = 0; i < data.length; i++) {
-        $("#codiHora").append('<option value=' + data[i].codi_hora + '>' + data[i].hora_inic + ' - ' + data[i].hora_fin + '</option>');
+      for (var i = 0; i < data.length ; i++) {
         $("#codiHoraUpda").append('<option value=' + data[i].codi_hora + '>' + data[i].hora_inic + ' - ' + data[i].hora_fin + '</option>');
       }
     },
-    error: function(data) {
+    error: function (data) {
+      console.log("Error al traer datos");
+    }
+  });
+}
+//Funcion para llenar select de horarios de update
+function selectHorariosUpda(codiDia) {
+  $.ajax({
+    type: 'POST',
+    url: '../app/controllers/HorarioController',
+    data: {
+      type: 'categoria',
+      codiDia: codiDia
+    },
+    dataType: 'JSON',
+    success: function (data) {
+      $("#codiHoraUpda").empty().append('whatever');
+      $("#codiHoraUpda").append('<option value="0" selected disabled>Seleccione el horario:</option>');
+      for (var i = 0; i < data.length; i++) {
+        $("#codiHoraUpda").append('<option value=' + data[i].codi_hora + '>' + data[i].hora_inic + ' - ' + data[i].hora_fin + '</option>');
+      }
+    },
+    error: function (data) {
       console.log("Error al traer datos");
     }
   });
@@ -109,14 +152,14 @@ function selectHorariosN() {
       codiDia: codiDia
     },
     dataType: 'JSON',
-    success: function(data) {
+    success: function (data) {
       $("#codiHoraN").empty().append('whatever');
       $("#codiHoraN").append('<option value="0" selected disabled>Seleccione el horario:</option>');
       for (var i = 0; i < data.length; i++) {
         $("#codiHoraN").append('<option value=' + data[i].codi_hora + '>' + data[i].hora_inic + ' - ' + data[i].hora_fin + '</option>');
       }
     },
-    error: function(data) {
+    error: function (data) {
       console.log("Error al traer datos");
     }
   });
@@ -130,7 +173,7 @@ function selectSalones() {
       type: 'categoria'
     },
     dataType: 'JSON',
-    success: function(data) {
+    success: function (data) {
       $("#codiSalo").empty().append('whatever');
       $("#codiSalo").append('<option value="0" selected disabled>Seleccione el salon:</option>');
       $("#codiSaloN").empty().append('whatever');
@@ -143,7 +186,7 @@ function selectSalones() {
         $("#codiSaloUpda").append('<option value=' + data[i].codi_salo + '>' + data[i].nomb_salo + '</option>');
       }
     },
-    error: function(data) {
+    error: function (data) {
       console.log("Error al traer datos");
     }
   });
@@ -157,7 +200,7 @@ function selectDocentes() {
       type: 'categoria'
     },
     dataType: 'JSON',
-    success: function(data) {
+    success: function (data) {
       $("#codiDoce").empty().append('whatever');
       $("#codiDoce").append('<option value="0" selected disabled>Seleccione el docente:</option>');
       $("#codiDoceN").empty().append('whatever');
@@ -170,13 +213,11 @@ function selectDocentes() {
         $("#codiDoceUpda").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + '</option>');
       }
     },
-    error: function(data) {
+    error: function (data) {
       console.log("Error al traer datos");
     }
   });
 }
-
-
 //PARTE DE UNA CASA
 //funcion que llena la tabla de los cursos de la casa logeada
 function dataTableCursoCasa() {
@@ -272,7 +313,7 @@ function dataTableCursoCasa() {
 }
 // Funcion para obtener la informacion de el elemento a modificar
 function getIdToUpdateCurso(tobyd, table) {
-  $('tbody').on("click", "a.update", function() {
+  $('tbody').on("click", "a.update", function () {
     var data = table.row($(this).parents("tr")).data();
     $("#nombCursUpda").next("label").addClass("active");
     $("#fechInicUpda").next("label").addClass("active");
@@ -288,14 +329,14 @@ function getIdToUpdateCurso(tobyd, table) {
 }
 //Funcion para obtener la informacion de los horarios del curso
 function getIdToUpdateHorarioCurso(tobyd, table) {
-  $('tbody').on("click", "a.update", function() {
+  $('tbody').on("click", "a.update", function () {
     var data = table.row($(this).parents("tr")).data();
     var codi_curs = $("#codiCursHoraMod").val(data.codi_curs);
   });
 }
 //Funcion para enviar datos para eliminar el elemento seleccionado
 function getIdToDeleteCurso(tobyd, table) {
-  $('tbody').on("click", "a.delete", function() {
+  $('tbody').on("click", "a.delete", function () {
     var data = table.row($(this).parents("tr")).data();
     var codi_curs = $("#codiCursDele").val(data.codi_curs);
   });
@@ -312,22 +353,19 @@ function create() {
     url: "../app/controllers/CursoController",
     //data que se va a enviar por post
     data: datos,
-    beforeSend: function() {
+    beforeSend: function () {
       $('.modal-footer').hide();
       //se muestra el preloader
       $('#preloader').show();
     },
     //funcion en el caso de que la peticion sea correcta
-    success: function(data) {
+    success: function (data) {
       //se obtiene el texto del json del servidor
       var message = JSON.parse(data);
       //si la respuesta del servidores mayor o igual a 0
       if (message > 0) {
         //se muestra el mensaje de confirmación
         successAlert("Curso agregado con exito");
-        // Recargando la tabla datatable
-        tableUno.ajax.reload();
-        tableDos.ajax.reload();
         // mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando  el preloader del modal
@@ -340,16 +378,20 @@ function create() {
         $('#addHorarioCurso').modal('open');
         //reseteando el formulario para agregar categoria
         $('#frmAddCurso')[0].reset();
+        // Recargando la tabla datatable
+        tableUno.ajax.reload();
+        tableDos.ajax.reload();
       } else {
         $('.modal-footer').show();
         //ocultando  el preloader del modal
         $('#preloader').hide();
         //se crear el modal para mostrar el error
-        errorAlert(message);
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
       }
     },
     //funcion en el caso de que exista un error con el servidor
-    error: function() {
+    error: function () {
       //creando toast para el error
       errorAlert("Error al contactar con el servidor");
     }
@@ -367,23 +409,21 @@ function update() {
     url: "../app/controllers/CursoController",
     //datos que se enviaran por el post
     data: datos,
-    beforeSend: function() {
+    beforeSend: function () {
       //ocultando el footer del modal
       $('.modal-footer').hide();
       //mostrando el preloader
       $('#preloader').show();
     },
     //funcion en el caso de que responda correctamente el servidor
-    success: function(data) {
+    success: function (data) {
       //obteniendo el valor de respuesta del servidor
       var resp = data.indexOf("Exito");
       //verificando que si sea exitosa la operacion
       if (resp >= 0) {
         //creando modal para el mensaje de confirmación
         successAlert("Curso modificado con exito");
-        // Recargando la tabla
-        tableUno.ajax.reload();
-        tableDos.ajax.reload();
+        
         //Mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
@@ -392,19 +432,21 @@ function update() {
         $('#updateCurso').modal('close');
         //reseteando el formulario
         $('#frmUpdaCurso')[0].reset();
+        // Recargando la tabla
+        tableUno.ajax.reload();
+        tableDos.ajax.reload();
       } else {
         //Mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
-        //obteniendo el mensaje de respuesta
-        var message = JSON.parse(data);
         ///creando el mensaje de error
-        errorAlert(message);
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
       }
     },
     //funcion en el caso de que el servidor no responda
-    error: function() {
+    error: function () {
       //creando modal de error
       errorAlert("No se pudo contactar con el servidor");
     }
@@ -422,23 +464,21 @@ function remove() {
     url: "../app/controllers/CursoController",
     //datos que se enviaran en el post
     data: datos,
-    beforeSend: function() {
+    beforeSend: function () {
       //ocultanod el footer del modal
       $('.modal-footer').hide();
       //mostrando el preloader
       $('#preloader').show();
     },
     //funcion si el servidor responde
-    success: function(data) {
+    success: function (data) {
       //obteniendo valor de la respuesta del servidor
       var resp = data.indexOf("Exito");
       //verificando si la respuesta es exitosa
       if (resp >= 0) {
         // Mensaje de confirmación
         successAlert("Curso eliminado con exito");
-        // Recargando la tabla
-        tableUno.ajax.reload();
-        tableDos.ajax.reload();
+        
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
@@ -452,20 +492,18 @@ function remove() {
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
-        //obteniendo valor de respuesta
-        var message = JSON.parse(data);
         //crando el mensaje de error
-        errorAlert(message);
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
       }
     },
     //funcion en el caso de que el servidor no responda
-    error: function() {
+    error: function () {
       // Mensaje de confirmación
       errorAlert("Error al contactar con el servidor");
     }
   });
 }
-
 //PARTE DE TODAS LAS CASAS
 //Funcion para obtener los cursos de todas las casas
 function dataTableCursoCasas() {
@@ -559,11 +597,41 @@ function dataTableCursoCasas() {
 }
 //Funcion para ver la informacion de los cursos de las demas casas
 function getIdSeeCursos(tobyd, table) {
-  $('tbody').on("click", "a.seeC", function() {
+  $('tbody').on("click", "a.seeC", function () {
     var data = table.row($(this).parents("tr")).data();
+    var fechInic = new Date(data.fech_inic).getTime();
+    var fechFina = new Date(data.fech_fin).getTime();
+    //Obteneindo cantidad de dias entre la fecha inicial y la fechafinal del curso
+    var cantDiasGlob = (fechFina-fechInic)/(1000*60*60*24);
+    console.log(cantDiasGlob);
+    //Obteniendo cantidad de dias entre la fecha inicial y la fecha actual
+    var hoy = new Date();
+    var cantDiasAct = (fechFina-hoy.getTime())/(1000*60*60*24);
+    console.log(cantDiasAct);
+    //porcentaje de dias que han pasado entre las fechas
+    var porcDiasPasa = 1-(cantDiasAct/cantDiasGlob);
+    //sacando el valor procentual de los dias
+    if (porcDiasPasa<0) {
+      var porcDiasCien = (0*100);
+    } else {
+      if (porcDiasPasa>1) {
+        var porcDiasCien = (1*100);
+      } else {
+        var porcDiasCien = (porcDiasPasa.toFixed(2)*100);
+      }
+    }
+    //agregando width al progress de avance de proyecto
+    $("#determinateAvance").width(porcDiasCien+"%");
+    //agregando cantidad de progreso
+    $("#progresoCursoC").text(porcDiasCien+"% / 100%");
+    //agregando informacion al formulario
+    var codi_curs = $("#codiCursSee").val(data.codi_curs),
+      nomb_curs = $("#tituloCurso").text(data.nomb_curs),
+      fech_inic = $("#fechasCursoInic").text("Fecha Inicio del Curso : "+data.fech_inic.split('-').reverse().join('/')),
+      fech_fin = $("#fechasCursoFin").text("Fecha Fin del Curso : "+data.fech_fin.split('-').reverse().join('/')),
+      codi_cate = $("#categoriaCurso").text(data.nomb_cate);
   });
 }
-
 //PARTE DE LOS HORARIOS DE MI CASA
 //Funcion para agregar los horarios cuando se crea el curso
 function agregarHorario() {
@@ -576,30 +644,32 @@ function agregarHorario() {
     url: "../app/controllers/IntermediaCursoSalonController",
     //datos que se enviaran en el post
     data: datos,
-    beforeSend: function() {
+    beforeSend: function () {
       //ocultanod el footer del modal
       $('.modal-footer').hide();
       //mostrando el preloader
       $('#preloader').show();
     },
     //funcion si el servidor responde
-    success: function(data) {
+    success: function (data) {
       //obteniendo valor de la respuesta del servidor
       var message = JSON.parse(data);
       //verificando si la respuesta es exitosa
       if (message > 0) {
         agregarHorarioDocente(message);
+
       } else {
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
         //crando el mensaje de error
-        errorAlert(message);
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
       }
     },
     //funcion en el caso de que el servidor no responda
-    error: function() {
+    error: function () {
       // Mensaje de confirmación
       errorAlert("Error al contactar con el servidor");
     }
@@ -616,30 +686,34 @@ function agregarHorarioN() {
     url: "../app/controllers/IntermediaCursoSalonController",
     //datos que se enviaran en el post
     data: datos,
-    beforeSend: function() {
+    beforeSend: function () {
       //ocultanod el footer del modal
       $('.modal-footer').hide();
       //mostrando el preloader
       $('#preloader').show();
     },
     //funcion si el servidor responde
-    success: function(data) {
+    success: function (data) {
       //obteniendo valor de la respuesta del servidor
       var message = JSON.parse(data);
       //verificando si la respuesta es exitosa
       if (message > 0) {
         agregarHorarioDocenteN(message);
+        $('.modal-footer').show();
+        //ocultando el preloader
+        $('#preloader').hide();
       } else {
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
         //crando el mensaje de error
-        errorAlert(message);
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
       }
     },
     //funcion en el caso de que el servidor no responda
-    error: function() {
+    error: function () {
       // Mensaje de confirmación
       errorAlert("Error al contactar con el servidor");
     }
@@ -660,41 +734,42 @@ function agregarHorarioDocenteN(codi) {
     url: "../app/controllers/IntermediaHorarioDocenteController",
     //datos que se enviaran en el post
     data: datos,
-    beforeSend: function() {
+    beforeSend: function () {
       //ocultanod el footer del modal
       $('.modal-footer').hide();
       //mostrando el preloader
       $('#preloader').show();
     },
     //funcion si el servidor responde
-    success: function(data) {
+    success: function (data) {
       //obteniendo valor de la respuesta del servidor
       var resp = data.indexOf("Exito");
       //verificando si la respuesta es exitosa
       if (resp >= 0) {
         // Mensaje de confirmación
         successAlert("Horario agregado con exito");
-        // Recargando la tabla de horarios
-        tableUno.ajax.reload();
-        tableDos.ajax.reload();
-        tableTres.ajax.reload();
+        
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
         //reseateando formulario
         //$('#frmAddHoraCurso')[0].reset();
+        tableUno.ajax.reload();
+        tableTres.ajax.reload();
+        tableDos.ajax.reload();
       } else {
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
         //crando el mensaje de error
-        errorAlert(message);
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
       }
     },
     //funcion en el caso de que el servidor no responda
-    error: function() {
+    error: function () {
       // Mensaje de confirmación
       errorAlert("Error al contactar con el servidor");
     }
@@ -715,41 +790,36 @@ function agregarHorarioDocente(codi) {
     url: "../app/controllers/IntermediaHorarioDocenteController",
     //datos que se enviaran en el post
     data: datos,
-    beforeSend: function() {
-      //ocultanod el footer del modal
-      $('.modal-footer').hide();
-      //mostrando el preloader
-      $('#preloader').show();
-    },
     //funcion si el servidor responde
-    success: function(data) {
+    success: function (data) {
       //obteniendo valor de la respuesta del servidor
       var resp = data.indexOf("Exito");
       //verificando si la respuesta es exitosa
       if (resp >= 0) {
         // Mensaje de confirmación
         successAlert("Horario agregado con exito");
-        // Recargando la tabla de horarios
-        tableUno.ajax.reload();
-        tableDos.ajax.reload();
-        tableTres.ajax.reload();
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
         //reseateando formulario
         //$('#frmAddHoraCurso')[0].reset();
+        // Recargando la tabla de horarios
+        tableUno.ajax.reload();
+        tableTres.ajax.reload();
+        tableDos.ajax.reload();
       } else {
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
         //crando el mensaje de error
-        errorAlert(message);
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
       }
     },
     //funcion en el caso de que el servidor no responda
-    error: function() {
+    error: function () {
       // Mensaje de confirmación
       errorAlert("Error al contactar con el servidor");
     }
@@ -791,6 +861,18 @@ function dataTableCursoHorario() {
       "visible": false
     }, {
       data: "codi_inte_curs_salo",
+      "visible": false
+    }, {
+      data: "codi_salo",
+      "visible": false
+    }, {
+      data: "codi_doce",
+      "visible": false
+    }, {
+      data: "codi_dia",
+      "visible": false
+    }, {
+      data: "codi_hora",
       "visible": false
     }, {
       //agregando datos de nombre de categoria
@@ -849,28 +931,31 @@ function dataTableCursoHorario() {
     //cantidad de datos que se van a mostrar al cargar los datos por defecto
     iDisplayLength: 5
   });
-  getIdToUpdateHorario("#table-horario-curso-casax tbody", tableTres);
-  getIdToDeleteHorario("#table-horario-curso-casax tbody", tableTres);
+  getIdToUpdateHorarioInfo("#table-horario-curso-casax tbody", tableTres);
+  getIdToDeleteHorarioInfo("#table-horario-curso-casax tbody", tableTres);
 }
 // Funcion para obtener la informacion de el elemento a modificar
-function getIdToUpdateHorario(tobyd, table) {
-  $('tbody').on("click", "a.update", function() {
+function getIdToUpdateHorarioInfo(tobyd, table) {
+  $('tbody').on("click", "a.update", function () {
     var data = table.row($(this).parents("tr")).data();
-    $("#nombCursUpda").next("label").addClass("active");
-    $("#fechInicUpda").next("label").addClass("active");
-    $("#fechFinUpda").next("label").addClass("active");
-    var codi_curs = $("#codiCursUpda").val(data.codi_curs),
-      nomb_curs = $("#nombCursUpda").val(data.nomb_curs),
-      fech_inic = $("#fechInicUpda").val(data.fech_inic),
-      fech_fin = $("#fechFinUpda").val(data.fech_fin),
-      codi_cate = $("#codiCateUpda").val(data.codi_cate);
-    $("#codiCateUpda").change();
-    $("#codiCateUpda").trigger('change.select2');
+    console.log(data.codi_dia);
+    selectHorariosUpda(data.codi_dia);
+    var codi_inte_hora_doce = $("#codiInteHoraDoceUpda").val(data.codi_inte_hora_doce),
+      codi_inte_curs_salo = $("#codiInteCursSaloUpda").val(data.codi_inte_curs_salo),
+      codi_salo = $("#codiSaloUpda").val(data.codi_salo),
+      codi_doce = $("#codiDoceUpda").val(data.codi_doce),
+      codi_dia = $("#codiDiaUpda").val(data.codi_dia);
+    $("#codiSaloUpda").change();
+    $("#codiSaloUpda").trigger('change.select2');
+    $("#codiDoceUpda").change();
+    $("#codiDoceUpda").trigger('change.select2');
+    $("#codiDiaUpda").change();
+    $("#codiDiaUpda").trigger('change.select2');
   });
 }
 //Funcion para enviar datos para eliminar el elemento seleccionado
-function getIdToDeleteHorario(tobyd, table) {
-  $('tbody').on("click", "a.delete", function() {
+function getIdToDeleteHorarioInfo(tobyd, table) {
+  $('tbody').on("click", "a.delete", function () {
     var data = table.row($(this).parents("tr")).data();
     var codi_inte_curs_salo = $("#codiInteCursSaloDele").val(data.codi_inte_curs_salo);
   });
@@ -896,45 +981,149 @@ function removeHorario() {
     url: "../app/controllers/IntermediaCursoSalonController",
     //datos que se enviaran en el post
     data: datos,
-    beforeSend: function() {
+    beforeSend: function () {
       //ocultanod el footer del modal
       $('.modal-footer').hide();
       //mostrando el preloader
       $('#preloader').show();
     },
     //funcion si el servidor responde
-    success: function(data) {
+    success: function (data) {
       //obteniendo valor de la respuesta del servidor
       var resp = data.indexOf("Exito");
       //verificando si la respuesta es exitosa
       if (resp >= 0) {
         // Mensaje de confirmación
         successAlert("Horario eliminado con exito");
-        // Recargando la tabla
-        tableTres.ajax.reload();
+        
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
         //cerrando modal de eliminar categoria
-        $('#deleteCurso').modal('close');
+        $('#deleteHorarioCurso').modal('close');
         //reseateando formulario
         $('#frmDeleCurso')[0].reset();
+        // Recargando la tabla
+        tableUno.ajax.reload();
+        tableTres.ajax.reload();
+        tableDos.ajax.reload();
       } else {
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
         $('#preloader').hide();
-        //obteniendo valor de respuesta
-        var message = JSON.parse(data);
         //crando el mensaje de error
-        errorAlert(message);
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
       }
     },
     //funcion en el caso de que el servidor no responda
-    error: function() {
+    error: function () {
       // Mensaje de confirmación
       errorAlert("Error al contactar con el servidor");
+    }
+  });
+}
+// Funcion para modificar el curso
+function updateHorario() {
+  if ($("#codiHoraUpda").val() == 0) {
+    errorAlert("Debe seleccionar un horario");
+  } else {
+    //datos del formulario
+  var datos = $("#frmUpdaHoraCursoInfo").serialize();
+  //realizando peticion ajax
+  $.ajax({
+    //metodo que se va a usar
+    method: "POST",
+    //ruta del controlador
+    url: "../app/controllers/IntermediaCursoSalonController",
+    //datos que se enviaran por el post
+    data: datos,
+    beforeSend: function () {
+      //ocultando el footer del modal
+      $('.modal-footer').hide();
+      //mostrando el preloader
+      $('#preloader').show();
+    },
+    //funcion en el caso de que responda correctamente el servidor
+    success: function (data) {
+      //obteniendo el valor de respuesta del servidor
+      var resp = data.indexOf("Exito");
+      //verificando que si sea exitosa la operacion
+      if (resp >= 0) {
+        updateHorario2();
+      } else {
+        //Mostrando el footer del modal
+        $('.modal-footer').show();
+        //ocultando el preloader
+        $('#preloader').hide();
+        ///creando el mensaje de error
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
+      }
+    },
+    //funcion en el caso de que el servidor no responda
+    error: function () {
+      //creando modal de error
+      errorAlert("No se pudo contactar con el servidor");
+    }
+  });
+  }
+}
+// Funcion para modificar el curso
+function updateHorario2() {
+  //datos del formulario
+  var datos = $("#frmUpdaHoraCursoInfo").serialize();
+  //realizando peticion ajax
+  $.ajax({
+    //metodo que se va a usar
+    method: "POST",
+    //ruta del controlador
+    url: "../app/controllers/IntermediaHorarioDocenteController",
+    //datos que se enviaran por el post
+    data: datos,
+    beforeSend: function () {
+      //ocultando el footer del modal
+      $('.modal-footer').hide();
+      //mostrando el preloader
+      $('#preloader').show();
+    },
+    //funcion en el caso de que responda correctamente el servidor
+    success: function (data) {
+      //obteniendo el valor de respuesta del servidor
+      var resp = data.indexOf("Exito");
+      //verificando que si sea exitosa la operacion
+      if (resp >= 0) {
+        //creando modal para el mensaje de confirmación
+        successAlert("Horario de curso modificado con exito");
+        
+        //Mostrando el footer del modal
+        $('.modal-footer').show();
+        //ocultando el preloader
+        $('#preloader').hide();
+        //ocultando modal para modificar la categoria
+        $('#updateHorarioCursoInfo').modal('close');
+        //reseteando el formulario
+        $('#frmUpdaHoraCursoInfo')[0].reset();
+        // Recargando la tabla
+        tableUno.ajax.reload();
+        tableTres.ajax.reload();
+        tableDos.ajax.reload();
+      } else {
+        //Mostrando el footer del modal
+        $('.modal-footer').show();
+        //ocultando el preloader
+        $('#preloader').hide();
+        ///creando el mensaje de error
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
+      }
+    },
+    //funcion en el caso de que el servidor no responda
+    error: function () {
+      //creando modal de error
+      errorAlert("No se pudo contactar con el servidor");
     }
   });
 }

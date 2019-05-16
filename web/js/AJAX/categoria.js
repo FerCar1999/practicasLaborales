@@ -147,16 +147,7 @@ function create() {
                     //se muestra el preloader
                     $('#preloader').show();
                     //se muestra el mensaje de confirmación
-                    const toast = swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                    toast({
-                        type: 'success',
-                        title: 'Categoría agregada con exito'
-                    });
+                    M.toast({ html: "Categoria agregada con exito", classes: 'rounded' });
                     // Recargando la tabla datatable
                     table.ajax.reload();
                     // mostrando el footer del modal
@@ -171,16 +162,7 @@ function create() {
                     //se obtiene el texto del json del servidor
                     var message = JSON.parse(data);
                     //se crear el modal para mostrar el error
-                    const toast = swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                    toast({
-                        type: 'error',
-                        title: message
-                    });
+                    M.toast({ html: message, classes: 'rounded' });
                     //dejando vacio el valor del campo de nombre de categoria
                     $("#nombCate").val("");
                 }
@@ -232,16 +214,7 @@ function update() {
                     //mostrando el preloader
                     $('#preloader').show();
                     //creando modal para el mensaje de confirmación
-                    const toast = swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                    toast({
-                        type: 'success',
-                        title: 'Categoría modificada correctamente'
-                    });
+                    M.toast({ html: "Categoria modificada con exito", classes: 'rounded' });
                     // Recargando la tabla
                     table.ajax.reload();
                     //Mostrando el footer del modal
@@ -256,31 +229,13 @@ function update() {
                     //obteniendo el mensaje de respuesta
                     var message = JSON.parse(data);
                     ///creando el mensaje de error
-                    const toast = swal.mixin({
-                        toast: true,
-                        position: 'top-end',
-                        showConfirmButton: false,
-                        timer: 3000
-                    });
-                    toast({
-                        type: 'error',
-                        title: message
-                    });
+                    M.toast({ html: message, classes: 'rounded' });
                 }
             },
             //funcion en el caso de que el servidor no responda
             error: function () {
                 //creando modal de error
-                const toast = swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-                toast({
-                    type: 'error',
-                    title: 'Error al contactar con el servidor'
-                });
+                M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
             }
         });
     }
@@ -310,16 +265,7 @@ function remove() {
                 //mostrando el preloader 
                 $('#preloader').show();
                 // Mensaje de confirmación
-                const toast = swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-                toast({
-                    type: 'success',
-                    title: 'Categoría eliminada correctamente'
-                });
+                M.toast({ html: "Categoria eliminada con exito", classes: 'rounded' });
                 // Recargando la tabla
                 table.ajax.reload();
                 //mostrando el footer del modal
@@ -334,31 +280,13 @@ function remove() {
                 //obteniendo valor de respuesta
                 var message = JSON.parse(data);
                 //crando el mensaje de error
-                const toast = swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-                toast({
-                    type: 'error',
-                    title: message
-                });
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que el servidor no responda
         error: function () {
             // Mensaje de confirmación
-            const toast = swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            toast({
-                type: 'error',
-                title: 'Error al contactar con el servidor'
-            });
+            M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
         }
     });
 }

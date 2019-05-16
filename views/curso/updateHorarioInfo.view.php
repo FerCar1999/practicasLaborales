@@ -9,6 +9,7 @@
               <div class="col s12">
                 <div class="row">
                     <input type="hidden" name="accion" id="accion" value="update">
+                    <input type="hidden" name="codiInteHoraDoceUpda" id="codiInteHoraDoceUpda">
                     <input type="hidden" name="codiInteCursSaloUpda" id="codiInteCursSaloUpda">
                     <div class="col s12 m6">
                         <label for="codiSaloUpda">
@@ -28,7 +29,7 @@
                         <label for="codiDiaUpda">
                            Seleccione el dia para obtener su horario:
                         </label>
-                        <select class="select-2 w-100" id="codiDiaUpda" name="codiDiaUpda" onchange="selectHorariosUpdate();">
+                        <select class="select-2 w-100" id="codiDiaUpda" name="codiDiaUpda" onchange="selectHorariosU();">
                             <option value="0" selected disabled>Seleccione el dia:</option>
                             <option value="1">Lunes</option>
                             <option value="2">Martes</option>

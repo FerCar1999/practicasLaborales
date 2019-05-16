@@ -314,4 +314,10 @@ class Usuario extends Validator
         $params = array(null);
         return Database::getRow($sql,$params);
     }
+    public function eliminandoCasaDefinitivo()
+    {
+        $sql = "DELETE FROM casa WHERE codi_casa = ?";
+        $params = array($this->codi_casa);
+        return Database::executeRow($sql, $params);
+    }
 }

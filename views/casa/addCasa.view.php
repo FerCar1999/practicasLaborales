@@ -13,7 +13,7 @@
                             </div>
                             <div class="step-content">
                                 <form id="infoPersonal" class="add">
-                                <input type="hidden" name="accion" value="create">
+                                <input type="hidden" name="accion" value="createPrimerUsuario">
                                     <input type="hidden" name="codiTipoUsua" value="1">
                                     <div class="row">
                                         <div class="input-field col s12">

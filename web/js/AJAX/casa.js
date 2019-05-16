@@ -51,7 +51,7 @@ function dataTable() {
             data: "logo_casa",
             "aTargets": [0],
             "render": function(data) {
-                return '<img class="circle responsive-img" src="../web/img/logos/' + data + '" />';
+                return '<img class="circle" width="100px" src="../web/img/logos/' + data + '" />';
             }
         }, {
             //agregando datos de nombre de categoria
@@ -133,66 +133,53 @@ function create() {
         data: formularioCasa,
         processData: false,
         contentType: false,
+        beforeSend: function (param) { 
+            M.toast({ html: "Cargando...", classes: 'rounded' });
+        },
         success: function(data) {
             var codiCasa = data.replace(/['"]+/g, '');
-            $.ajax({
-                method: "POST",
-                url: "../app/controllers/UsuarioController.php",
-                data: formularioPersonal + '&codiCasa=' + codiCasa,
-                success: function(data2) {
-                    //obteniendo valor de la respuesta del servidor
-                    var resp = data.indexOf("Exito");
-                    //si la respuesta del servidores mayor o igual a 0
-                    if (resp >= 0) {
-                        //se oculta el footer del modal
-                        $('.modal-footer').hide();
-                        //se muestra el preloader
-                        $('#preloader').show();
-                        //se muestra el mensaje de confirmación
-                        const toast = swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-                        toast({
-                            type: 'success',
-                            title: 'Casa agregada con exito'
-                        });
-                        // Recargando la tabla datatable
-                        table.ajax.reload();
-                        // mostrando el footer del modal
-                        $('.modal-footer').show();
-                        //ocultando  el preloader del modal
-                        $('#preloader').hide();
-                        //cerrando el modal de categoria
-                        $('#addCasa').modal('close');
-                        //reseteando el formulario para agregar categoria
-                        $("#infoCasa")[0].reset();
-                        $("#infoPersonal")[0].reset();
-                    } else {
-                        //se obtiene el texto del json del servidor
-                        var message = JSON.parse(data);
-                        //se crear el modal para mostrar el error
-                        const toast = swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 3000
-                        });
-                        toast({
-                            type: 'error',
-                            title: message
-                        });
+            if (codiCasa>0) {
+                $.ajax({
+                    method: "POST",
+                    url: "../app/controllers/UsuarioController.php",
+                    data: formularioPersonal + '&codiCasa=' + codiCasa,
+                    success: function(data2) {
+                        //obteniendo valor de la respuesta del servidor
+                        var resp = data2.indexOf("Exito");
+                        //si la respuesta del servidores mayor o igual a 0
+                        if (resp >= 0) {
+                            //se oculta el footer del modal
+                            $('.modal-footer').hide();
+                            //se muestra el preloader
+                            $('#preloader').show();
+                            //se muestra el mensaje de confirmación
+                            M.toast({ html: "Casa agregada con exito", classes: 'rounded' });
+                            // Recargando la tabla datatable
+                            table.ajax.reload();
+                            // mostrando el footer del modal
+                            $('.modal-footer').show();
+                            //ocultando  el preloader del modal
+                            $('#preloader').hide();
+                            //cerrando el modal de categoria
+                            $('#addCasa').modal('close');
+                            //reseteando el formulario para agregar categoria
+                            $("#infoCasa")[0].reset();
+                            $("#infoPersonal")[0].reset();
+                        } else {
+                            //se obtiene el texto del json del servidor
+                            M.toast({ html: JSON.parse(data2), classes: 'rounded' });
+                        }
+                    },
+                    error: function() {
+                        M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
                     }
-                },
-                error: function() {
-                    console.log("Error de server");
-                }
-            });
+                });
+            } else {
+                M.toast({ html: JSON.parse(data), classes: 'rounded' });
+            }
         },
         error: function(resp) {
-            console.log("Error de server");
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
         }
     });
 }
@@ -221,16 +208,7 @@ function remove() {
                 //mostrando el preloader 
                 $('#preloader').show();
                 // Mensaje de confirmación
-                const toast = swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-                toast({
-                    type: 'success',
-                    title: 'Casa eliminada correctamente'
-                });
+                M.toast({ html: "Casa eliminada con exito", classes: 'rounded' });
                 // Recargando la tabla
                 table.ajax.reload();
                 //mostrando el footer del modal
@@ -243,33 +221,13 @@ function remove() {
                 $('#frmDele')[0].reset();
             } else {
                 //obteniendo valor de respuesta
-                var message = JSON.parse(data);
-                //crando el mensaje de error
-                const toast = swal.mixin({
-                    toast: true,
-                    position: 'top-end',
-                    showConfirmButton: false,
-                    timer: 3000
-                });
-                toast({
-                    type: 'error',
-                    title: message
-                });
+                M.toast({ html: JSON.parse(data), classes: 'rounded' });
             }
         },
         //funcion en el caso de que el servidor no responda
         error: function() {
             // Mensaje de confirmación
-            const toast = swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000
-            });
-            toast({
-                type: 'error',
-                title: 'Error al contactar con el servidor'
-            });
+            M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
         }
     });
 }

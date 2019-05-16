@@ -123,7 +123,7 @@ function create() {
             if (resp >= 0) {
                 //se oculta el footer del modal
                 //se muestra el mensaje de confirmación
-                successAlert("Usuario agregado con exito");
+                M.toast({ html: "Usuario agregado con exito", classes: 'rounded' });
                 // Recargando la tabla datatable
                 table.ajax.reload();
                 // mostrando el footer del modal
@@ -138,13 +138,13 @@ function create() {
                 //se obtiene el texto del json del servidor
                 var message = JSON.parse(data);
                 //se crear el modal para mostrar el error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que exista un error con el servidor
         error: function() {
             //creando toast para el error
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
         }
     });
 }
@@ -173,7 +173,7 @@ function remove() {
                 //mostrando el preloader 
                 $('#preloader').show();
                 // Mensaje de confirmación
-                successAlert("Usuario eliminado con exito");
+                M.toast({ html: "Usuario eliminado con exito", classes: 'rounded' });
                 // Recargando la tabla
                 table.ajax.reload();
                 //mostrando el footer del modal
@@ -183,18 +183,18 @@ function remove() {
                 //cerrando modal de eliminar categoria
                 $('#deleUsuario').modal('close');
                 //reseateando formulario
-                $('#frmDele')[0].reset();
+            $('#frmDele')[0].reset();
             } else {
                 //obteniendo valor de respuesta
                 var message = JSON.parse(data);
                 //crando el mensaje de error
-                errorAlert(message);
+                M.toast({ html: message, classes: 'rounded' });
             }
         },
         //funcion en el caso de que el servidor no responda
         error: function() {
             // Mensaje de confirmación
-            errorAlert("Error al contactar con el servidor");
+            M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
         }
     });
 }
@@ -214,11 +214,10 @@ function selectTipoUsua() {
             for (x in data) {
                 $("#codiTipoUsua").append('<option value=' + data[x].codi_tipo_usua + '>' + data[x].nomb_tipo_usua + '</option>');
                 $("#codiTipoUsuaUpda").append('<option value=' + data[x].codi_tipo_usua + '>' + data[x].nomb_tipo_usua + '</option>');
-                
             }
         },
         error: function (data) {
-            console.log("Error al traer datos");
+            M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
         }
     });
 }

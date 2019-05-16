@@ -230,8 +230,7 @@ function verificarPresupuestoMostrar() {
         },
         success: function(data) {
             if (JSON.parse(data) == 'casa') {
-                $('#getCasasRestantesLi').hide();
-                $('#casas').hide();
+                $('[href="#casas"]').closest('li').hide();
                 dataTablePresupuestoCasa();
             } else {
                 dataTablePresupuestoCasa();
@@ -267,9 +266,7 @@ function agregarIngreso() {
                         //se oculta el footer del modal
                         //se muestra el mensaje de confirmación
                         successAlert("Ingreso agregado con exito");
-                        // Recargando la tabla datatable
-                        tableUno.ajax.reload();
-                        tableDos.ajax.reload();
+                        
                         // mostrando el footer del modal
                         $('.modal-footer').show();
                         //ocultando  el preloader del modal
@@ -279,6 +276,9 @@ function agregarIngreso() {
                         //reseteando el formulario para agregar categoria
                         $('#frmAddIngre')[0].reset();
                         selectCasasRestantes();
+                        // Recargando la tabla datatable
+                        tableUno.ajax.reload();
+                        tableDos.ajax.reload();
                     } else {
                         $('.modal-footer').show();
                         //ocultando  el preloader del modal
@@ -351,9 +351,7 @@ function agregarGasto() {
                         //se oculta el footer del modal
                         //se muestra el mensaje de confirmación
                         successAlert("Ingreso agregado con exito");
-                        // Recargando la tabla datatable
-                        tableUno.ajax.reload();
-                        tableDos.ajax.reload();
+                        
                         // mostrando el footer del modal
                         $('.modal-footer').show();
                         //ocultando  el preloader del modal
@@ -362,6 +360,9 @@ function agregarGasto() {
                         $('#addEgreso').modal('close');
                         //reseteando el formulario para agregar categoria
                         $('#frmAddEgreso')[0].reset();
+                        // Recargando la tabla datatable
+                        tableUno.ajax.reload();
+                        tableDos.ajax.reload();
                         selectCasasRestantes();
                     } else {
                         $('.modal-footer').show();
@@ -406,9 +407,7 @@ function modificarIngreso() {
                         //se oculta el footer del modal
                         //se muestra el mensaje de confirmación
                         successAlert("Ingreso agregado con exito");
-                        // Recargando la tabla datatable
-                        tableUno.ajax.reload();
-                        tableDos.ajax.reload();
+                        
                         // mostrando el footer del modal
                         $('.modal-footer').show();
                         //ocultando  el preloader del modal
@@ -418,6 +417,9 @@ function modificarIngreso() {
                         //reseteando el formulario para agregar categoria
                         $('#frmUpdaIngre')[0].reset();
                         selectCasasRestantes();
+                        // Recargando la tabla datatable
+                        tableUno.ajax.reload();
+                        tableDos.ajax.reload();
                     } else {
                         $('.modal-footer').show();
                         //ocultando  el preloader del modal
@@ -455,9 +457,7 @@ function deleteIngreso() {
                 //se oculta el footer del modal
                 //se muestra el mensaje de confirmación
                 successAlert("Ingreso eliminado con exito");
-                // Recargando la tabla datatable
-                tableUno.ajax.reload();
-                tableDos.ajax.reload();
+                
                 selectCasasRestantes();
                 // mostrando el footer del modal
                 $('.modal-footer').show();
@@ -465,7 +465,9 @@ function deleteIngreso() {
                 $('#deleteIngreso').modal('close');
                 //reseteando el formulario para agregar categoria
                 $('#frmDeleIngre')[0].reset();
-                
+                // Recargando la tabla datatable
+                tableUno.ajax.reload();
+                tableDos.ajax.reload();
             } else {
                 $('.modal-footer').show();
                 //se obtiene el texto del json del servidor
@@ -496,9 +498,7 @@ function deleteGasto() {
                 //se oculta el footer del modal
                 //se muestra el mensaje de confirmación
                 successAlert("Gasto eliminado con exito");
-                // Recargando la tabla datatable
-                tableUno.ajax.reload();
-                tableDos.ajax.reload();
+                
                 // mostrando el footer del modal
                 $('.modal-footer').show();
                 //cerrando el modal de categoria
@@ -506,6 +506,9 @@ function deleteGasto() {
                 //reseteando el formulario para agregar categoria
                 $('#frmDeleEgre')[0].reset();
                 selectCasasRestantes();
+                // Recargando la tabla datatable
+                tableUno.ajax.reload();
+                tableDos.ajax.reload();
             } else {
                 $('.modal-footer').show();
                 //se obtiene el texto del json del servidor

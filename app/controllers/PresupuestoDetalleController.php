@@ -47,9 +47,8 @@ try {
                     $idPresMes = $presupuestoD->buscarIdPresupuestoMes(date("m"), date("Y"));
                     if ($presupuestoD->setCodiPres($idPresMes['codi_pres'])) {
                         if ($presupuestoD->setCantPresDeta($_POST['cantPresDeta'])) {
-                            $cantidadEgreso  = $presupuestoD->obtenerCantidadEgreso();
                             $cantidadIngreso = $presupuestoD->obtenerCantidadIngreso();
-                            $respuesta       = ($cantidadIngreso - $cantidadEgreso) - $_POST['cantPresDeta'];
+                            $respuesta       = $cantidadIngreso  - $_POST['cantPresDeta'];
                             if ($respuesta >= 0) {
                                 if ($presupuestoD->setFechPresDeta(date('Y-m-d'))) {
                                     if ($presupuestoD->setCodiUsua($_SESSION['codi_usua'])) {

@@ -137,8 +137,8 @@ class PresupuestoDetalle extends Validator
     //Funcion para validar que la nueva cantidad a agregar no sobrepase el presupuesto del mes
     public function obtenerCantidadIngreso()
     {
-        $sql = "SELECT cant_pres FROM presupuesto WHERE codi_pres = ?";
-        $params = array($this->codi_pres);
+        $sql = "SELECT p.cant_pres- IFNULL((SELECT SUM(pda.cant_pres_deta) as cant FROM presupuesto_detalle as pda WHERE pda.codi_pres=?),0) as cant_pres FROM presupuesto as p WHERE p.codi_pres=?";
+        $params = array($this->codi_pres,$this->codi_pres);
         $data = Database::getRow($sql, $params);
         if ($data) {
             return $data['cant_pres'];
