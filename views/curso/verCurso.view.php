@@ -1,4 +1,4 @@
-<div class="modal" id="verCurso">
+<div class="modal modal-fixed-footer" id="verCurso">
     <div class="modal-header light-blue darken-1 white-text">
         <h5 class="mt-none mb-none">
             Informacion del Curso
@@ -43,36 +43,9 @@
                         </p>
                     </div>
                     <div class="col s12 m12">
-                        <table class="responsive-table hover no-wrap row-border striped" id="table-curso-casa" style="width:100%">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Horario
-                                    </th>
-                                    <th>
-                                        Lunes
-                                    </th>
-                                    <th>
-                                        Martes
-                                    </th>
-                                    <th>
-                                        Miercoles
-                                    </th>
-                                    <th>
-                                        Jueves
-                                    </th>
-                                    <th>
-                                        Viernes
-                                    </th>
-                                    <th>
-                                        Sabado
-                                    </th>
-                                    <th>
-                                        Domingo
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
+                        <ul class="collection with-header" name="maestros" id="maestros">
+                            <li class='collection-header'><h5>Maestros del Curso</h5></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -81,9 +54,6 @@
     <div class="modal-footer">
         <button class="modal-close waves-effect btn-flat" type="button">
             Cancelar
-        </button>
-        <button class="waves-effect waves-green btn red darken-3" onclick="reporteCasa();" type="button">
-            Generar Reporte
         </button>
     </div>
 </div>

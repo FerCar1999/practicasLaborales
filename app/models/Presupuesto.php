@@ -103,7 +103,7 @@ class Presupuesto extends Validator
     }
     public function obtenerCasasSinPresupuestoMes($mes, $anio)
     {
-        $sql = "SELECT c.codi_casa, c.nomb_casa FROM casa as c WHERE c.codi_casa NOT IN(SELECT p.codi_casa FROM presupuesto as p WHERE MONTH(p.fech_pres)=? AND YEAR(p.fech_pres) = ?)";
+        $sql = "SELECT c.codi_casa, c.nomb_casa FROM casa as c WHERE c.esta_casa=1 AND c.codi_casa NOT IN(SELECT p.codi_casa FROM presupuesto as p WHERE MONTH(p.fech_pres)=? AND YEAR(p.fech_pres) = ?)";
         $params = array($mes, $anio);
         return Database::getRows($sql, $params);
     }

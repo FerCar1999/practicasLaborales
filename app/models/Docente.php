@@ -135,4 +135,10 @@ class Docente extends Validator
         $params = array($this->codi_doce);
         return Database::executeRow($sql, $params);
     }
+    public function obtenerListaMaestros($codiCurs)
+    {
+        $sql = "SELECT DISTINCT d.nomb_doce, d.apel_doce from intermedia_horario_docente as ihd INNER JOIN intermedia_curso_salon as ics ON ihd.codi_inte_curs_salo= ics.codi_inte_curs_salo INNER JOIN docente as d ON ihd.codi_doce = d.codi_doce WHERE ics.codi_curs=?";
+        $params = array($codiCurs);
+        return Database::getRows($sql, $params);
+    }
 }

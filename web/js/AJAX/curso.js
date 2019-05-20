@@ -1,8 +1,8 @@
 var tableUno, tableDos, tableTres;
 $(document).ready(function () {
   $('.progress').hide();
-  $('#progressAvance').show();
   $('#progressAvance2').show();
+  $('#progressAvance2N').show();  
   $(".modal").modal({
     dismissible: false
   });
@@ -315,6 +315,29 @@ function dataTableCursoCasa() {
 function getIdToUpdateCurso(tobyd, table) {
   $('tbody').on("click", "a.update", function () {
     var data = table.row($(this).parents("tr")).data();
+    var fechInic = new Date(data.fech_inic).getTime();
+    var fechFina = new Date(data.fech_fin).getTime();
+    //Obteneindo cantidad de dias entre la fecha inicial y la fechafinal del curso
+    var cantDiasGlob = (fechFina-fechInic)/(1000*60*60*24);
+    //Obteniendo cantidad de dias entre la fecha inicial y la fecha actual
+    var hoy = new Date();
+    var cantDiasAct = (fechFina-hoy.getTime())/(1000*60*60*24);
+    //porcentaje de dias que han pasado entre las fechas
+    var porcDiasPasa = 1-(cantDiasAct/cantDiasGlob);
+    //sacando el valor procentual de los dias
+    if (porcDiasPasa<0) {
+      var porcDiasCien = (0*100);
+    } else {
+      if (porcDiasPasa>1) {
+        var porcDiasCien = (1*100);
+      } else {
+        var porcDiasCien = (porcDiasPasa.toFixed(2)*100);
+      }
+    }
+    //agregando width al progress de avance de proyecto
+    $("#determinateAvanceN").width(porcDiasCien+"%");
+    //agregando cantidad de progreso
+    $("#progresoCursoCN").text(porcDiasCien+"% / 100%");
     $("#nombCursUpda").next("label").addClass("active");
     $("#fechInicUpda").next("label").addClass("active");
     $("#fechFinUpda").next("label").addClass("active");
@@ -603,7 +626,6 @@ function getIdSeeCursos(tobyd, table) {
     var fechFina = new Date(data.fech_fin).getTime();
     //Obteneindo cantidad de dias entre la fecha inicial y la fechafinal del curso
     var cantDiasGlob = (fechFina-fechInic)/(1000*60*60*24);
-    console.log(cantDiasGlob);
     //Obteniendo cantidad de dias entre la fecha inicial y la fecha actual
     var hoy = new Date();
     var cantDiasAct = (fechFina-hoy.getTime())/(1000*60*60*24);
@@ -624,14 +646,36 @@ function getIdSeeCursos(tobyd, table) {
     $("#determinateAvance").width(porcDiasCien+"%");
     //agregando cantidad de progreso
     $("#progresoCursoC").text(porcDiasCien+"% / 100%");
+    llenandoListaMaestros(data.codi_curs);
     //agregando informacion al formulario
     var codi_curs = $("#codiCursSee").val(data.codi_curs),
       nomb_curs = $("#tituloCurso").text(data.nomb_curs),
       fech_inic = $("#fechasCursoInic").text("Fecha Inicio del Curso : "+data.fech_inic.split('-').reverse().join('/')),
       fech_fin = $("#fechasCursoFin").text("Fecha Fin del Curso : "+data.fech_fin.split('-').reverse().join('/')),
-      codi_cate = $("#categoriaCurso").text(data.nomb_cate);
+      codi_cate = $("#categoriaCurso").text("Categoria: "+data.nomb_cate);
   });
+  
 }
+function llenandoListaMaestros(codi) { 
+  $.ajax({
+    method : 'POST',
+    url : '../app/controllers/DocenteController',
+    data : {
+      lista : 'listaMaestros',
+      codiCurs : codi
+    },
+    dataType: 'JSON',
+    success : function (data) {
+      for (var s = 1; s < 10; s++) {
+          $("#" + s).remove();
+      }
+      for (var i = 0; i < data.length; i++) {
+        //agregandole los elementos a la lista
+        $("#maestros").append("<li id="+(i+1)+" class='collection-item'>"+data[i].nomb_doce+" "+data[i].apel_doce+"</li> ");
+      }
+     }
+  });
+ }
 //PARTE DE LOS HORARIOS DE MI CASA
 //Funcion para agregar los horarios cuando se crea el curso
 function agregarHorario() {

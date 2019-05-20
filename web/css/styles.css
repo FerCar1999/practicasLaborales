@@ -448,11 +448,8 @@ ul.stepper .step.active::before {
     bottom: 0;
     background: white;
 }
-@media only screen and (max-width: 992px)
-.modal {
-    width: %;
-}
-@media only screen and (max-width: 1080px)
-.modal {
-    width: %;
+.collection.with-header .collection-header {
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 0px 10px;
 }

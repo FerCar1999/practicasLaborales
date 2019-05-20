@@ -1,4 +1,4 @@
-<div id="addCategoria" class="modal">
+<div id="addCategoria" class="modal modal-fixed-footer">
     <form id="frmAdd" action="" class="add">
         <div class="modal-header green darken-1 white-text">
             <h5 class="mt-none mb-none">Agregar Categoria</h5>

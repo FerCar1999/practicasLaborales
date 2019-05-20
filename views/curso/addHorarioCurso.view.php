@@ -1,4 +1,4 @@
-<div id="addHorarioCurso" class="modal">
+<div id="addHorarioCurso" class="modal modal-fixed-footer">
     <form id="frmAddHoraCurso" action="" class="add">
         <div class="modal-header green darken-1 white-text">
             <h5 class="mt-none mb-none">Agregar Horario Curso</h5>

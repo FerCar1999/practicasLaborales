@@ -1,4 +1,4 @@
-<div class="modal" id="updateCurso">
+<div class="modal modal-fixed-footer" id="updateCurso">
     <form action="" class="update" id="frmUpdaCurso">
         <div class="modal-header blue darken-1 white-text">
             <h5 class="mt-none mb-none">
@@ -10,6 +10,20 @@
         </div>
         <div class="modal-content">
             <div class="row">
+                <div class="col s12 m12">
+                        <div class="row" id="rowProgreso">
+                            <p class="col s9" id="progresoCursoN">
+                                Progreso del Curso
+                            </p>
+                            <p class="col s3 right-align" id="progresoCursoCN">
+                                
+                            </p>
+                        </div>
+                        <div class="progress" id="progressAvance2N">
+                            <div class="determinate" id="determinateAvanceN">
+                            </div>
+                        </div>
+                </div>
                 <div class="col s12">
                         <div class="row">
                             <input id="accion" name="accion" type="hidden" value="update"/>

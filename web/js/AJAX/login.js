@@ -38,7 +38,7 @@ function iniciarSesion() {
                 //quitando el login de la url
                 var ruta = url.replace('login', '')
                 //enviando al index de la pagina
-                window.location.replace(ruta + 'index');
+                window.location.replace(ruta + 'cuenta');
             } else {
                 //toast con error encontrado
                 M.toast({ html: JSON.parse(response), classes: 'rounded' });

@@ -7,6 +7,13 @@ session_start();
 try {
     //inicializando la clase de categoria
     $docente = new Docente;
+    if (isset($_POST['lista'])) {
+        //se obtiene la lista sin array asociativo
+        $data = null;
+        $data = $docente->obtenerListaMaestros($_POST['codiCurs']);
+        //imprimiendo la lista en tipo json
+        echo json_encode($data);
+    }
     //si el post es para llenar campos que no tienen que ver en el crud de categoria
     if (isset($_POST['type'])) {
         //se obtiene la lista sin array asociativo
