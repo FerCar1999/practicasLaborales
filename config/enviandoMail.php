@@ -7,8 +7,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 //Load Composer's autoloader
 require APP_PATH . '/app/libraries/vendor/autoload.php';
 
-$correo = "fernandocarranza328@gmail.com";
-$contra = "administracion12345_";
 function enviandoCorreoCuenta($destinatario, $nombreDestinatario, $password) {
 	$mail = new PHPMailer(true); // Passing `true` enables exceptions
 	try {
@@ -17,8 +15,8 @@ function enviandoCorreoCuenta($destinatario, $nombreDestinatario, $password) {
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = $correo; // SMTP username
-		$mail->Password = $contra; // SMTP password
+		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
+		$mail->Password = 'Fernando12345'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -31,7 +29,7 @@ function enviandoCorreoCuenta($destinatario, $nombreDestinatario, $password) {
 		); // TCP port to connect to
 
 		//Recipients
-		$mail->setFrom($correo, 'Adminstrador del Sitio');
+		$mail->setFrom('carranzafernando99@gmail.com', 'Fernando Ernesto Carranza Guardado');
 		$mail->addAddress($destinatario, $nombreDestinatario); // Add a recipient
 		//$mail->addAddress('ellen@example.com');               // Name is optional
 		//$mail->addReplyTo('info@example.com', 'Information');
@@ -65,8 +63,8 @@ function enviandoCorreoCuentaCambioContrasenia($destinatario, $nombreDestinatari
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = $correo; // SMTP username
-		$mail->Password = $contra; // SMTP password
+		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
+		$mail->Password = 'Fernando12345'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -79,7 +77,7 @@ function enviandoCorreoCuentaCambioContrasenia($destinatario, $nombreDestinatari
 		); // TCP port to connect to
 
 		//Recipients
-		$mail->setFrom($correo, 'Adminstrador del Sitio');
+		$mail->setFrom('carranzafernando99@gmail.com', 'Fernando Ernesto Carranza Guardado');
 		$mail->addAddress($destinatario, $nombreDestinatario); // Add a recipient
 		//$mail->addAddress('ellen@example.com');               // Name is optional
 		//$mail->addReplyTo('info@example.com', 'Information');
@@ -95,7 +93,7 @@ function enviandoCorreoCuentaCambioContrasenia($destinatario, $nombreDestinatari
 		$mail->Subject = 'Recuperacion de Contraseña';
 		$mail->Body = '<center><h1>Contraseña Recuperada</h1><center>
 		</br>
-		<center><p>Se le notifica por medio de este correo que se cambiado con exito su 
+		<center><p>Saludos ' . $nombreDestinatario . ', se le notifica por medio de este correo que se cambiado con exito su 
 		contraseña. Se le envia su nueva contraseña : ' . $password . '</p><center>';
 		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
@@ -114,8 +112,8 @@ function enviandoCorreoCuentaModificaContra($destinatario, $nombreDestinatario, 
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = $correo; // SMTP username
-		$mail->Password = $contra; // SMTP password
+		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
+		$mail->Password = 'Fernando12345'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -128,7 +126,7 @@ function enviandoCorreoCuentaModificaContra($destinatario, $nombreDestinatario, 
 		); // TCP port to connect to
 
 		//Recipients
-		$mail->setFrom($correo, 'Adminstrador del Sitio');
+		$mail->setFrom('carranzafernando99@gmail.com', 'Fernando Ernesto Carranza Guardado');
 		$mail->addAddress($destinatario, $nombreDestinatario); // Add a recipient
 		//$mail->addAddress('ellen@example.com');               // Name is optional
 		//$mail->addReplyTo('info@example.com', 'Information');
