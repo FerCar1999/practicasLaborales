@@ -155,7 +155,7 @@ function dataTablePresupuestoCasas() {
             }
         }, {
             //agregando botones para abrir el modal de modificar o de eliminar categoria
-            defaultContent: "<a href='#verEgresoCasa' class='update btn-small light-blue waves-effect waves-ligth modal-trigger'><i class='material-icons'>visibility</i></a>  " + "<a href='#updateIngreso' class='delete btn-small blue darken-1 waves-effect waves-ligth modal-trigger'><i class='material-icons'>create</i></a> " + "<a href='#deleteIngreso' class='delete btn-small red darken-1 waves-effect waves-ligth modal-trigger'><i class='material-icons'>delete</i></a>"
+            defaultContent: "<a href='#updateIngreso' class='delete btn-small blue darken-1 waves-effect waves-ligth modal-trigger'><i class='material-icons'>create</i></a> " + "<a href='#deleteIngreso' class='delete btn-small red darken-1 waves-effect waves-ligth modal-trigger'><i class='material-icons'>delete</i></a>"
         }],
         //cambiando el idioma de las diferentes opciones
         language: {
