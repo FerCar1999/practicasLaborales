@@ -256,6 +256,12 @@ function dataTableCursoCasa() {
     }, {
       data: 'fech_fin'
     }, {
+      data: 'cant_part',
+      "visible": false
+    }, {
+      data: 'mont_esti',
+      "visible": false
+    }, {
       //agregando botones para abrir el modal de modificar o de eliminar categoria
       defaultContent: "<div class='center-btn'>" +
         "<a href='#updateHorarioCurso' class='update btn-small blue darken-1 waves-effect waves-light modal-trigger'><i class='material-icons'>list</i></a> " +
@@ -341,10 +347,14 @@ function getIdToUpdateCurso(tobyd, table) {
     $("#nombCursUpda").next("label").addClass("active");
     $("#fechInicUpda").next("label").addClass("active");
     $("#fechFinUpda").next("label").addClass("active");
+    $("#montEstiUpda").next("label").addClass("active");
+    $("#cantPartUpda").next("label").addClass("active");
     var codi_curs = $("#codiCursUpda").val(data.codi_curs),
       nomb_curs = $("#nombCursUpda").val(data.nomb_curs),
       fech_inic = $("#fechInicUpda").val(data.fech_inic),
       fech_fin = $("#fechFinUpda").val(data.fech_fin),
+      cant_part = $("#cantPartUpda").val(data.cant_part),
+      mont_esti = $("#montEstiUpda").val(data.mont_esti),
       codi_cate = $("#codiCateUpda").val(data.codi_cate);
     $("#codiCateUpda").change();
     $("#codiCateUpda").trigger('change.select2');
@@ -570,6 +580,12 @@ function dataTableCursoCasas() {
     }, {
       data: 'fech_fin'
     }, {
+      data: 'cant_part',
+      "visible": false
+    }, {
+      data: 'mont_esti',
+      "visible": false
+    }, {
       //agregando botones para abrir el modal de modificar o de eliminar categoria
       defaultContent: "<a href='#verCurso' class='seeC btn-small light-blue waves-effect waves-ligth modal-trigger'><i class='material-icons'>visibility</i></a>"
     }],
@@ -652,6 +668,8 @@ function getIdSeeCursos(tobyd, table) {
       nomb_curs = $("#tituloCurso").text(data.nomb_curs),
       fech_inic = $("#fechasCursoInic").text("Fecha Inicio del Curso : "+data.fech_inic.split('-').reverse().join('/')),
       fech_fin = $("#fechasCursoFin").text("Fecha Fin del Curso : "+data.fech_fin.split('-').reverse().join('/')),
+      cant_part = $("#cantidadParticipantes").text("Cantidad de Participantes: " +data.cant_part),
+      mont_esti = $("#montoEstimado").text("Monto Estimado: " + data.mont_esti),
       codi_cate = $("#categoriaCurso").text("Categoria: "+data.nomb_cate);
   });
   

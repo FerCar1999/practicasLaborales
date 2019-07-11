@@ -15,7 +15,7 @@
                     <input id="codiCursSee" name="codiCursSee" type="hidden"/>
                     <div class="col s12 m12">
                         <p id="tituloCurso">
-                            
+
                         </p>
                     </div>
                     <div class="col s12 m12">
@@ -24,7 +24,7 @@
                                 Progreso del Curso
                             </p>
                             <p class="col s3 right-align" id="progresoCursoC">
-                                
+
                             </p>
                         </div>
                         <div class="progress" id="progressAvance2">
@@ -37,9 +37,17 @@
                         </p>
                     </div>
                     <div class="col s12 m6 right-align">
-                        <p id="fechasCursoInic">            
+                        <p id="fechasCursoInic">
                         </p>
                         <p id="fechasCursoFin">
+                        </p>
+                    </div>
+                    <div class="col s12 m6">
+                        <p id="cantidadParticipantes">
+                        </p>
+                    </div>
+                    <div class="col s12 m6">
+                        <p id="montoEstimado">
                         </p>
                     </div>
                     <div class="col s12 m12">

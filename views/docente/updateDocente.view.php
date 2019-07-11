@@ -8,18 +8,31 @@
             <div class="row">
                 <div class="col s12">
                     <div class="row">
+                        <input type="hidden" name="accion" id="accion" value="update">
                         <input type="hidden" id="codiDoceUpda" name="codiDoceUpda">
-                        <div class="input-field col s12">
+                        <input type="hidden" id="codiInteAcreDoceUpda" name="codiInteAcreDoceUpda">
+                        <input type="hidden" id="codiInteDoceProfUpda" name="codiInteDoceProfUpda">
+                        <div class="input-field col s12 m6">
                             <i class="material-icons prefix">people</i>
                             <input id="nombDoceUpda" name="nombDoceUpda" type="text" class="validate">
                             <label for="nombDoceUpda">Nombres del docente:</label>
                             <span class="helper-text" data-error="Campo requerido, ingrese solo letras" data-success="Correcto"></span>
                         </div>
-                        <div class="input-field col s12">
+                        <div class="input-field col s12 m6">
                             <i class="material-icons prefix">people</i>
                             <input id="apelDoceUpda" name="apelDoceUpda" type="text" class="validate">
                             <label for="apelDoceUpda">Apellidos del docente:</label>
                             <span class="helper-text" data-error="Campo requerido, ingrese solo letras" data-success="Correcto"></span>
+                        </div>
+                        <div class="col s12 m6">
+                            <select class="js-example-basic-single" name="codiAcreUpda" id="codiAcreUpda">
+
+                            </select>
+                        </div>
+                        <div class="col s12 m6">
+                            <select class="js-example-basic-single" name="codiProfUpda" id="codiProfUpda">
+
+                            </select>
                         </div>
                     </div>
                 </div>

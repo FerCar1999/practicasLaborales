@@ -3,6 +3,9 @@ var table;
 //creando variable para el regex
 var reAlpha = /^[a-zA-ZñÑáÁéÉíÍóÓúÚ\s]{1,100}/; // Regex
 $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+    selectProfesiones();
+    selectAcreditaciones();
     //ejecutando la funcion datatable
     dataTable();
     //escondiendo el progress de guardado y modificado
@@ -13,6 +16,54 @@ $(document).ready(function() {
         dismissible: false
     });
 });
+
+function selectAcreditaciones() {
+    $.ajax({
+        type: 'POST',
+        url: '../app/controllers/AcreditacionController',
+        data: {
+            type: 'acreditaciones'
+        },
+        dataType: 'JSON',
+        success: function(data) {
+            $("#codiAcre").empty().append('whatever');
+            $("#codiAcre").append('<option value="0" selected disabled>Seleccione la acreditacion:</option>');
+            $("#codiAcreUpda").empty().append('whatever');
+            $("#codiAcreUpda").append('<option value="0" selected disabled>Seleccione la acreditacion:</option>');
+            for (var i = 0; i < data.length; i++) {
+                $("#codiAcre").append('<option value=' + data[i].codi_acre + '>' + data[i].tipo_acre + '</option>');
+                $("#codiAcreUpda").append('<option value=' + data[i].codi_acre + '>' + data[i].tipo_acre + '</option>');
+            }
+        },
+        error: function(data) {
+            console.log("Error al traer datos");
+        }
+    });
+}
+
+function selectProfesiones() {
+    $.ajax({
+        type: 'POST',
+        url: '../app/controllers/ProfesionController',
+        data: {
+            type: 'profesion'
+        },
+        dataType: 'JSON',
+        success: function(data) {
+            $("#codiProf").empty().append('whatever');
+            $("#codiProf").append('<option value="0" selected disabled>Seleccione la profesion:</option>');
+            $("#codiProfUpda").empty().append('whatever');
+            $("#codiProfUpda").append('<option value="0" selected disabled>Seleccione la profesion:</option>');
+            for (var i = 0; i < data.length; i++) {
+                $("#codiProf").append('<option value=' + data[i].codi_prof + '>' + data[i].nomb_prof + '</option>');
+                $("#codiProfUpda").append('<option value=' + data[i].codi_prof + '>' + data[i].nomb_prof + '</option>');
+            }
+        },
+        error: function(data) {
+            console.log("Error al traer datos");
+        }
+    });
+}
 // Cargar datos a la tabla
 function dataTable() {
     //llenando la variable datatable
@@ -41,6 +92,18 @@ function dataTable() {
             data: 'nomb_doce'
         }, {
             data: 'apel_doce'
+        }, {
+            data: 'codi_inte_acre_doce',
+            "visible": false
+        }, {
+            data: 'codi_acre',
+            "visible": false
+        }, {
+            data: 'codi_inte_doce_prof',
+            "visible": false
+        }, {
+            data: 'codi_prof',
+            "visible": false
         }, {
             //agregando botones para abrir el modal de modificar o de eliminar categoria
             defaultContent: "<a href='#updaDocente' class='update btn-small blue darken-1 waves-effect waves-ligth modal-trigger'>Modificar</a>" + "  <a href='#deleDocente' class='delete btn-small red darken-1 waves-effect waves-ligth modal-trigger'>Eliminar</a>"
@@ -87,7 +150,7 @@ function dataTable() {
         //cantidad de datos que se van a mostrar al cargar los datos por defecto
         iDisplayLength: 5
     });
-    $('select').formSelect();
+    $('select').select2();
     // Llamamos al metodo para obtener los datos, para actualizar
     getDataToUpdate("#table-docente tbody", table);
     // Llamamos al metodo para obtener el id del registro, para eliminar
@@ -101,7 +164,15 @@ function getDataToUpdate(tbody, table) {
         $("#apelDoceUpda").next("label").addClass("active");
         var codi_cate = $("#codiDoceUpda").val(data.codi_doce),
             nomb_cate = $("#nombDoceUpda").val(data.nomb_doce),
-            apel_doce = $("#apelDoceUpda").val(data.apel_doce);
+            apel_doce = $("#apelDoceUpda").val(data.apel_doce),
+            codi_inte_acre_doce = $("#codiInteAcreDoceUpda").val(data.codi_inte_acre_doce),
+            codi_acre = $("#codiAcreUpda").val(data.codi_acre),
+            codi_inte_doce_prof = $("#codiInteDoceProfUpda").val(data.codi_inte_doce_prof),
+            codi_prof = $("#codiProfUpda").val(data.codi_prof);
+        $("#codiAcreUpda").change();
+        $("#codiAcreUpda").trigger('change.select2');
+        $("#codiProfUpda").change();
+        $("#codiProfUpda").trigger('change.select2');
     });
 }
 // Funcion para obtener el ID
@@ -132,17 +203,41 @@ function create() {
                 //ruta de controlador de categoria
                 url: "../app/controllers/DocenteController.php",
                 //data que se va a enviar por post
-                data: datos + '&accion=' + accion,
+                data: datos,
                 //funcion en el caso de que la peticion sea correcta
                 success: function(data) {
-                    //obteniendo valor de la respuesta del servidor
-                    var resp = data.indexOf("Exito");
                     //si la respuesta del servidores mayor o igual a 0
-                    if (resp >= 0) {
+                    if (JSON.parse(data) >= 0) {
                         //se oculta el footer del modal
                         $('.modal-footer').hide();
                         //se muestra el preloader
                         $('#preloader').show();
+                        $.ajax({
+                            method: "POST",
+                            url: "../app/controllers/IntermediaDocenteProfesionController",
+                            data: datos + '&codiDoce=' + JSON.parse(data),
+                            success: function(dato) {
+                                var resp = data.indexOf("Exito");
+                                if (resp > 0) {
+                                    console.log('');
+                                } else {
+                                    console.log('');
+                                }
+                            }
+                        });
+                        $.ajax({
+                            method: "POST",
+                            url: "../app/controllers/IntermediaAcreditacionDocenteController",
+                            data: datos + '&codiDoce=' + JSON.parse(data),
+                            success: function(dato) {
+                                var resp = data.indexOf("Exito");
+                                if (resp > 0) {
+                                    console.log('');
+                                } else {
+                                    console.log('');
+                                }
+                            }
+                        });
                         //se muestra el mensaje de confirmación
                         successAlert("Docente agregado con exito");
                         // Recargando la tabla datatable
@@ -203,6 +298,32 @@ function update() {
                         $('.modal-footer').hide();
                         //mostrando el preloader
                         $('#preloader').show();
+                        $.ajax({
+                            method: "POST",
+                            url: "../app/controllers/IntermediaAcreditacionDocenteController",
+                            data: datos,
+                            success: function(dato) {
+                                var resp = data.indexOf("Exito");
+                                if (resp > 0) {
+                                    console.log('');
+                                } else {
+                                    console.log('');
+                                }
+                            }
+                        });
+                        $.ajax({
+                            method: "POST",
+                            url: "../app/controllers/IntermediaAcreditacionDocenteController",
+                            data: datos,
+                            success: function(dato) {
+                                var resp = data.indexOf("Exito");
+                                if (resp > 0) {
+                                    console.log('');
+                                } else {
+                                    console.log('');
+                                }
+                            }
+                        });
                         //creando modal para el mensaje de confirmación
                         successAlert("Docente modificado con exito");
                         // Recargando la tabla

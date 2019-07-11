@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+    selectCategorias();
     verificarPresupuestoMostrar();
     selectCasasRestantes();
     //ejecutando la funcion datatable
@@ -34,24 +36,22 @@ function dataTablePresupuestoCasa() {
             //pasar a invisible esa columna
             "visible": false
         }, {
+            data: 'codi_cate',
+            "visible": false
+        }, {
+            data: 'nomb_cate'
+        }, {
             data: "cant_pres_deta",
             "aTargets": [0],
             "render": function(data) {
                 return '$' + data;
             }
         }, {
-            //agregando datos de nombre de categoria
             data: 'fech_pres_deta'
         }, {
-            //agregando dato de estado de categoria
-            data: 'arch_pres_deta',
-            "aTargets": [0],
-            "render": function(data) {
-                return '<a class="btn green white-text" target="_blank" href="../web/documentos/' + data + '"> Ver Comprobate</a>';
-            }
-        }, {
             //agregando botones para abrir el modal de modificar o de eliminar categoria
-            defaultContent: "<a href='#deleteEgreso' class='delete btn-small red darken-1 waves-effect waves-ligth modal-trigger'>Eliminar</a>"
+            defaultContent: "<a href='#updateEgreso' class='update btn-small blue darken-1 waves-effect waves-ligth modal-trigger'>Modificar</a>"+
+            "  <a href='#deleteEgreso' class='delete btn-small red darken-1 waves-effect waves-ligth modal-trigger'>Eliminar</a>"
         }],
         //cambiando el idioma de las diferentes opciones
         language: {
@@ -220,7 +220,29 @@ function getIdToDeleteCasas(tobyd, table) {
         var codi_pres = $("#codiPresDele").val(datax.codi_pres);
     });
 }
-
+function selectCategorias() {
+    $.ajax({
+        type: 'POST',
+        url: '../app/controllers/PresupuestoDetalleController',
+        data: {
+            categorias: 'categoria'
+        },
+        dataType: 'JSON',
+        success: function(data) {
+            $("#codiCate").empty().append('whatever');
+            $("#codiCate").append('<option value="0" selected disabled>Seleccione la categoria:</option>');
+            //$("#codiProfUpda").empty().append('whatever');
+            //$("#codiProfUpda").append('<option value="0" selected disabled>Seleccione la profesion:</option>');
+            for (var i = 0; i < data.length; i++) {
+                $("#codiCate").append('<option value=' + data[i].codi_cate + '>' + data[i].nomb_cate + '</option>');
+                //$("#codiProfUpda").append('<option value=' + data[i].codi_prof + '>' + data[i].nomb_prof + '</option>');
+            }
+        },
+        error: function(data) {
+            console.log("Error al traer datos");
+        }
+    });
+}
 function verificarPresupuestoMostrar() {
     $.ajax({
         url: '../app/controllers/PresupuestoController',
@@ -326,8 +348,7 @@ function selectCasasRestantes() {
 }
 
 function agregarGasto() {
-    var formularioGasto = new FormData($("#frmAddEgreso")[0]);
-    formularioGasto.append('archPresDeta', $("#archPresDeta")[0].files[0]);
+    var formularioIngreso = $("#frmAddEgreso").serialize();
     if (isNaN($("#cantPresDeta").val())) {
         $('#cantPresDeta').addClass('invalid');
         errorAlert("El valor tiene que ser un número")
@@ -336,9 +357,7 @@ function agregarGasto() {
             $.ajax({
                 url: '../app/controllers/PresupuestoDetalleController',
                 type: 'POST',
-                processData: false,
-                contentType: false,
-                data: formularioGasto,
+                data: formularioIngreso,
                 beforeSend: function() {
                     $('.modal-footer').hide();
                     //se muestra el preloader
@@ -363,7 +382,7 @@ function agregarGasto() {
                         // Recargando la tabla datatable
                         tableUno.ajax.reload();
                         tableDos.ajax.reload();
-                        selectCasasRestantes();
+                        selectCategorias();
                     } else {
                         $('.modal-footer').show();
                         //ocultando  el preloader del modal

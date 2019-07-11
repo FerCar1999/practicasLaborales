@@ -16,7 +16,7 @@
                                 Progreso del Curso
                             </p>
                             <p class="col s3 right-align" id="progresoCursoCN">
-                                
+
                             </p>
                         </div>
                         <div class="progress" id="progressAvance2N">
@@ -35,6 +35,24 @@
                                 <input class="validate" id="nombCursUpda" name="nombCursUpda" type="text"/>
                                 <label for="nombCursUpda">
                                     Nombre del curso:
+                                </label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">
+                                    library_books
+                                </i>
+                                <input class="validate" id="cantPartUpda" name="cantPartUpda" type="text"/>
+                                <label for="cantPartUpda">
+                                    Cantidad de participantes:
+                                </label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">
+                                    library_books
+                                </i>
+                                <input class="validate" id="montEstiUpda" name="montEstiUpda" type="text"/>
+                                <label for="montEstiUpda">
+                                    Monto estimado de cobro:
                                 </label>
                             </div>
                             <div class="input-field col s12 m6">

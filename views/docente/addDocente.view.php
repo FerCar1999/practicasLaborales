@@ -8,17 +8,28 @@
             <div class="row">
                 <div class="col s12">
                     <div class="row">
-                        <div class="input-field col s12">
+                        <input type="hidden" name="accion" id="accion" value="create">
+                        <div class="input-field col s12 m6">
                             <i class="material-icons prefix">people</i>
                             <input id="nombDoce" name="nombDoce" type="text" class="validate">
                             <label for="nombDoce">Nombres del docente:</label>
                             <span class="helper-text" data-error="Campo requerido, ingrese solo letras" data-success="Correcto"></span>
                         </div>
-                        <div class="input-field col s12">
+                        <div class="input-field col s12 m6">
                             <i class="material-icons prefix">people</i>
                             <input id="apelDoce" name="apelDoce" type="text" class="validate">
                             <label for="apelDoce">Apellidos del docente:</label>
                             <span class="helper-text" data-error="Campo requerido, ingrese solo letras" data-success="Correcto"></span>
+                        </div>
+                        <div class="col s12 m6">
+                            <select class="js-example-basic-single" name="codiAcre" id="codiAcre">
+
+                            </select>
+                        </div>
+                        <div class="col s12 m6">
+                            <select class="js-example-basic-single" name="codiProf" id="codiProf">
+
+                            </select>
                         </div>
                     </div>
                 </div>

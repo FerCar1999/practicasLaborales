@@ -8,11 +8,11 @@ $active = "docentes";
 ?>
 <?php
 //llamando el archivo head
-include APP_PATH . '/views/templates/head.view.php' ?>
+include APP_PATH . '/views/templates/head.view.php'?>
 
 <?php
 //llamando al archivo sidebar que es el que trae las diferentes opciones para los usuarios y controla el tiempo de sesion
-include APP_PATH . '/views/templates/sidebar.view.php' ?>
+include APP_PATH . '/views/templates/sidebar.view.php'?>
 
 <main>
     <div class="container-fluid">
@@ -30,6 +30,10 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                                 <th>ID</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
+                                <th>codis</th>
+                                <th>codi_acre</th>
+                                <th>codil</th>
+                                <th>codi_prof</th>
                                 <th>Opciones</th>
                             </tr>
                         </thead>
@@ -47,14 +51,14 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
     </div>
 
     <!-- Modal para agregar categoria -->
-    <?php include APP_PATH . '/views/docente/addDocente.view.php' ?>
+    <?php include APP_PATH . '/views/docente/addDocente.view.php'?>
     <!-- Modal para modificar categoria -->
-    <?php include APP_PATH . '/views/docente/updateDocente.view.php' ?>
+    <?php include APP_PATH . '/views/docente/updateDocente.view.php'?>
     <!-- Modal para eliminar categoria -->
-    <?php include APP_PATH . '/views/docente/deleteDocente.view.php' ?>
+    <?php include APP_PATH . '/views/docente/deleteDocente.view.php'?>
 </main>
 
 <!-- AJAX -->
-<script src="<?= WEB_PATH ?>js/AJAX/docente.js"></script>
+<script src="<?=WEB_PATH?>js/AJAX/docente.js"></script>
 
-<?php include APP_PATH . '/views/templates/footer.view.php' ?>
+<?php include APP_PATH . '/views/templates/footer.view.php'?>

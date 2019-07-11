@@ -1,8 +1,8 @@
 <?php
 //Titulo de pagina
-$title = "Casas";
+$title = "Presupuesto";
 //Nombre de pagina
-$page = "Casas";
+$page = "Presupuesto";
 ?>
 <?php 
 //llamando el archivo head
@@ -41,7 +41,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                             <div class="row center-align" id="modificarLogoCasa">
                                 <div class="col s12">
                                     <a class="waves-effect waves-green btn green darken-2 modal-trigger" href="#addEgreso">
-                                        Agregar Egreso
+                                        Modificar Presupuesto
                                     </a>
                                 </div>
                             </div>
@@ -52,13 +52,16 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                                             ID
                                         </th>
                                         <th>
+                                            codi_cate
+                                        </th>
+                                        <th>
+                                            Categoria
+                                        </th>
+                                        <th>
                                             Cantidad
                                         </th>
                                         <th>
                                             Fecha
-                                        </th>
-                                        <th>
-                                            Comprobante de Gasto
                                         </th>
                                         <th>
                                             Opciones

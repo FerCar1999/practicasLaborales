@@ -15,6 +15,24 @@
                             <label for="nombCurs">Nombre del curso:</label>
                         </div>
                         <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">
+                                    library_books
+                                </i>
+                                <input class="validate" id="cantPart" name="cantPart" type="text"/>
+                                <label for="cantPart">
+                                    Cantidad de participantes:
+                                </label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">
+                                    library_books
+                                </i>
+                                <input class="validate" id="montEsti" name="montEsti" type="text"/>
+                                <label for="montEsti">
+                                    Monto estimado de cobro:
+                                </label>
+                            </div>
+                        <div class="input-field col s12 m6">
                             <i class="material-icons prefix">date_range</i>
                             <input type="text" class="datepicker" name="fechInic" id="fechInic">
                             <label for="fechInic">Fecha de inicio:</label>
