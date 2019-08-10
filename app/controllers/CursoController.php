@@ -3,7 +3,7 @@
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
 require_once APP_PATH . '/app/models/Curso.php';
-date_default_timezone_get();
+date_default_timezone_set("America/El_Salvador");
 session_start();
 try {
 	//inicializando la clase de categoria
@@ -67,36 +67,45 @@ try {
 		case 'create':
 			if ($curso->setCodiCate($_POST['codiCate'])) {
 				if ($curso->setCodiCasa($_SESSION['codi_casa'])) {
-					if ($curso->setNombCurs($_POST['nombCurs'])) {
-						if ($curso->setFechInic($_POST['fechInic'])) {
-							if ($curso->setFechFin($_POST['fechFin'])) {
-								if ($curso->setCantPart($_POST['cantPart'])) {
-									if ($curso->setMontEsti($_POST['montEsti'])) {
-										$fechaInicio = strtotime($curso->getFechInic());
-										$fechaFin = strtotime($curso->getFechFin());
-										if ($fechaInicio < $fechaFin) {
-											if ($curso->createCurso()) {
-												throw new Exception($curso->obtenerIdUltimo());
+					if ($curso->setCorrCurs($_POST['corrCurs'])) {
+						if ($curso->setNombCurs($_POST['nombCurs'])) {
+							if ($curso->setFechInic($_POST['fechInic'])) {
+								if ($curso->setFechFin($_POST['fechFin'])) {
+									if ($curso->setCantPart($_POST['cantPart'])) {
+										if ($curso->setMontEsti($_POST['montEsti'])) {
+											$cantidadCategoriaPresupuesto = $curso->obtenerCantPresCate(date("Y"));
+											if (($cantidadCategoriaPresupuesto['cantidad']-$_POST['montEsti'])>=0) {
+												$fechaInicio = strtotime($curso->getFechInic());
+												$fechaFin = strtotime($curso->getFechFin());
+												if ($fechaInicio < $fechaFin) {
+													if ($curso->createCurso()) {
+														throw new Exception($curso->obtenerIdUltimo());
+													} else {
+														throw new Exception("No se pudo crear el curso");
+													}
+												} else {
+													throw new Exception("La fecha inicial no puede ser mayor a la final");
+												}
 											} else {
-												throw new Exception("No se pudo crear el curso");
+												throw new Exception("La cantidad estimada es mayor a la cantidad restante del presupuesto");
 											}
 										} else {
-											throw new Exception("La fecha inicial no puede ser mayor a la final");
+											throw new Exception("Debe ingresar el monto estimado del curso");
 										}
 									} else {
-										throw new Exception("Debe ingresar el monto estimado del curso");
+										throw new Exception("Debe ingresar la cantidad de participantes del curso");
 									}
 								} else {
-									throw new Exception("Debe ingresar la cantidad de participantes del curso");
+									throw new Exception("Verifique la fecha final");
 								}
 							} else {
-								throw new Exception("Verifique la fecha final");
+								throw new Exception("Verifique la fecha inicial");
 							}
 						} else {
-							throw new Exception("Verifique la fecha inicial");
+							throw new Exception("Verifique el nombre del curso");
 						}
 					} else {
-						throw new Exception("Verifique el nombre del curso");
+						throw new Exception("Debe agregar el correlativo del curso");
 					}
 				} else {
 					throw new Exception("No se encontro la casa");
@@ -109,38 +118,42 @@ try {
 		case 'update':
 			if ($curso->setCodiCurs($_POST['codiCursUpda'])) {
 				if ($curso->setCodiCate($_POST['codiCateUpda'])) {
-					if ($curso->setNombCurs($_POST['nombCursUpda'])) {
-						if ($curso->setFechInic($_POST['fechInicUpda'])) {
-							if ($curso->setFechFin($_POST['fechFinUpda'])) {
-								if ($curso->setCantPart($_POST['cantPartUpda'])) {
-									if ($curso->setMontEsti($_POST['montEstiUpda'])) {
-										$fechaInicio = strtotime($curso->getFechInic());
-										$fechaFin = strtotime($curso->getFechFin());
-										if ($fechaInicio < $fechaFin) {
-											if ($curso->updateCurso()) {
-												throw new Exception("Exito");
+					if ($curso->setCorrCurs($_POST['corrCursUpda'])) {
+						if ($curso->setNombCurs($_POST['nombCursUpda'])) {
+							if ($curso->setFechInic($_POST['fechInicUpda'])) {
+								if ($curso->setFechFin($_POST['fechFinUpda'])) {
+									if ($curso->setCantPart($_POST['cantPartUpda'])) {
+										if ($curso->setMontEsti($_POST['montEstiUpda'])) {
+											$fechaInicio = strtotime($curso->getFechInic());
+											$fechaFin = strtotime($curso->getFechFin());
+											if ($fechaInicio < $fechaFin) {
+												if ($curso->updateCurso()) {
+													throw new Exception("Exito");
+												} else {
+													throw new Exception("No se pudo crear el curso");
+												}
 											} else {
-												throw new Exception("No se pudo crear el curso");
+												throw new Exception("La fecha inicial no puede ser mayor a la final");
 											}
 										} else {
-											throw new Exception("La fecha inicial no puede ser mayor a la final");
+											throw new Exception("Debe ingresar el monto estimado del curso");
 										}
+	
 									} else {
-										throw new Exception("Debe ingresar el monto estimado del curso");
+										throw new Exception("Debe ingresar la cantidad de participantes del curso");
 									}
-
+	
 								} else {
-									throw new Exception("Debe ingresar la cantidad de participantes del curso");
+									throw new Exception("Verifique la fecha final");
 								}
-
 							} else {
-								throw new Exception("Verifique la fecha final");
+								throw new Exception("Verifique la fecha inicial");
 							}
 						} else {
-							throw new Exception("Verifique la fecha inicial");
+							throw new Exception("Verifique el nombre del curso");
 						}
 					} else {
-						throw new Exception("Verifique el nombre del curso");
+						throw new Exception('Debe ingresar el correlativo del curso');
 					}
 				} else {
 					throw new Exception("Debe seleccionar la categoria");
@@ -166,15 +179,34 @@ try {
 			break;
 		case 'informe':
 			if ($curso->setCodiCurs($_POST['codiCurs'])) {
-				if ($curso->updateCursoInforme()) {
-					throw new Exception("Exito");
+				if ($curso->setFechInfo(date("Y-m-d"))) {
+					if ($curso->setUsuaInfo($_SESSION['codi_usua'])) {
+						if ($curso->updateCursoInforme()) {
+							throw new Exception("Exito");
+						} else {
+							throw new Exception("No se pudo modificar el estado del curso");
+						}
+					} else {
+						throw new Exception("No se encontro el usuario");
+					}					
 				} else {
-					throw new Exception("No se pudo modificar el estado del curso");
+					throw new Exception("Error al obtener la fecha de ingreso");
 				}
 			} else {
 				throw new Exception("No se encontro el curso");
 			}
 			break;
+		case 'informeAprovacion':
+				if ($curso->setCodiCurs($_POST['codiCursAp'])) {
+					if ($curso->updateCursoInformeAprovacion()) {
+						throw new Exception("Exito");
+					} else {
+						throw new Exception("No se pudo modificar el estado del curso");
+					}
+				} else {
+					throw new Exception("No se encontro el curso");
+				}
+				break;
 		}
 	}
 

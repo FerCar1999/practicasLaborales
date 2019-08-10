@@ -28,13 +28,22 @@
                         <div class="row">
                             <input id="accion" name="accion" type="hidden" value="update"/>
                             <input id="codiCursUpda" name="codiCursUpda" type="hidden"/>
-                            <div class="input-field col s12 m12">
+                            <div class="input-field col s12 m6">
                                 <i class="material-icons prefix">
                                     library_books
                                 </i>
                                 <input class="validate" id="nombCursUpda" name="nombCursUpda" type="text"/>
                                 <label for="nombCursUpda">
                                     Nombre del curso:
+                                </label>
+                            </div>
+                            <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">
+                                    library_books
+                                </i>
+                                <input class="validate" id="corrCursUpda" name="corrCursUpda" type="text"/>
+                                <label for="corrCursUpda">
+                                    Correlativo del curso:
                                 </label>
                             </div>
                             <div class="input-field col s12 m6">

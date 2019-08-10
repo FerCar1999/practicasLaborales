@@ -3,6 +3,7 @@
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
 require_once APP_PATH . '/app/models/Casa.php';
+date_default_timezone_set("America/El_Salvador");
 session_start();
 try {
     //inicializando la clase de categoria

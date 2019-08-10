@@ -1,189 +1,199 @@
 <?php
 
-class PresupuestoDetalle extends Validator
+class Quedan extends Validator
 {
     // Declaraion de propiedades
-    private $codi_pres_deta = null;
-    private $codi_pres = null;
-    private $codi_casa = null;
-    private $codi_usua = null;
-    private $cant_pres_deta = null;
-    private $arch_pres_deta = null;
-    private $fech_pres_deta = null;
+    private $codi_qued = null;
+    private $nume_qued = null;
+    private $fech_emis = null;
+    private $fech_abon = null;
+    private $cant_fact = null;
+    private $fech_ing = null;
+    private $arch_qued = null;
+    private $esta_qued = null;
 
     // Encapsulamiento
-    public function setCodiPresDeta($value)
+    public function setCodiQued($value)
     {
         if ($this->validateId($value)) {
-            $this->codi_pres_deta = $value;
+            $this->codi_qued = $value;
             return true;
 
         } else {
             return false;
         }
     }
-    public function getCodiPresDeta($value)
+    public function getCodiQued($value)
     {
-        return $this->codi_pres_deta;
+        return $this->codi_qued;
     }
-    public function setCodiPres($value)
+    public function setNumeQued($value)
+    {
+        if ($value!=null) {
+            $this->nume_qued = $value;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function getNumeQued($value)
+    {
+        return $this->nume_qued;
+    }
+    public function setFechEmis($value)
+    {
+            $this->fech_emis = $value;
+            return true;
+    }
+    public function getFechEmis($value)
+    {
+        return $this->fech_emis;
+    }
+    public function setFechAbon($value)
+    {
+            $this->fech_abon = $value;
+            return true;
+    }
+    public function getFechAbon($value)
+    {
+        return $this->fech_abon;
+    }
+    public function setCantFact($value)
     {
         if ($this->validateId($value)) {
-            $this->codi_pres = $value;
+            $this->cant_fact = $value;
             return true;
+        } else {
+            return false;
+        }
+    }
+    public function getCantFact($value)
+    {
+        return $this->cant_fact;
+    }
 
-        } else {
-            return false;
-        }
-    }
-    public function getCodiPres($value)
+    public function setFechIngr($value)
     {
-        return $this->codi_pres;
+            $this->fech_ing = $value;
+            return true;
     }
-    public function setCodiCasa($value)
+    public function getFechIngr()
     {
-        if ($this->validateId($value)) {
-            $this->codi_casa = $value;
+        return $this->fech_ing;
+    }
+    public function setArchQued($file)
+    {
+        if ($this->validateFile($file, $this->arch_qued, "../../web/quedan/")) {
+            $this->arch_qued = $this->getImageName();
             return true;
         } else {
             return false;
         }
     }
-    public function getCodiCasa($value)
+    public function getArchQued()
     {
-        return $this->codi_casa;
+        return $this->arch_qued;
     }
-    public function setCodiUsua($value)
+    public function unsetArchQued()
     {
-        if ($this->validateId($value)) {
-            $this->codi_usua = $value;
+        if (unlink("../../web/quedan/" . $this->arch_qued)) {
+            $this->arch_qued = null;
             return true;
         } else {
             return false;
         }
     }
-    public function getCodiUsua($value)
+    public function setEstaQued($value)
     {
-        return $this->codi_usua;
-    }
-
-    public function setCantPresDeta($value)
-    {
-        if ($value > 0) {
-            $this->cant_pres_deta = $value;
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function getCantPresDeta()
-    {
-        return $this->cant_pres_deta;
-    }
-    public function setArchivoDeta($file)
-    {
-        if ($this->validateFile($file, $this->arch_pres_deta, "../../web/documentos/")) {
-            $this->arch_pres_deta = $this->getImageName();
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function getArchivoDeta()
-    {
-        return $this->arch_pres_deta;
-    }
-    public function unsetArchivoDeta()
-    {
-        if (unlink("../../web/documentos/" . $this->arch_pres_deta)) {
-            $this->arch_pres_deta = null;
-            return true;
-        } else {
-            return false;
-        }
-    }
-    public function setFechPresDeta($value)
-    {
-        $this->fech_pres_deta = $value;
+        $this->esta_qued = $value;
         return true;
     }
-    public function getFechPresDeta()
+    public function getEstaQued()
     {
-        return $this->fech_pres_deta;
+        return $this->esta_qued;
     }
     // Funciones para CRUD
-    // Crear casa
-    //Buscar el id del presupuesto del mes
-    public function buscarIdPresupuestoMes($mes, $anio)
-    {
-        $sql = "SELECT codi_pres FROM presupuesto WHERE codi_casa = ? AND MONTH(fech_pres) = ? AND YEAR(fech_pres)=?";
-        $params = array($this->codi_casa, $mes, $anio);
-        return Database::getRow($sql, $params);
-    }
     //Funcion para agregar un nuevo egreso
-    public function agregarEgreso()
+    public function addQuedan()
     {
-        $sql    = "INSERT INTO presupuesto_detalle(codi_pres,codi_casa, codi_usua, cant_pres_deta, arch_pres_deta, fech_pres_deta) VALUES(?,?,?,?,?,?)";
-        $params = array($this->codi_pres, $this->codi_casa, $this->codi_usua, $this->cant_pres_deta, $this->arch_pres_deta, $this->fech_pres_deta);
+        $sql    = "INSERT INTO quedan_maestro(nume_qued, fech_emis, cant_fact, arch_qued, fech_ing, esta_qued) VALUES(?,?,?,?,?,1)";
+        $params = array($this->nume_qued, $this->fech_emis, $this->cant_fact, $this->arch_qued, $this->fech_ing);
         return Database::executeRow($sql, $params);
     }
-    //Funcion para obtener el total de egresos en el mes y año para la casa logeada
-    public function obtenerTotalEgresosPresupuestoMesAnio($mes, $anio)
+    public function updateQuedan()
     {
-        $sql = "SELECT SUM(cant_pres_deta) as 'cantidad' FROM presupuesto_detalle WHERE MONTH(fech_pres_deta) = ? AND YEAR(fech_pres_deta)=? AND codi_pres=?";
-        $params = array($mes, $anio, $this->codi_pres);
-        return Database::getRow($sql, $params);
-    }
-    //Funcion para validar que la nueva cantidad a agregar no sobrepase el presupuesto del mes
-    public function obtenerCantidadIngreso()
-    {
-        $sql = "SELECT p.cant_pres- IFNULL((SELECT SUM(pda.cant_pres_deta) as cant FROM presupuesto_detalle as pda WHERE pda.codi_pres=?),0) as cant_pres FROM presupuesto as p WHERE p.codi_pres=?";
-        $params = array($this->codi_pres,$this->codi_pres);
-        $data = Database::getRow($sql, $params);
-        if ($data) {
-            return $data['cant_pres'];
-        } else {
-            return 0;
-        }
-        
-    }
-    public function obtenerCantidadEgreso()
-    {
-        $sql = "SELECT SUM(cant_pres_deta) as 'cant_pres_deta' FROM presupuesto_detalle WHERE codi_pres = ?";
-        $params = array($this->codi_pres);
-        $data = Database::getRow($sql, $params);
-        if ($data) {
-            return $data['cant_pres_deta'];
-        } else {
-            return 0;
-        }
-        
-    }
-    //Funcion para modificar el egreso ingresado
-    public function updateEgreso()
-    {
-        $sql    = "UPDATE presupuesto_detalle SET cant_pres=? WHERE codi_pres_deta=?";
-        $params = array($this->cant_pres, $this->codi_pres);
+        $sql = "UPDATE quedan_maestro SET nume_qued=?, fech_emis = ?, cant_fact = ? WHERE codi_qued=?";
+        $params = array($this->nume_qued, $this->fech_emis, $this->cant_fact, $this->codi_qued);
         return Database::executeRow($sql, $params);
     }
-    //Funcion para modificar el archivo agregado con el egreso
-    public function updateArchivo()
+    public function updateQuedanArchivo()
     {
-        $sql    = "UPDATE presupuesto_detalle SET arch_pres_deta=? WHERE codi_pres_deta=?";
-        $params = array($this->arch_pres_deta, $this->codi_pres_deta);
+        $sql = "UPDATE quedan_maestro SET arch_qued=? WHERE codi_qued=?";
+        $params = array($this->$arch_qued, $this->codi_qued);
+        return Database::executeRow($sql, $params);
+    }
+    public function deleteQuedan()
+    {
+        $sql = "UPDATE quedan_maestro SET esta_qued=0 WHERE codi_qued=?";
+        $params = array($this->codi_qued);
+        return Database::executeRow($sql, $params);
+    }
+    public function abonarQuedan()
+    {
+        $sql = "UPDATE quedan_maestro SET fech_abon = ? WHERE codi_qued=?";
+        $params = array($this->fech_abon,$this->codi_qued);
         return Database::executeRow($sql, $params);
     }
     //Funcion para obtener Egresos de cada casa por mes y año
-    public function getListaEgresos($mes, $anio)
+    public function getListaQuedanCasa($codiCasa)
     {
-        $sql="SELECT codi_pres_deta, cant_pres_deta, fech_pres_deta, arch_pres_deta FROM presupuesto_detalle WHERE codi_casa = ? AND MONTH(fech_pres_deta)=? AND YEAR(fech_pres_deta)=?";
-        $params = array($this->codi_casa, $mes, $anio);
+        $sql="SELECT qm.codi_qued, qm.nume_qued, qm.fech_emis, qm.cant_fact, qm.arch_qued, qm.esta_qued FROM quedan_detalle as qd INNER JOIN quedan_maestro as qm ON qm.codi_qued = qd.codi_qued INNER JOIN factura as f ON f.codi_fact=qd.codi_fact INNER JOIN factura_detalle as fd ON fd.codi_fact=f.codi_fact INNER JOIN curso as c ON c.codi_curs=fd.codi_curs WHERE c.codi_casa = ? AND qm.esta_qued!=0 GROUP BY qm.codi_qued";
+        $params = array($codiCasa);
         return Database::getRowsAjax($sql, $params);
     }
-    public function deleteEgreso()
+    public function getFacturasPendientesQuedan()
+	{
+		$sql = "SELECT DISTINCT f.codi_fact ,f.nume_fact FROM factura_detalle as fd INNER JOIN factura as f ON f.codi_fact=fd.codi_fact INNER JOIN curso as c ON c.codi_curs = fd.codi_curs INNER JOIN casa as ca ON ca.codi_casa = c.codi_casa WHERE f.esta_fact= 1";
+		$params = array(null);
+		return Database::getRows($sql, $params);
+    }
+    public function obtenerCasasAbono()
     {
-        $sql="DELETE FROM presupuesto_detalle WHERE codi_pres_deta = ?";
-        $params = array($this->codi_pres_deta);
+        $sql ="SELECT c.codi_casa FROM quedan_detalle as qd INNER JOIN factura as f ON f.codi_fact= qd.codi_fact INNER JOIN factura_detalle as fd ON fd.codi_fact = f.codi_fact INNER JOIN curso as c On c.codi_curs = fd.codi_curs WHERE qd.codi_qued = ?";
+        $params = array($this->codi_qued);
+        return Database::getRows($sql, $params);
+    }
+    public function obtenerIdQuedan()
+    {
+        $sql = "SELECT nume_qued FROM quedan_maestro WHERE codi_qued=?";
+        $params = array($this->codi_qued);
+        return Database::getRow($sql, $params);
+    }
+    public function updateEstadoQuedan($estado)
+    {
+        $sql = "UPDATE quedan_maestro SET esta_qued = ? WHERE codi_qued = ?";
+        $params = array($estado,$this->codi_qued);
+        Database::executeRow($sql, $params);
+    }
+    public function agregarNotificacion($emisor, $receptor, $numeroQuedan)
+    {
+        $sql = "INSERT INTO notificaciones(codi_casa, codi_emis, acci_noti, esta_noti) VALUES(?,?,?,1)";
+        $params = array($receptor, $emisor, $numeroQuedan);
         return Database::executeRow($sql, $params);
     }
+    public function obtenerInfoCasaQuedan() {
+		$sql = "SELECT u.nomb_usua, u.apel_usua, u.corre_usua, qm.nume_qued, f.nume_fact FROM quedan_detalle as qd INNER JOIN quedan_maestro as qm on qm.codi_qued=qd.codi_qued INNER JOIN factura as f ON f.codi_fact=qd.codi_fact INNER JOIN factura_detalle AS fd ON f.codi_fact=fd.codi_fact INNER JOIN curso as c ON c.codi_curs=fd.codi_curs INNER JOIN usuario as u ON u.codi_casa=c.codi_casa WHERE qd.codi_qued=? AND u.codi_tipo_usua=1";
+		$params = array($this->codi_qued);
+		return Database::getRows($sql, $params);
+    }
+    public function obtenerInfoCasaQuedanAbono() {
+		$sql = "SELECT u.nomb_usua, u.apel_usua, u.corre_usua, qm.nume_qued FROM quedan_detalle as qd INNER JOIN quedan_maestro as qm on qm.codi_qued=qd.codi_qued INNER JOIN factura as f ON f.codi_fact=qd.codi_fact INNER JOIN factura_detalle AS fd ON f.codi_fact=fd.codi_fact INNER JOIN curso as c ON c.codi_curs=fd.codi_curs INNER JOIN usuario as u ON u.codi_casa=c.codi_casa WHERE qd.codi_qued=? AND u.codi_tipo_usua=1";
+		$params = array($this->codi_qued);
+		return Database::getRow($sql, $params);
+    }
+    public function obtenerCorreoEmisor($codi) {
+		$sql = "SELECT corre_usua FROM usuario WHERE codi_usua=?";
+		$params = array($codi);
+		return Database::getRow($sql, $params);
+	}
 }

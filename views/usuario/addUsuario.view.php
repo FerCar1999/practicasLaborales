@@ -54,11 +54,18 @@
                                 </span>
                             </input>
                         </div>
-                        <div class=" col s12 m12">
+                        <div class=" col s12 m6">
                             <label for="codiTipoUsua">
                                 Tipo de usuario
                             </label>
-                            <select class="select-2 w-100" id="codiTipoUsua" name="codiTipoUsua">
+                            <select class="select-2 w-100" id="codiTipoUsua" name="codiTipoUsua" onchange="mostrarCategorias()">
+                            </select>
+                        </div>
+                        <div id="categoria" class=" col s12 m6">
+                            <label for="codiTipoUsua">
+                                Categoria
+                            </label>
+                            <select class="select-2 w-100" id="codiCateUsua" name="codiCateUsua">
                             </select>
                         </div>
                     </div>

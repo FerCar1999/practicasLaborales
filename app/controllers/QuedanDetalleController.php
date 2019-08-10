@@ -2,95 +2,86 @@
 //llamando el archivo app
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
-require_once APP_PATH . '/app/models/PresupuestoDetalle.php';
-date_default_timezone_get();
+require_once APP_PATH . '/app/models/QuedanDetalle.php';
+date_default_timezone_set("America/El_Salvador");
 session_start();
+require '../../config/enviandoMail.php';
 try {
-    //inicializando la clase de categoria
-    $presupuestoD = new PresupuestoDetalle;
-    //si el post es para la datatable del crud de categoria
-    if (isset($_POST['tabla'])) {
-        //se obtiene la lista en array asociativo con formato json
-        $data = null;
-        if ($presupuestoD->setCodiCasa($_SESSION['codi_casa'])) {
-            $data = $presupuestoD->getListaEgresos(date("m"), date("Y"));
-        }
-        //se imprime la lista
-        echo $data;
-    }
-    //si el post es para una de las acciones del crud
-    if (isset($_POST['accion'])) {
-        //Validando los datos del formulario
-        $_POST = $presupuestoD-> validateForm($_POST);
-        //switch para verificar que accion es la que se va a realizar
-        switch ($_POST['accion']) {
-            case 'delete':
-                if ($presupuestoD->setCodiPresDeta($_POST['codiPresDetaDele'])) {
-                    if ($presupuestoD->deleteEgreso()) {
-                        throw new Exception('Exito');
-                    } else {
-                        throw new Exception('No se pudo eliminar el gasto');
-                    }
-                } else {
-                    throw new Exception('No se encontro el gasto');
-                }
-                break;
-            case 'verficarInfo':
-                if ($_SESSION['codi_tipo_casa'] == 1) {
-                    echo json_encode("casas");
-                } else {
-                    echo json_encode("casa");
-                }
-                break;
-            case 'create':
-                if ($presupuestoD->setCodiCasa($_SESSION['codi_casa'])) {
-                    $idPresMes = $presupuestoD->buscarIdPresupuestoMes(date("m"), date("Y"));
-                    if ($presupuestoD->setCodiPres($idPresMes['codi_pres'])) {
-                        if ($presupuestoD->setCantPresDeta($_POST['cantPresDeta'])) {
-                            $cantidadIngreso = $presupuestoD->obtenerCantidadIngreso();
-                            $respuesta       = $cantidadIngreso  - $_POST['cantPresDeta'];
-                            if ($respuesta >= 0) {
-                                if ($presupuestoD->setFechPresDeta(date('Y-m-d'))) {
-                                    if ($presupuestoD->setCodiUsua($_SESSION['codi_usua'])) {
-                                        if (is_uploaded_file($_FILES['archPresDeta']['tmp_name'])) {
-                                            if ($presupuestoD-> setArchivoDeta($_FILES['archPresDeta'])) {
-                                                if ($presupuestoD-> agregarEgreso()) {
-                                                    throw new Exception('Exito');
-                                                } else {
-                                                    if ($presupuestoD->unsetArchivoDeta()) {
-                                                        throw new Exception(Database::getException());
-                                                    } else {
-                                                        throw new Exception("Elimine la imagen manualmente");
-                                                    }
-                                                }
-                                            } else {
-                                                throw new Exception($presupuestoD->getImageError());
-                                            }
-                                        } else {
-                                            throw new Exception("Seleccione un archivo");
-                                        }
-                                    } else {
-                                        throw new Exception('No se encontro el usuario');
-                                    }
-                                } else {
-                                    throw new Exception('Error con la fecha');
-                                }
-                            } else {
-                                throw new Exception('La cantidad a ingresar sobrepasa el presupuesto: $' . $cantidadIngreso);
-                            }
-                        } else {
-                            throw new Exception('La cantidad debe ser mayor a 0');
-                        }
-                    } else {
-                        throw new Exception('Al parecer este mes no se le ha agregado su presupuesto, contactar con la casa encargada para poder solucionarlo');
-                    }
-                } else {
-                    throw new Exception('No se encontro la casa');
-                }
-                break;
-        }
-    }
+	//inicializando la clase de categoria
+	$quedanD = new QuedanDetalle;
+	//si el post es para la datatable del crud de categoria
+	if (isset($_POST['quedanDetalle'])) {
+		//se obtiene la lista en array asociativo con formato json
+		$data = $quedanD->getQuedanDetalle();
+		//se imprime la lista
+		echo $data;
+	}
+	//si el post es para una de las acciones del crud
+	if (isset($_POST['accion'])) {
+		//Validando los datos del formulario
+		$_POST = $quedanD->validateForm($_POST);
+		//switch para verificar que accion es la que se va a realizar
+		switch ($_POST['accion']) {
+		case 'monto':
+			if ($quedanD->setCodiQued($_POST['codiQued'])) {
+				$data = $quedanD->getMontoQuedan();
+				echo json_encode($data['mont']);
+			} else {
+				echo json_encode(null);
+			}
+			break;
+		case 'create':
+			if ($quedanD->setCodiQued($_POST['codiQued'])) {
+				if ($quedanD->setCodiFact($_POST['codiFact'])) {
+					$cantidad = $quedanD->getCantidadDeQuedanRestantes();
+					if ($cantidad['cant'] > 0) {
+						if ($quedanD->updateEstadoQuedan()) {
+							if ($quedanD->updateFactura(2)) {
+								if ($quedanD->addQuedanDetalle()) {
+									throw new Exception('Exito');
+								} else {
+									throw new Exception('No se pudo agregarla factura');
+								}
+							} else {
+								throw new Exception('No se pudo modificar la factura');
+							}
+						} else {
+							throw new Exception('No se pudo modificar el quedan');
+						}
+					} else {
+						throw new Exception('Limite');
+					}
+
+				} else {
+					throw new Exception('Debe de seleccionar una factura');
+				}
+			} else {
+				throw new Exception('No se encontro el quedan');
+			}
+			break;
+		case 'agregandoQuedan':
+			if ($quedanD->setCodiQued($_POST['codiQuedNoti'])) {
+				$admin = $quedanD->obtenerCorreoEmisor($_SESSION['codi_usua']);
+			$datas = $quedanD->obtenerInfoCasaQuedan();
+			foreach ($datas as $row) {
+				$nombreReceptor = $row['nomb_usua']." ".$row['apel_usua'];
+				enviandoCorreoQuedan($_SESSION['nomb_usua'], $admin['corre_usua'],$_SESSION['nomb_casa'], $nombreReceptor, $row['corre_usua'],$row['nume_qued'],$row['nume_fact']);
+			}
+			throw new Exception("Exito");
+			} else {
+				throw new Exception("No se encontro el quedan");
+			}
+			
+			break;
+		case 'delete':
+
+			break;
+		case 'update':
+
+			break;
+		}
+	}
 } catch (Exception $error) {
-    //enviando el mensaje ya sea de exito o de error en json
-    echo json_encode($error->getMessage());
+	//enviando el mensaje ya sea de exito o de error en json
+	echo json_encode($error->getMessage());
 }

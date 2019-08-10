@@ -2,92 +2,103 @@
 //llamando el archivo app
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
-require_once APP_PATH . '/app/models/PresupuestoDetalle.php';
-date_default_timezone_get();
+require_once APP_PATH . '/app/models/Quedan.php';
+date_default_timezone_set("America/El_Salvador");
 session_start();
+require '../../config/enviandoMail.php';
 try {
-    //inicializando la clase de categoria
-    $presupuestoD = new PresupuestoDetalle;
+    //inicializando la clase de categorias
+    $quedan = new Quedan;
     //si el post es para la datatable del crud de categoria
     if (isset($_POST['tabla'])) {
         //se obtiene la lista en array asociativo con formato json
-        $data = null;
-        if ($presupuestoD->setCodiCasa($_SESSION['codi_casa'])) {
-            $data = $presupuestoD->getListaEgresos(date("m"), date("Y"));
-        }
+        $data = $quedan->getListaQuedanCasa($_SESSION['codi_casa']);
         //se imprime la lista
         echo $data;
+    }
+    if (isset($_POST['facturasP'])) {
+        $data = $quedan->getFacturasPendientesQuedan();
+        echo json_encode($data);
     }
     //si el post es para una de las acciones del crud
     if (isset($_POST['accion'])) {
         //Validando los datos del formulario
-        $_POST = $presupuestoD-> validateForm($_POST);
+        $_POST = $quedan-> validateForm($_POST);
         //switch para verificar que accion es la que se va a realizar
         switch ($_POST['accion']) {
-            case 'delete':
-                if ($presupuestoD->setCodiPresDeta($_POST['codiPresDetaDele'])) {
-                    if ($presupuestoD->deleteEgreso()) {
-                        throw new Exception('Exito');
-                    } else {
-                        throw new Exception('No se pudo eliminar el gasto');
-                    }
-                } else {
-                    throw new Exception('No se encontro el gasto');
-                }
-                break;
-            case 'verficarInfo':
-                if ($_SESSION['codi_tipo_casa'] == 1) {
-                    echo json_encode("casas");
-                } else {
-                    echo json_encode("casa");
-                }
-                break;
             case 'create':
-                if ($presupuestoD->setCodiCasa($_SESSION['codi_casa'])) {
-                    $idPresMes = $presupuestoD->buscarIdPresupuestoMes(date("m"), date("Y"));
-                    if ($presupuestoD->setCodiPres($idPresMes['codi_pres'])) {
-                        if ($presupuestoD->setCantPresDeta($_POST['cantPresDeta'])) {
-                            $cantidadIngreso = $presupuestoD->obtenerCantidadIngreso();
-                            $respuesta       = $cantidadIngreso  - $_POST['cantPresDeta'];
-                            if ($respuesta >= 0) {
-                                if ($presupuestoD->setFechPresDeta(date('Y-m-d'))) {
-                                    if ($presupuestoD->setCodiUsua($_SESSION['codi_usua'])) {
-                                        if (is_uploaded_file($_FILES['archPresDeta']['tmp_name'])) {
-                                            if ($presupuestoD-> setArchivoDeta($_FILES['archPresDeta'])) {
-                                                if ($presupuestoD-> agregarEgreso()) {
-                                                    throw new Exception('Exito');
-                                                } else {
-                                                    if ($presupuestoD->unsetArchivoDeta()) {
-                                                        throw new Exception(Database::getException());
-                                                    } else {
-                                                        throw new Exception("Elimine la imagen manualmente");
-                                                    }
-                                                }
+                if ($quedan->setNumeQued($_POST['numeQued'])) {
+                    if ($quedan->setFechEmis($_POST['fechEmis'])) {
+                        if ($quedan->setFechIngr(date('Y-m-d'))) {
+                                if ($quedan->setCantFact($_POST['cantFact'])) {
+                                    if (is_uploaded_file($_FILES['archQuedan']['tmp_name'])) {
+                                        if ($quedan->setArchQued($_FILES['archQuedan'])) { 
+                                            if ($quedan->addQuedan()) {
+                                                throw new Exception(Database::getLastRowId());
                                             } else {
-                                                throw new Exception($presupuestoD->getImageError());
+                                                if ($quedan->unsetArchQued()) {
+                                                    throw new Exception(Database::getException());
+                                                } else {
+                                                    throw new Exception("Elimine el quedan manualmente");
+                                                }
                                             }
                                         } else {
-                                            throw new Exception("Seleccione un archivo");
+                                            throw new Exception($quedan->getImageError());
                                         }
                                     } else {
-                                        throw new Exception('No se encontro el usuario');
+                                        throw new Exception("Seleccione un archivo");
                                     }
                                 } else {
-                                    throw new Exception('Error con la fecha');
+                                    throw new Exception("Debe ingresar la cantidad de facturas");
                                 }
-                            } else {
-                                throw new Exception('La cantidad a ingresar sobrepasa el presupuesto: $' . $cantidadIngreso);
-                            }
                         } else {
-                            throw new Exception('La cantidad debe ser mayor a 0');
+                            throw new Exception('Error con la fecha');
                         }
+                } else {
+                    throw new Exception('Debe ingresar la fecha del quedan');
+                }
+            }else{
+                throw new Exception('Debe ingresar el numero del quedan');
+            }
+                break;
+            case 'abono':
+            if ($quedan->setCodiQued($_POST['codiQuedUpdaEsta'])) {
+                if ($quedan->setFechAbon(date("Y-m-d"))) {
+                    if ($quedan->abonarQuedan()) {
+                        $casas = $quedan->obtenerInfoCasaQuedan();
+                        $quedan->updateEstadoQuedan(2);
+                        $obtenerCorreoEmisor = $quedan->obtenerCorreoEmisor($_SESSION['codi_usua']);
+                        foreach ($casas as $row) { 
+                            $nombreReceptor = $row['nomb_usua']." ".$row['apel_usua'];
+				            enviandoCorreoQuedanAbono($_SESSION['nomb_usua'], $obtenerCorreoEmisor['corre_usua'],$_SESSION['nomb_casa'], $nombreReceptor, $row['corre_usua'],$row['nume_qued'],$row['nume_fact']);
+                        }
+                        $quedan->updateEstadoQuedan(2);
+                        throw new Exception("Exito");
                     } else {
-                        throw new Exception('Al parecer este mes no se le ha agregado su presupuesto, contactar con la casa encargada para poder solucionarlo');
+                        throw new Exception("No se pudo agregar el abono, notificar al administrador");
                     }
                 } else {
-                    throw new Exception('No se encontro la casa');
+                    throw new Exception("Error con la fecha de abono");
                 }
-                break;
+            } else {
+                throw new Exception("No se encontro el codigo del quedan");
+            }
+            break;
+            case 'abonoVerificado':
+            if ($quedan->setCodiQued($_POST['codiQuedUpdaFinEsta'])) {
+                //obtener informacion de casa que ingreso el quedan
+                $row = $quedan->obtenerInfoCasaQuedanAbono();
+                //modificar el estado del quedan para que ya no aparezca
+                $quedan->updateEstadoQuedan(3);
+                $obtenerCorreoEmisor = $quedan->obtenerCorreoEmisor($_SESSION['codi_usua']);
+                //enviando correo a la cas que lo agrego que si se confirmo el abono
+                $nombreReceptor = $row['nomb_usua']." ".$row['apel_usua'];
+                enviandoCorreoQuedanFin($_SESSION['nomb_usua'], $obtenerCorreoEmisor['corre_usua'],$_SESSION['nomb_casa'], $nombreReceptor, $row['corre_usua'],$row['nume_qued']);
+                throw new Exception("Exito");
+            } else {
+                throw new Exception("No se encontro el codigo del quedan");
+            }
+            break;
         }
     }
 } catch (Exception $error) {

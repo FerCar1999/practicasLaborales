@@ -55,7 +55,7 @@ function recuperando() {
     var valoresForm = $("#frmRecuperar").serialize();
     $.ajax({
         type: "POST",
-        url: "../app/controllers/UsuarioController",
+        url: "../app/controllers/UsuarioController.php",
         data: valoresForm,
         beforeSend: function () {
             //ocultando botones mientras se realiza la peticion

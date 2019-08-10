@@ -5,6 +5,7 @@ var reAlphaNumeric = /^[a-zA-ZñÑáÁéÉíÍóÓúÚ\s]{1,150}/; // Regex
 var reAlias = /^[A-Z]{1}[0-9]{6}/;
 
 $(document).ready(function () {
+    $("#categoria").hide();
     dataTable();
     selectTipoUsua();
     $('#preloader').hide();
@@ -139,6 +140,9 @@ function create() {
                 var message = JSON.parse(data);
                 //se crear el modal para mostrar el error
                 M.toast({ html: message, classes: 'rounded' });
+                $('.modal-footer').show();
+                //ocultando  el preloader del modal
+                $('#preloader').hide();
             }
         },
         //funcion en el caso de que exista un error con el servidor
@@ -194,6 +198,34 @@ function remove() {
         //funcion en el caso de que el servidor no responda
         error: function() {
             // Mensaje de confirmación
+            M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
+        }
+    });
+}
+function mostrarCategorias() { 
+    if($("#codiTipoUsua").val()==3){
+        selectCategorias();
+        $("#categoria").show();
+    }else{
+        $("#categoria").hide();
+    }
+ }
+function selectCategorias() {
+    $.ajax({
+        type: 'POST',
+        url: '../app/controllers/CategoriaController.php',
+        data: {
+            'type': 'tipo'
+        },
+        dataType: 'JSON',
+        success: function (data) {
+            $("#codiCateUsua").empty().append('whatever');
+            $("#codiCateUsua").append('<option value="0" selected disabled>Seleccione la categoria del usuario:</option>');
+            for (x in data) {
+                $("#codiCateUsua").append('<option value=' + data[x].codi_cate + '>' + data[x].nomb_cate + '</option>');
+            }
+        },
+        error: function (data) {
             M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
         }
     });

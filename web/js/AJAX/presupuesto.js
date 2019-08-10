@@ -223,7 +223,7 @@ function getIdToDeleteCasas(tobyd, table) {
 function selectCategorias() {
     $.ajax({
         type: 'POST',
-        url: '../app/controllers/PresupuestoDetalleController',
+        url: '../app/controllers/PresupuestoDetalleController.php',
         data: {
             categorias: 'categoria'
         },
@@ -245,7 +245,7 @@ function selectCategorias() {
 }
 function verificarPresupuestoMostrar() {
     $.ajax({
-        url: '../app/controllers/PresupuestoController',
+        url: '../app/controllers/PresupuestoController.php',
         type: 'POST',
         data: {
             'accion': 'verficarInfo'
@@ -273,7 +273,7 @@ function agregarIngreso() {
     } else {
         if ($('#cantPres').val() != 0) {
             $.ajax({
-                url: '../app/controllers/PresupuestoController',
+                url: '../app/controllers/PresupuestoController.php',
                 type: 'POST',
                 data: formularioIngreso,
                 beforeSend: function() {
@@ -355,7 +355,7 @@ function agregarGasto() {
     } else {
         if ($('#cantPresDeta').val() != 0) {
             $.ajax({
-                url: '../app/controllers/PresupuestoDetalleController',
+                url: '../app/controllers/PresupuestoDetalleController.php',
                 type: 'POST',
                 data: formularioIngreso,
                 beforeSend: function() {
@@ -411,7 +411,7 @@ function modificarIngreso() {
     } else {
         if ($('#cantPresUpda').val() != 0) {
             $.ajax({
-                url: '../app/controllers/PresupuestoController',
+                url: '../app/controllers/PresupuestoController.php',
                 type: 'POST',
                 data: formularioIngreso,
                 beforeSend: function() {
@@ -462,7 +462,7 @@ function modificarIngreso() {
 function deleteIngreso() {
     var formularioIngreso = $("#frmDeleIngre").serialize();
     $.ajax({
-        url: '../app/controllers/PresupuestoController',
+        url: '../app/controllers/PresupuestoController.php',
         type: 'POST',
         data: formularioIngreso,
         beforeSend: function() {
@@ -503,7 +503,7 @@ function deleteIngreso() {
 function deleteGasto() {
     var formularioIngreso = $("#frmDeleEgre").serialize();
     $.ajax({
-        url: '../app/controllers/PresupuestoDetalleController',
+        url: '../app/controllers/PresupuestoDetalleController.php',
         type: 'POST',
         data: formularioIngreso,
         beforeSend: function() {

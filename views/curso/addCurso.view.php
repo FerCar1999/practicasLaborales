@@ -9,11 +9,20 @@
                 <div class="col s12">
                     <div class="row">
                         <input type="hidden" name="accion" id="accion" value="create">
-                        <div class="input-field col s12 m12">
+                        <div class="input-field col s12 m6">
                             <i class="material-icons prefix">library_books</i>
                             <input id="nombCurs" name="nombCurs" type="text" class="validate">
                             <label for="nombCurs">Nombre del curso:</label>
                         </div>
+                        <div class="input-field col s12 m6">
+                                <i class="material-icons prefix">
+                                    library_books
+                                </i>
+                                <input class="validate" id="corrCurs" name="corrCurs" type="text"/>
+                                <label for="corrCurs">
+                                    Correlativo del curso:
+                                </label>
+                            </div>
                         <div class="input-field col s12 m6">
                                 <i class="material-icons prefix">
                                     library_books

@@ -20,7 +20,7 @@ $(document).ready(function() {
 function selectAcreditaciones() {
     $.ajax({
         type: 'POST',
-        url: '../app/controllers/AcreditacionController',
+        url: '../app/controllers/AcreditacionController.php',
         data: {
             type: 'acreditaciones'
         },
@@ -44,7 +44,7 @@ function selectAcreditaciones() {
 function selectProfesiones() {
     $.ajax({
         type: 'POST',
-        url: '../app/controllers/ProfesionController',
+        url: '../app/controllers/ProfesionController.php',
         data: {
             type: 'profesion'
         },
@@ -214,7 +214,7 @@ function create() {
                         $('#preloader').show();
                         $.ajax({
                             method: "POST",
-                            url: "../app/controllers/IntermediaDocenteProfesionController",
+                            url: "../app/controllers/IntermediaDocenteProfesionController.php",
                             data: datos + '&codiDoce=' + JSON.parse(data),
                             success: function(dato) {
                                 var resp = data.indexOf("Exito");
@@ -227,7 +227,7 @@ function create() {
                         });
                         $.ajax({
                             method: "POST",
-                            url: "../app/controllers/IntermediaAcreditacionDocenteController",
+                            url: "../app/controllers/IntermediaAcreditacionDocenteController.php",
                             data: datos + '&codiDoce=' + JSON.parse(data),
                             success: function(dato) {
                                 var resp = data.indexOf("Exito");
@@ -300,7 +300,7 @@ function update() {
                         $('#preloader').show();
                         $.ajax({
                             method: "POST",
-                            url: "../app/controllers/IntermediaAcreditacionDocenteController",
+                            url: "../app/controllers/IntermediaAcreditacionDocenteController.php",
                             data: datos,
                             success: function(dato) {
                                 var resp = data.indexOf("Exito");
@@ -313,7 +313,7 @@ function update() {
                         });
                         $.ajax({
                             method: "POST",
-                            url: "../app/controllers/IntermediaAcreditacionDocenteController",
+                            url: "../app/controllers/IntermediaAcreditacionDocenteController.php",
                             data: datos,
                             success: function(dato) {
                                 var resp = data.indexOf("Exito");

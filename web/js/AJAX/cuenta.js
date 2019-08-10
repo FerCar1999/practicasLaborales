@@ -278,7 +278,7 @@ function updateInfo() {
 	var datosUsuario = $("#miCuenta").serialize();
 	var accion = 'updateInfo';
 	$.ajax({
-		url: '../app/controllers/UsuarioController',
+		url: '../app/controllers/UsuarioController.php',
 		type: 'POST',
 		data: datosUsuario + "&accion="+accion,
 		beforeSend: function() {
@@ -318,7 +318,7 @@ function updateLogoCasa() {
     //agregando la imagen de la casa que se ingresara
     formularioCasa.append("logoCasaUpda", $("#logoCasaUpda")[0].files[0]);
     	$.ajax({
-		url: '../app/controllers/CasaController',
+		url: '../app/controllers/CasaController.php',
 		type: 'POST',
 		data:formularioCasa,
 		processData: false,
@@ -359,7 +359,7 @@ function updateLogoCasa() {
 function updateInfoCasa() {
 	var formularioCasa = new FormData($("#infoCasa")[0]);
 	$.ajax({
-		url: '../app/controllers/CasaController',
+		url: '../app/controllers/CasaController.php',
 		type: 'POST',
 		data:formularioCasa,
 		processData: false,
@@ -400,7 +400,7 @@ function updateContra() {
 	var datosUsuario = $("#miCuenta").serialize();
 	var accion = 'updateContra';
 	$.ajax({
-		url: '../app/controllers/UsuarioController',
+		url: '../app/controllers/UsuarioController.php',
 		type: 'POST',
 		data: datosUsuario + "&accion="+accion,
 		beforeSend: function() {

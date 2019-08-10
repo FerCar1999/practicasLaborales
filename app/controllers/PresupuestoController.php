@@ -3,8 +3,9 @@
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
 require_once APP_PATH . '/app/models/Presupuesto.php';
-date_default_timezone_get();
+date_default_timezone_set("America/El_Salvador");
 session_start();
+require APP_PATH.'/config/enviandoMail.php';
 try {
 	//inicializando la clase de categoria
 	$presupuesto = new Presupuesto;
@@ -54,8 +55,12 @@ try {
 					if ($presupuesto->setCantPres($_POST['cantPres'])) {
 						if ($presupuesto->setFechPres(date('Y-m-d'))) {
 							if ($presupuesto->addPresupuesto()) {
-								//ENVIAR NOTIFICACION TANTO AL CORREO COMO AL DASHBOARD
-								throw new Exception('Exito');
+								$correo= $presupuesto->obtenerCorreoEmisor($_SESSION['codi_usua']);
+								$emisor = $presupuesto->obtenerIdAdministradorCasa();
+								foreach ($emisor as $row) { 
+									enviandoCorreoPresupuesto($_SESSION['nomb_usua'], $correo['corre_usua'],$row['nomb_usua']." ".$row['apel_usua'],$row['corre_usua'],$_SESSION['nomb_casa']);
+								}
+								throw new Exception('Exito'. $emisor);
 							} else {
 								throw new Exception('No se pudo agregar al presupuesto');
 							}

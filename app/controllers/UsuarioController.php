@@ -30,14 +30,32 @@ try {
                                 if ($user->setContUsua($password)) {
                                     if ($user->setCodiCasa($_SESSION['codi_casa'])) {
                                         if ($user->setTipoUsua($_POST['codiTipoUsua'])) {
-                                            if ($user->createUsuario()) {
-                                                if (enviandoCorreoCuenta($_POST['correUsua'], $_POST['nombUsua'] . ' ' . $_POST['apelUsua'], $password)) {
-                                                    throw new Exception('Exito');
-                                                } else {
-                                                    throw new Exception('Exito');
+                                            if ($_POST['codiTipoUsua']!=3) {
+                                                if ($user->setCodiCate(0)) {
+                                                    if ($user->createUsuario()) {
+                                                        if (enviandoCorreoCuenta($_POST['correUsua'], $_POST['nombUsua'] . ' ' . $_POST['apelUsua'], $password)) {
+                                                            throw new Exception('Exito');
+                                                        } else {
+                                                            throw new Exception('Exito');
+                                                        }
+                                                    } else {
+                                                        throw new Exception('No se pudo agregar el usuario');
+                                                    }
                                                 }
                                             } else {
-                                                throw new Exception('No se pudo agregar el usuario');
+                                                if ($user->setCodiCate($_POST['codiCateUsua'])) {
+                                                    if ($user->createUsuario()) {
+                                                        if (enviandoCorreoCuenta($_POST['correUsua'], $_POST['nombUsua'] . ' ' . $_POST['apelUsua'], $password)) {
+                                                            throw new Exception('Exito');
+                                                        } else {
+                                                            throw new Exception('Exito');
+                                                        }
+                                                    } else {
+                                                        throw new Exception('No se pudo agregar el usuario');
+                                                    }
+                                                } else {
+                                                    throw new Exception("Debe agregar el programa al cual estara encargado");
+                                                }
                                             }
                                         } else {
                                             throw new Exception("Seleccione el tipo de usuario");
@@ -231,6 +249,7 @@ try {
                                 $_SESSION['nomb_casa']      = $user->getNombCasa();
                                 $_SESSION['logo_casa']      = $user->getLogoCasa();
                                 $_SESSION['codi_tipo_casa'] = $user->getCodiTipoCasa();
+                                $_SESSION['codi_cate'] = $user->getCodiCate();
                                 throw new Exception("Exito");
                             } else {
                                 throw new Exception("Verifique sus credenciales");

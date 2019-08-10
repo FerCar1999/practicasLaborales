@@ -13,6 +13,7 @@ class Usuario extends Validator
     private $logo_casa = null;
     private $codi_tipo_casa = null;
     private $codi_tipo_usua = null;
+    private $codi_cate = null;
     private $esta_usua = null;
 
     // Encapsulando
@@ -164,7 +165,16 @@ class Usuario extends Validator
     {
         return $this->codi_tipo_usua;
     }
+    public function setCodiCate($value)
+    {
+            $this->codi_cate = $value;
+            return true;
+    }
 
+    public function getCodiCate()
+    {
+        return $this->codi_cate;
+    }
     public function setEstaUsua($value)
     {
         if ($this->validateId($value)) {
@@ -188,16 +198,16 @@ class Usuario extends Validator
         //Encriptando la contraseña ingresada
         $hash   = password_hash($this->cont_usua, PASSWORD_DEFAULT);
         //realizando consuta
-        $sql    = "INSERT INTO usuario(nomb_usua,apel_usua,corre_usua,cont_usua,codi_casa,codi_tipo_usua,esta_usua) VALUES (?,?,?,?,?,?,?)";
+        $sql    = "INSERT INTO usuario(nomb_usua,apel_usua,corre_usua,cont_usua,codi_casa,codi_tipo_usua,codi_cate,esta_usua) VALUES (?,?,?,?,?,?,?,?)";
         //parametros a ingresar
-        $params = array($this->nomb_usua, $this->apel_usua, $this->corre_usua, $hash, $this->codi_casa, $this->codi_tipo_usua,1);
+        $params = array($this->nomb_usua, $this->apel_usua, $this->corre_usua, $hash, $this->codi_casa, $this->codi_tipo_usua,$this->codi_cate,1);
         return Database::executeRow($sql, $params);
     }
 
     // Obtener usuarios encargados de la casa
     public function getUsuariosCasa()
     {
-        $sql    = "SELECT u.codi_usua as 'codi_usua', u.nomb_usua as 'nomb_usua', u.apel_usua as 'apel_usua' , u.corre_usua as 'corre_usua', tp.codi_tipo_usua as 'codi_tipo_usua', tp.nomb_tipo_usua as 'nomb_tipo_usua' FROM usuario as u INNER JOIN tipo_usuario as tp USING (codi_tipo_usua) WHERE u.esta_usua=1 AND u.codi_casa=? ORDER BY u.codi_usua";
+        $sql    = "SELECT u.codi_usua as 'codi_usua', u.nomb_usua as 'nomb_usua', u.apel_usua as 'apel_usua' , u.corre_usua as 'corre_usua', tp.codi_tipo_usua as 'codi_tipo_usua', u.codi_cate, tp.nomb_tipo_usua as 'nomb_tipo_usua' FROM usuario as u INNER JOIN tipo_usuario as tp USING (codi_tipo_usua) WHERE u.esta_usua=1 AND u.codi_casa=? ORDER BY u.codi_usua";
         $params = array($this->codi_casa);
         return Database::getRowsAjax($sql, $params);
     }
@@ -214,7 +224,7 @@ class Usuario extends Validator
     public function checkUser()
 	{
         //buscando datos del usuario con el correo ingresado
-		$sql = "SELECT u.codi_usua as codi_usua, u.nomb_usua as nomb_usua, u.apel_usua as apel_usua, u.codi_tipo_usua as codi_tipo_usua, u.codi_casa as codi_casa, c.nomb_casa as nomb_casa, c.logo_casa as logo_casa, c.codi_tipo_casa as codi_tipo_casa FROM usuario as u INNER JOIN casa as c USING (codi_casa) WHERE u.corre_usua=? AND c.esta_casa = 1";
+		$sql = "SELECT u.codi_usua as codi_usua, u.nomb_usua as nomb_usua, u.apel_usua as apel_usua, u.codi_tipo_usua as codi_tipo_usua, u.codi_casa as codi_casa, c.nomb_casa as nomb_casa, c.logo_casa as logo_casa, c.codi_tipo_casa as codi_tipo_casa, u.codi_cate as codi_cate FROM usuario as u INNER JOIN casa as c USING (codi_casa) WHERE u.corre_usua=? AND c.esta_casa = 1";
         //agregando parametros
         $params = array($this->corre_usua);
         //ejecutando consulta y obteniendo los datos
@@ -230,6 +240,7 @@ class Usuario extends Validator
             $this->nomb_casa = $data['nomb_casa'];
             $this->logo_casa = $data['logo_casa'];
             $this->codi_tipo_casa = $data['codi_tipo_casa'];
+            $this->codi_cate = $data['codi_cate'];
             //retornando true
 			return true;
 		}else{
@@ -263,8 +274,8 @@ class Usuario extends Validator
     // Modificar informacion de usuario
     public function updateInformacionUsuario()
     {   
-        $sql    = "UPDATE usuario SET nomb_usua = ?, apel_usua = ?, corre_usua = ? WHERE codi_usua = ?";
-        $params = array($this->nomb_usua, $this->apel_usua, $this->corre_usua, $this->codi_usua);
+        $sql    = "UPDATE usuario SET nomb_usua = ?, apel_usua = ?, corre_usua = ?, codi_cate=? WHERE codi_usua = ?";
+        $params = array($this->nomb_usua, $this->apel_usua, $this->corre_usua, $this->codi_cate, $this->codi_usua);
         return Database::executeRow($sql, $params);
     }
     public function updateContraUsuario()

@@ -3,14 +3,14 @@
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
 require_once APP_PATH . '/app/models/Categoria.php';
-
+session_start();
 try {
     //inicializando la clase de categoria
     $categoria = new Categoria;
     //si el post es para llenar campos que no tienen que ver en el crud de categoria
     if (isset($_POST['type'])) {
         //se obtiene la lista sin array asociativo
-        $data = $categoria->getCategoriasN();
+        $data = $categoria->getCategoriasN($_SESSION['codi_casa']);
         //imprimiendo la lista en tipo json
         echo json_encode($data);
     }

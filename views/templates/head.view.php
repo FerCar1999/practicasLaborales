@@ -18,7 +18,7 @@ ini_set("date.timezone","America/El_Salvador");
     <link rel="stylesheet" href="<?= WEB_PATH ?>css/styles.css">
     <script src="<?= WEB_PATH ?>js/jquery.min.js"></script>
     <script src="<?= WEB_PATH ?>js/materialize.min.js"></script>
-    <script src="<?= WEB_PATH ?>js/moment.min.js"></script>
+    <script src="<?= WEB_PATH ?>js/moment.js"></script>
     <script src="<?= WEB_PATH ?>js/es.js"></script>
     <script src="<?= WEB_PATH ?>js/select2.js"></script>
     <script src="<?= WEB_PATH ?>js/sweetalert2.js"></script>

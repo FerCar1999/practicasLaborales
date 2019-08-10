@@ -28,7 +28,7 @@ $(document).ready(function () {
 //Funcion para saber si va a mostrar los cursos de las otras casas o solo los propios
 function verificarCursoMostrar() {
   $.ajax({
-    url: '../app/controllers/CursoController',
+    url: '../app/controllers/CursoController.php',
     type: 'POST',
     data: {
       'accion': 'verificarInfo'
@@ -51,7 +51,7 @@ function verificarCursoMostrar() {
 function selectCategorias() {
   $.ajax({
     type: 'POST',
-    url: '../app/controllers/CategoriaController',
+    url: '../app/controllers/CategoriaController.php',
     data: {
       type: 'categoria'
     },
@@ -76,7 +76,7 @@ function selectHorarios() {
   var codiDia = $('#codiDia').val();
   $.ajax({
     type: 'POST',
-    url: '../app/controllers/HorarioController',
+    url: '../app/controllers/HorarioController.php',
     data: {
       type: 'categoria',
       codiDia: codiDia
@@ -101,7 +101,7 @@ function selectHorariosU() {
   var codiDia = $('#codiDiaUpda').val();
   $.ajax({
     type: 'POST',
-    url: '../app/controllers/HorarioController',
+    url: '../app/controllers/HorarioController.php',
     data: {
       type: 'categoria',
       codiDia: codiDia
@@ -123,7 +123,7 @@ function selectHorariosU() {
 function selectHorariosUpda(codiDia) {
   $.ajax({
     type: 'POST',
-    url: '../app/controllers/HorarioController',
+    url: '../app/controllers/HorarioController.php',
     data: {
       type: 'categoria',
       codiDia: codiDia
@@ -146,7 +146,7 @@ function selectHorariosN() {
   var codiDia = $('#codiDiaN').val();
   $.ajax({
     type: 'POST',
-    url: '../app/controllers/HorarioController',
+    url: '../app/controllers/HorarioController.php',
     data: {
       type: 'categoria',
       codiDia: codiDia
@@ -168,7 +168,7 @@ function selectHorariosN() {
 function selectSalones() {
   $.ajax({
     type: 'POST',
-    url: '../app/controllers/SalonController',
+    url: '../app/controllers/SalonController.php',
     data: {
       type: 'categoria'
     },
@@ -195,7 +195,7 @@ function selectSalones() {
 function selectDocentes() {
   $.ajax({
     type: 'POST',
-    url: '../app/controllers/DocenteController',
+    url: '../app/controllers/DocenteController.php',
     data: {
       type: 'categoria'
     },
@@ -228,7 +228,7 @@ function dataTableCursoCasa() {
     ajax: {
       method: 'POST',
       //url de controlador adonde se traeran los datos
-      url: '../app/controllers/CursoController',
+      url: '../app/controllers/CursoController.php',
       //datos que iran por el post
       data: {
         tabla: "casa"
@@ -248,6 +248,8 @@ function dataTableCursoCasa() {
     }, {
       //agregando datos de nombre de categoria
       data: 'nomb_cate'
+    }, {
+      data: 'corr_curs'
     }, {
       //agregando dato de estado de categoria
       data: 'nomb_curs'
@@ -348,6 +350,7 @@ function getIdToUpdateCurso(tobyd, table) {
     $("#fechInicUpda").next("label").addClass("active");
     $("#fechFinUpda").next("label").addClass("active");
     $("#montEstiUpda").next("label").addClass("active");
+    $("#corrCursUpda").next("label").addClass("active");
     $("#cantPartUpda").next("label").addClass("active");
     var codi_curs = $("#codiCursUpda").val(data.codi_curs),
       nomb_curs = $("#nombCursUpda").val(data.nomb_curs),
@@ -355,6 +358,7 @@ function getIdToUpdateCurso(tobyd, table) {
       fech_fin = $("#fechFinUpda").val(data.fech_fin),
       cant_part = $("#cantPartUpda").val(data.cant_part),
       mont_esti = $("#montEstiUpda").val(data.mont_esti),
+      corr_curs = $("#corrCursUpda").val(data.corr_curs),
       codi_cate = $("#codiCateUpda").val(data.codi_cate);
     $("#codiCateUpda").change();
     $("#codiCateUpda").trigger('change.select2');
@@ -383,7 +387,7 @@ function create() {
     //metodo que se va a usar
     method: "POST",
     //ruta de controlador de categoria
-    url: "../app/controllers/CursoController",
+    url: "../app/controllers/CursoController.php",
     //data que se va a enviar por post
     data: datos,
     beforeSend: function () {
@@ -439,7 +443,7 @@ function update() {
     //metodo que se va a usar
     method: "POST",
     //ruta del controlador
-    url: "../app/controllers/CursoController",
+    url: "../app/controllers/CursoController.php",
     //datos que se enviaran por el post
     data: datos,
     beforeSend: function () {
@@ -494,7 +498,7 @@ function remove() {
     //metodo que se va a utilizar
     method: "POST",
     //url del controlador
-    url: "../app/controllers/CursoController",
+    url: "../app/controllers/CursoController.php",
     //datos que se enviaran en el post
     data: datos,
     beforeSend: function () {
@@ -547,7 +551,7 @@ function dataTableCursoCasas() {
     ajax: {
       method: 'POST',
       //url de controlador adonde se traeran los datos
-      url: '../app/controllers/CursoController',
+      url: '../app/controllers/CursoController.php',
       //datos que iran por el post
       data: {
         tabla: "casas"
@@ -573,6 +577,8 @@ function dataTableCursoCasas() {
     }, {
       //agregando dato de estado de categoria
       data: 'nomb_casa'
+    }, {
+      data: 'corr_curs'
     }, {
       data: 'nomb_curs'
     }, {
@@ -665,7 +671,7 @@ function getIdSeeCursos(tobyd, table) {
     llenandoListaMaestros(data.codi_curs);
     //agregando informacion al formulario
     var codi_curs = $("#codiCursSee").val(data.codi_curs),
-      nomb_curs = $("#tituloCurso").text(data.nomb_curs),
+      nomb_curs = $("#tituloCurso").text(data.nomb_curs+" ("+ data.corr_curs+")"),
       fech_inic = $("#fechasCursoInic").text("Fecha Inicio del Curso : "+data.fech_inic.split('-').reverse().join('/')),
       fech_fin = $("#fechasCursoFin").text("Fecha Fin del Curso : "+data.fech_fin.split('-').reverse().join('/')),
       cant_part = $("#cantidadParticipantes").text("Cantidad de Participantes: " +data.cant_part),
@@ -677,7 +683,7 @@ function getIdSeeCursos(tobyd, table) {
 function llenandoListaMaestros(codi) { 
   $.ajax({
     method : 'POST',
-    url : '../app/controllers/DocenteController',
+    url : '../app/controllers/DocenteController.php',
     data : {
       lista : 'listaMaestros',
       codiCurs : codi
@@ -703,7 +709,7 @@ function agregarHorario() {
     //metodo que se va a utilizar
     method: "POST",
     //url del controlador
-    url: "../app/controllers/IntermediaCursoSalonController",
+    url: "../app/controllers/IntermediaCursoSalonController.php",
     //datos que se enviaran en el post
     data: datos,
     beforeSend: function () {
@@ -745,7 +751,7 @@ function agregarHorarioN() {
     //metodo que se va a utilizar
     method: "POST",
     //url del controlador
-    url: "../app/controllers/IntermediaCursoSalonController",
+    url: "../app/controllers/IntermediaCursoSalonController.php",
     //datos que se enviaran en el post
     data: datos,
     beforeSend: function () {
@@ -793,7 +799,7 @@ function agregarHorarioDocenteN(codi) {
     //metodo que se va a utilizar
     method: "POST",
     //url del controlador
-    url: "../app/controllers/IntermediaHorarioDocenteController",
+    url: "../app/controllers/IntermediaHorarioDocenteController.php",
     //datos que se enviaran en el post
     data: datos,
     beforeSend: function () {
@@ -849,7 +855,7 @@ function agregarHorarioDocente(codi) {
     //metodo que se va a utilizar
     method: "POST",
     //url del controlador
-    url: "../app/controllers/IntermediaHorarioDocenteController",
+    url: "../app/controllers/IntermediaHorarioDocenteController.php",
     //datos que se enviaran en el post
     data: datos,
     //funcion si el servidor responde
@@ -905,7 +911,7 @@ function dataTableCursoHorario() {
     ajax: {
       method: 'POST',
       //url de controlador adonde se traeran los datos
-      url: '../app/controllers/CursoController',
+      url: '../app/controllers/CursoController.php',
       //datos que iran por el post
       data: {
         tabla: "cursoHorario",
@@ -1040,7 +1046,7 @@ function removeHorario() {
     //metodo que se va a utilizar
     method: "POST",
     //url del controlador
-    url: "../app/controllers/IntermediaCursoSalonController",
+    url: "../app/controllers/IntermediaCursoSalonController.php",
     //datos que se enviaran en el post
     data: datos,
     beforeSend: function () {
@@ -1099,7 +1105,7 @@ function updateHorario() {
     //metodo que se va a usar
     method: "POST",
     //ruta del controlador
-    url: "../app/controllers/IntermediaCursoSalonController",
+    url: "../app/controllers/IntermediaCursoSalonController.php",
     //datos que se enviaran por el post
     data: datos,
     beforeSend: function () {
@@ -1142,7 +1148,7 @@ function updateHorario2() {
     //metodo que se va a usar
     method: "POST",
     //ruta del controlador
-    url: "../app/controllers/IntermediaHorarioDocenteController",
+    url: "../app/controllers/IntermediaHorarioDocenteController.php",
     //datos que se enviaran por el post
     data: datos,
     beforeSend: function () {

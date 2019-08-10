@@ -1,12 +1,13 @@
-<div id="deleCasa" class="modal">
+<div id="deleteFactura" class="modal">
     <form id="frmDele" action="">
         <div class="modal-header red darken-1 white-text">
-            <h5 class="mt-none mb-none">Eliminar Casa</h5>
+            <h5 class="mt-none mb-none">Eliminar Factura</h5>
             <i class="material-icons modal-close">close</i>
         </div>
         <div class="modal-content">
             <div class="row">
-                <input type="hidden" id="codiCasaDele" name="codiCasaDele">
+            <input type="hidden" id="accion" name="accion" value="delete">
+                <input type="hidden" id="codiFactDele" name="codiFactDele">
                 <p>¿Desea eliminar el siguiente registro?</p>
                 <p><b>Nota: </b>Recordar una vez eliminado el registro y no se puede recuperar una vez realizada la operación</p>
             </div>

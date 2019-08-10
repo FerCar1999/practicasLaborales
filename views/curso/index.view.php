@@ -51,6 +51,9 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
                                             Categoria
                                         </th>
                                         <th>
+                                            Correlativo de Curso
+                                        </th>
+                                        <th>
                                             Nombre de Curso
                                         </th>
                                         <th>
@@ -102,6 +105,9 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
                                         </th>
                                         <th>
                                             Casa
+                                        </th>
+                                        <th>
+                                            Correlativo de Curso
                                         </th>
                                         <th>
                                             Nombre de Curso

@@ -82,8 +82,8 @@ class Presupuesto extends Validator {
 	}
 	// Obtener presupuestos de casas
 	public function getPresupuestoCasas($anio) {
-		$sql = "SELECT p.codi_pres, c.codi_casa, c.nomb_casa, p.cant_pres, p.cant_pres - COALESCE((SELECT SUM(pd.cant_pres_deta) FROM presupuesto_detalle as pd WHERE YEAR(pd.fech_pres_deta)= ?), 0) as cant_rest FROM presupuesto as p INNER JOIN casa as c ON c.codi_casa=p.codi_casa WHERE YEAR(p.fech_pres)=?";
-		$params = array($anio, $anio);
+		$sql = "SELECT p.codi_pres, c.codi_casa, c.nomb_casa, p.cant_pres, (p.cant_pres - SUM(pd.cant_pres_deta)) as cant_rest FROM presupuesto_detalle as pd INNER JOIN presupuesto as p on p.codi_pres=pd.codi_pres INNER JOIN casa as c ON c.codi_casa=p.codi_casa WHERE YEAR(p.fech_pres)=? GROUP BY codi_pres";
+		$params = array($anio);
 		return Database::getRowsAjax($sql, $params);
 	}
 	public function obtenerCantidadSubPresupuesto() {
@@ -100,5 +100,16 @@ class Presupuesto extends Validator {
 		$sql = "DELETE FROM presupuesto WHERE codi_pres = ?";
 		$params = array($this->codi_pres);
 		return Database::executeRow($sql, $params);
+	}
+
+	public function obtenerIdAdministradorCasa() {
+		$sql = "SELECT nomb_usua, apel_usua, corre_usua FROM usuario WHERE codi_casa=? AND codi_tipo_usua=1 OR codi_casa=? AND codi_tipo_usua=2";
+		$params = array($this->codi_casa,$this->codi_casa);
+		return Database::getRows($sql, $params);
+	}
+	public function obtenerCorreoEmisor($codi) {
+		$sql = "SELECT corre_usua FROM usuario WHERE codi_usua=?";
+		$params = array($codi);
+		return Database::getRow($sql, $params);
 	}
 }

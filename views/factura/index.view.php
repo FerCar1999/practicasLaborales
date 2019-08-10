@@ -4,13 +4,13 @@ $title = "Facturas";
 //Nombre de pagina
 $page = "Facturas";
 ?>
-<?php 
+<?php
 //llamando el archivo head
-include APP_PATH . '/views/templates/head.view.php' ?>
+include APP_PATH . '/views/templates/head.view.php'?>
 
-<?php 
+<?php
 //llamando al archivo sidebar que es el que trae las diferentes opciones para los usuarios y controla el tiempo de sesion
-include APP_PATH . '/views/templates/sidebar.view.php' ?>
+include APP_PATH . '/views/templates/sidebar.view.php'?>
 
 
 <main>
@@ -29,7 +29,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                                 <th>ID</th>
                                 <th>Numero de Factura</th>
                                 <th>Fecha de Emision</th>
-                                <th>Cantidad de Facturas</th>
+                                <th>Monto Total</th>
                                 <th>Archivo de Factura</th>
                                 <th>Opciones</th>
                             </tr>
@@ -48,15 +48,28 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
     </div>
 
     <!-- Modal para agregar categoria -->
-    <?php include APP_PATH . '/views/factura/addFactura.view.php' ?>
+    <?php include APP_PATH . '/views/factura/addFactura.view.php'?>
     <!-- Modal para modificar categoria -->
-    <?php include APP_PATH . '/views/factura/updateFactura.view.php' ?>
+    <?php include APP_PATH . '/views/factura/updateFactura.view.php'?>
+    <?php include APP_PATH . '/views/factura/updateArchivoFactura.view.php'?>
+    <?php include APP_PATH . '/views/factura/notificarDeleteFactura.view.php'?>
     <!-- Modal para eliminar categoria -->
-    <?php include APP_PATH . '/views/factura/deleteFactura.view.php' ?>
-    <?php include APP_PATH . '/views/factura/addFacturaDetalle.view.php' ?>
+    <?php include APP_PATH . '/views/factura/deleteFactura.view.php'?>
+    <?php include APP_PATH . '/views/factura/addFacturaDetalle.view.php'?>
+    <?php include APP_PATH . '/views/factura/verDetalleFactura.view.php'?>
 </main>
 
 <!-- AJAX -->
-<script src="<?= WEB_PATH ?>js/AJAX/factura.js"></script>
+<?php
+switch ($_SESSION['codi_tipo_usua']) {
+case '1':
+	print('<script src="' . WEB_PATH . 'js/AJAX/facturaAdmin.js"></script>');
+	break;
 
-<?php include APP_PATH . '/views/templates/footer.view.php' ?>
+default:
+	print('<script src="' . WEB_PATH . 'js/AJAX/factura.js"></script>');
+	break;
+}
+?>
+
+<?php include APP_PATH . '/views/templates/footer.view.php'?>

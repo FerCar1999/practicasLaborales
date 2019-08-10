@@ -453,3 +453,39 @@ ul.stepper .step.active::before {
     border-bottom: 1px solid #e0e0e0;
     padding: 0px 10px;
 }
+.progress .determinate.cero{
+    background-color: #1e88e5;
+}
+.progress.cero{
+    background-color: #90caf9;
+}
+.progress .determinate.uno{
+    background-color: #43a047;
+}
+.progress.uno{
+    background-color: #a5d6a7;
+}
+.progress .determinate.dos{
+    background-color: #c0ca33;
+}
+.progress.dos{
+    background-color: #e6ee9c;
+}
+.progress .determinate.tres{
+    background-color: #ffb300;
+}
+.progress.tres{
+    background-color: #ffe082;
+}
+.progress .determinate.cuatro{
+    background-color: #fb8c00;
+}
+.progress.cuatro{
+    background-color: #ffab91;
+}
+.progress .determinate.cinco{
+    background-color: #e53935;
+}
+.progress.cinco{
+    background-color: #ef9a9a;
+}
