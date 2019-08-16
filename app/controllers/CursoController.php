@@ -78,15 +78,25 @@ try {
 											if (($cantidadCategoriaPresupuesto['cantidad']-$_POST['montEsti'])>=0) {
 												$fechaInicio = strtotime($curso->getFechInic());
 												$fechaFin = strtotime($curso->getFechFin());
-												if ($fechaInicio < $fechaFin) {
-													if ($curso->createCurso()) {
-														throw new Exception($curso->obtenerIdUltimo());
-													} else {
-														throw new Exception("No se pudo crear el curso");
+												if ($fechaInicio!="") {
+													if($fechaFin!=""){
+														if ($fechaInicio < $fechaFin) {
+															if ($curso->createCurso()) {
+																throw new Exception($curso->obtenerIdUltimo());
+															} else {
+																throw new Exception("No se pudo crear el curso");
+															}
+														} else {
+															throw new Exception("La fecha inicial no puede ser mayor a la final" . $fechaFin);
+														}
+													}else{
+														throw new Exception("Debe ingresar la fecha de finalizacion");
 													}
+													
 												} else {
-													throw new Exception("La fecha inicial no puede ser mayor a la final");
+													throw new Exception("Debe ingresar la fecha de inicio");
 												}
+												
 											} else {
 												throw new Exception("La cantidad estimada es mayor a la cantidad restante del presupuesto");
 											}
