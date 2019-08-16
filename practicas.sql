@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-08-2019 a las 15:42:19
+-- Tiempo de generación: 16-08-2019 a las 18:47:10
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.3
 
@@ -127,8 +127,9 @@ INSERT INTO `curso` (`codi_curs`, `codi_cate`, `codi_casa`, `corr_curs`, `nomb_c
 (11, 3, 3, 'CP071293', 'Curso PHP', '2019-01-07', '2019-07-31', '100', 10, NULL, NULL, 1),
 (12, 2, 2, 'CC092267', 'Curso CSS', '2019-01-07', '2019-07-23', '100', 10, '2019-07-10', 6, 5),
 (13, 1, 1, 'CJ092342', 'Curso de Javascript', '2019-01-07', '2019-07-23', '100', 10, '2019-07-10', 9, 5),
-(14, 1, 1, 'x12', 'x', '2019-08-01', '2019-08-10', '100', 100, NULL, NULL, 2),
-(15, 2, 1, 'y12', 'y', '2019-08-01', '2019-08-10', '100', 100, '2019-08-10', 10, 4);
+(14, 2, 1, 'x12', 'x', '2019-08-01', '2019-08-10', '100', 100, NULL, NULL, 2),
+(15, 2, 1, 'y12', 'y', '2019-08-01', '2019-08-10', '100', 100, '2019-08-10', 10, 4),
+(16, 1, 1, 'AA2019', 'PHP Avanzado', '2019-08-01', '2019-08-16', '100', 10, NULL, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -679,7 +680,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`codi_usua`, `nomb_usua`, `apel_usua`, `corre_usua`, `cont_usua`, `codi_casa`, `codi_tipo_usua`, `codi_cate`, `esta_usua`) VALUES
-(1, 'Fernando Ernesto', 'Carranza Guardado', 'carranzafernando99@gmail.com', '$2y$10$tcgOMpnucTJ7C9Eum8cO.OqM4vUzb8XehiBXlyhWF4gbzsG3qbTky', 1, 1, 0, 1),
+(1, 'Fernando Ernesto', 'Carranza Guardado', 'carranzafernando99@gmail.com', '$2y$10$wP5TR.D1uE5AOsI5C6tCMOCiMcoUmE2L81gRs06XsV3dQm0vniFV.', 1, 1, 0, 1),
 (2, 'Luis Gerardo', 'Diaz Ventura', 'foreverfas_fc@hotmail.com', '$2y$10$jjCJjJfsPRl8.EpuCs465Oez.5yFaoKJzPs2EOOeBXwH1q8/gVeg.', 2, 1, 0, 1),
 (3, 'Rita', 'Knight', 'udadddmn@yomail.info', '$2y$10$TJLvA8s3No4qR/l2o6uf5OORUrdFbDwnSOeaIfGsqHZ2z0cePSKO.', 1, 2, 1, 1),
 (4, 'Lester', 'Griffin', 'lnlrtgomb@emlpro.com', '$2y$10$NVHPebNLeZ4J4HleyLtvPu7mwIAPC6hwzdozIy9qG6wNaMd3wCeDC', 1, 3, 0, 1),
@@ -889,7 +890,7 @@ ALTER TABLE `categoria`
 -- AUTO_INCREMENT de la tabla `curso`
 --
 ALTER TABLE `curso`
-  MODIFY `codi_curs` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `codi_curs` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `docente`
@@ -925,7 +926,7 @@ ALTER TABLE `intermedia_acreditacion_docente`
 -- AUTO_INCREMENT de la tabla `intermedia_curso_salon`
 --
 ALTER TABLE `intermedia_curso_salon`
-  MODIFY `codi_inte_curs_salo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `codi_inte_curs_salo` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `intermedia_docente_profesion`

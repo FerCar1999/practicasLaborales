@@ -27,7 +27,7 @@ class Acreditacion extends Validator {
 	//Encapsulamiento de nombre de categoria
 	public function setTipoAcre($value) {
 		//validando de que el valor sea alfabetico y que sea mayor a uno y menor a cien
-		if ($this->validateAlphabetic($value, 1, 250)) {
+		if ($this->validateAlphanumeric($value, 1, 250)) {
 			//seteando valor a la variable de nombre de categoria
 			$this->tipo_acre = $value;
 			//retornando respuesta true

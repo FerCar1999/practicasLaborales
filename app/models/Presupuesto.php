@@ -56,8 +56,12 @@ class Presupuesto extends Validator {
 		return $this->cant_pres;
 	}
 	public function setFechPres($value) {
-		$this->fech_pres = $value;
-		return true;
+		if ($this->validateDate($value)) {
+			$this->fech_pres=$value;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public function getFechPres() {
 		return $this->fech_pres;

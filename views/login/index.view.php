@@ -124,7 +124,6 @@
                                             <label for="corrUsua">
                                                 Ingrese su correo electronico:
                                             </label>
-                                        </input>
                                     </div>
                                     <div class="input-field col s12">
                                         <i class="material-icons prefix">
@@ -134,7 +133,6 @@
                                             <label for="contUsua">
                                                 Ingrese su contraseña:
                                             </label>
-                                        </input>
                                     </div>
                                     <div class="col s12">
                                         <a class="waves-effect waves-teal btn-flat right" onClick="recuperar();">¿Has olvidado tu contraseña?</a>

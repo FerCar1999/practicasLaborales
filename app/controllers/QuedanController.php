@@ -12,7 +12,12 @@ try {
     //si el post es para la datatable del crud de categoria
     if (isset($_POST['tabla'])) {
         //se obtiene la lista en array asociativo con formato json
-        $data = $quedan->getListaQuedanCasa($_SESSION['codi_casa']);
+        $data = null;
+        if ($_SESSION['codi_tipo_casa']==1) {
+            $data = $quedan->getListaQuedanCasaEncargada($_SESSION['codi_casa']);
+        } else {
+            $data = $quedan->getListaQuedanCasa($_SESSION['codi_casa']);
+        }
         //se imprime la lista
         echo $data;
     }

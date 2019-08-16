@@ -29,7 +29,7 @@ class Quedan extends Validator
     }
     public function setNumeQued($value)
     {
-        if ($value!=null) {
+        if (is_numeric($value) && $value>0) {
             $this->nume_qued = $value;
             return true;
         } else {
@@ -148,6 +148,12 @@ class Quedan extends Validator
     public function getListaQuedanCasa($codiCasa)
     {
         $sql="SELECT qm.codi_qued, qm.nume_qued, qm.fech_emis, qm.cant_fact, qm.arch_qued, qm.esta_qued FROM quedan_detalle as qd INNER JOIN quedan_maestro as qm ON qm.codi_qued = qd.codi_qued INNER JOIN factura as f ON f.codi_fact=qd.codi_fact INNER JOIN factura_detalle as fd ON fd.codi_fact=f.codi_fact INNER JOIN curso as c ON c.codi_curs=fd.codi_curs WHERE c.codi_casa = ? AND qm.esta_qued!=0 GROUP BY qm.codi_qued";
+        $params = array($codiCasa);
+        return Database::getRowsAjax($sql, $params);
+    }
+    public function getListaQuedanCasaEncargada($codiCasa)
+    {
+        $sql="SELECT qm.codi_qued, qm.nume_qued, qm.fech_emis, qm.cant_fact, qm.arch_qued, qm.esta_qued FROM quedan_detalle as qd INNER JOIN quedan_maestro as qm ON qm.codi_qued = qd.codi_qued INNER JOIN factura as f ON f.codi_fact=qd.codi_fact INNER JOIN factura_detalle as fd ON fd.codi_fact=f.codi_fact INNER JOIN curso as c ON c.codi_curs=fd.codi_curs WHERE qm.esta_qued=1 OR qm.esta_qued=2 OR qm.esta_qued= 3 AND c.codi_casa=? GROUP BY qm.codi_qued";
         $params = array($codiCasa);
         return Database::getRowsAjax($sql, $params);
     }

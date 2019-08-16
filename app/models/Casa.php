@@ -28,7 +28,7 @@ class Casa extends Validator
 
     public function setNombCasa($value)
     {
-        if ($this->validateAlphabetic($value, 1, 200)) {
+        if ($this->validateAlphanumeric($value, 1, 200)) {
             $this->nomb_casa = $value;
             return true;
         } else {

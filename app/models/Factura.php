@@ -24,22 +24,34 @@ class Factura extends Validator {
 		return $this->codi_fact;
 	}
 	public function setNumeFact($value) {
-		$this->nume_fact = $value;
+		if (is_numeric($values) && $value>0) {
+			$this->nume_fact = $value;
 		return true;
+		} else {
+			return false;
+		}
 	}
 	public function getNumeFact($value) {
 		return $this->nume_fact;
 	}
 	public function setFechEmisFact($value) {
-		$this->fech_emis_fact = $value;
-		return true;
+		if ($this->validateDate($value)) {
+			$this->fech_emis_fact=$value;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public function getFechEmisFact($value) {
 		return $this->fech_emis_fact;
 	}
 	public function setFechIngr($value) {
-		$this->fech_ingr = $value;
-		return true;
+		if ($this->validateDate($value)) {
+			$this->fech_ingr=$value;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public function getFechIngr($value) {
 		return $this->fech_ingr;

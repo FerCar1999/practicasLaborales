@@ -52,7 +52,7 @@ class Curso extends Validator {
 		return $this->codi_casa;
 	}
 	public function setCorrCurs($value) {
-		if ($this->validateAlphanumeric($value, 1, 100)) {
+		if ($this->validateCorrelativoCurso($value, 1, 100)) {
 			$this->corr_curs = $value;
 			return true;
 		} else {
@@ -74,21 +74,29 @@ class Curso extends Validator {
 		return $this->nomb_curs;
 	}
 	public function setFechInic($value) {
-		$this->fech_inic = $value;
-		return true;
+		if ($this->validateDate($value)) {
+			$this->fech_inic=$value;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public function getFechInic() {
 		return $this->fech_inic;
 	}
 	public function setFechFin($value) {
-		$this->fech_fin = $value;
-		return true;
+		if ($this->validateDate($value)) {
+			$this->fech_fin=$value;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public function getFechFin() {
 		return $this->fech_fin;
 	}
 	public function setCantPart($value) {
-		if ($this->validateId($value)) {
+		if ($value>0) {
 			$this->cant_part = $value;
 			return true;
 		} else {
@@ -99,15 +107,23 @@ class Curso extends Validator {
 		return $this->cant_part;
 	}
 	public function setMontEsti($value) {
-		$this->mont_esti = $value;
+		if ($value>0) {
+			$this->mont_esti = $value;
 		return true;
+		} else {
+			return false;
+		}
 	}
 	public function getMontEsti() {
 		return $this->mont_esti;
 	}
 	public function setFechInfo($value) {
-		$this->fech_info = $value;
-		return true;
+		if ($this->validateDate($value)) {
+			$this->fech_info=$value;
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public function getFechInfo() {
 		return $this->fech_info;

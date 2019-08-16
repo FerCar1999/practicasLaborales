@@ -68,7 +68,7 @@ try {
 							throw new Exception('Error con la fecha');
 						}
 					} else {
-						throw new Exception('La cantidad debe ser mayor a 0');
+						throw new Exception('La cantidad del presupuesto debe ser mayor a 0');
 					}
 				} else {
 					throw new Exception('No se encontro el usuario');

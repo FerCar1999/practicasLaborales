@@ -47,7 +47,7 @@ class Docente extends Validator {
 	//Encapsulamiento de nombre de categoria
 	public function setNombDoce($value) {
 		//validando de que el valor sea alfabetico y que sea mayor a uno y menor a cien
-		if ($this->validateAlphabetic($value, 1, 100)) {
+		if ($this->validateAlphanumeric($value, 1, 100)) {
 			//seteando valor a la variable de nombre de categoria
 			$this->nomb_doce = $value;
 			//retornando respuesta true
@@ -64,7 +64,7 @@ class Docente extends Validator {
 
 	public function setApelDoce($value) {
 		//validando de que el valor sea alfabetico y que sea mayor a uno y menor a cien
-		if ($this->validateAlphabetic($value, 1, 100)) {
+		if ($this->validateAlphanumeric($value, 1, 100)) {
 			//seteando valor a la variable de nombre de categoria
 			$this->apel_doce = $value;
 			//retornando respuesta true

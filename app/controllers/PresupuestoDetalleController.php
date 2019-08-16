@@ -52,15 +52,25 @@ try {
                             if ($cantidad >= 0) {
                                 if ($presupuestoD->setFechPresDeta(date('Y-m-d'))) {
                                     if ($presupuestoD->setCodiUsua($_SESSION['codi_usua'])) {
-                                            if ($presupuestoD-> setCodiCate($_POST['codiCate'])) {
-                                                if ($presupuestoD-> agregarEgreso()) {
-                                                    throw new Exception('Exito');
+                                            if (isset($_POST['codiCate'])) {
+                                                if ($presupuestoD-> setCodiCate($_POST['codiCate'])) {
+                                                    if ($presupuestoD->verificarCategoriaDinero()) {
+                                                        if ($presupuestoD-> agregarEgreso()) {
+                                                            throw new Exception('Exito');
+                                                        } else {
+                                                            throw new Exception('No se pudo agregar el dinero a la categoria');
+                                                        }
+                                                    } else {
+                                                        throw new Exception('La categoria que selecciono ya tiene una cantidad designada');
+                                                    }
+                                                    
                                                 } else {
-                                                    throw new Exception('No se pudo agregar el dinero a la categoria');
+                                                    throw new Exception("Debe de seleccionar la categoria a la cual ira el dinero");
                                                 }
                                             } else {
-                                                throw new Exception("Debe de seleccionar la categoria a la cual ira el dinero");
+                                                throw new Exception('Debe de seleccionar la categoria a la cual ira el dinero');
                                             }
+                                            
                                     } else {
                                         throw new Exception('No se encontro el usuario');
                                     }
@@ -71,10 +81,10 @@ try {
                                 throw new Exception('La cantidad a ingresar sobrepasa el presupuesto: $' . $cantidadPresupuestoRestante['cant_pres']);
                             }
                         } else {
-                            throw new Exception('La cantidad debe ser mayor a 0');
+                            throw new Exception('La cantidad monetaria debe ser mayor a 0');
                         }
                     } else {
-                        throw new Exception('Al parecer este mes no se le ha agregado su presupuesto, contactar con la casa encargada para poder solucionarlo');
+                        throw new Exception('Al parecer este año no se le ha agregado su presupuesto, contactar con la casa encargada para poder solucionarlo');
                     }
                 break;
         }

@@ -95,6 +95,15 @@ class Validator
             return false;
         }
     }
+    public function validateDate($value)
+    {
+        if (!is_null($value)) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
     public function validateHour($value)
     {
         if (preg_match("/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/", $value)) {
@@ -114,6 +123,14 @@ class Validator
     public function validateAlphabetic($value, $minimum, $maximum)
     {
         if (preg_match("/^[a-zA-ZñÑáÁéÉíÍóÓúÚ\s]{" . $minimum . "," . $maximum . "}$/", $value)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    public function validateCorrelativoCurso($value, $minimum, $maximum)
+    {
+        if (preg_match("/^[a-zA-Z0-9ñÑáÁéÉíÍóÓúÚ\s]{" . $minimum . "," . $maximum . "}$/", $value)) {
             return true;
         } else {
             return false;

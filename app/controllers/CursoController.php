@@ -65,6 +65,7 @@ try {
 			break;
 		//en el caso que la accion sea de crear una nueva categoria
 		case 'create':
+		if(isset($_POST['codiCate'])){
 			if ($curso->setCodiCate($_POST['codiCate'])) {
 				if ($curso->setCodiCasa($_SESSION['codi_casa'])) {
 					if ($curso->setCorrCurs($_POST['corrCurs'])) {
@@ -93,7 +94,7 @@ try {
 											throw new Exception("Debe ingresar el monto estimado del curso");
 										}
 									} else {
-										throw new Exception("Debe ingresar la cantidad de participantes del curso");
+										throw new Exception("Debe ingresar una cantidad estimada de participantes del curso");
 									}
 								} else {
 									throw new Exception("Verifique la fecha final");
@@ -105,7 +106,7 @@ try {
 							throw new Exception("Verifique el nombre del curso");
 						}
 					} else {
-						throw new Exception("Debe agregar el correlativo del curso");
+						throw new Exception("Ingrese un correlativo correcto para el curso");
 					}
 				} else {
 					throw new Exception("No se encontro la casa");
@@ -113,6 +114,9 @@ try {
 			} else {
 				throw new Exception("Seleccione la categoria del curso");
 			}
+		}else{
+			throw new Exception("Seleccione la categoria del curso");
+		}
 			break;
 		//en el caso de que la accion sea de modificar la categoria
 		case 'update':
