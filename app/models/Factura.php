@@ -24,7 +24,7 @@ class Factura extends Validator {
 		return $this->codi_fact;
 	}
 	public function setNumeFact($value) {
-		if (is_numeric($values) && $value>0) {
+		if ($value>0) {
 			$this->nume_fact = $value;
 		return true;
 		} else {
@@ -70,7 +70,7 @@ class Factura extends Validator {
 	}
 	public function setArchFact($file) {
 		if ($this->validateFile($file, $this->arch_fact, "../../web/facturas/")) {
-			$this->arch_fact = $this->getImageName();
+			$this->arch_fact = $this->getFileName();
 			return true;
 		} else {
 			return false;

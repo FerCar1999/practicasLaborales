@@ -3,6 +3,8 @@ class Validator
 {
     private $imageName  = null;
     private $imageError = null;
+    private $fileName  = null;
+    private $fileError = null;
 
     public function getImageName()
     {
@@ -46,21 +48,40 @@ class Validator
     }
     public function validateFile($file, $value, $path)
     {
-        $typeValidate = array('application/msword', 'image/jpeg', 'image/png', 'application/pdf', 'application/x-rar-compressed', 'application/vnd.ms-excel', 'application/zip', 'application/x-7z-compressed');
-        for ($i = 0; $i < count($typeValidate); $i++) {
-            if ($file['type'] == $typeValidate[$i]) {
-                $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            if ($extension == 'pdf') {
                 $archivo   = uniqid() . "." . $extension;
                 $url       = $path . $archivo;
                 if (move_uploaded_file($file['tmp_name'], $url)) {
-                    $this->imageName = $archivo;
+                    $this->fileName = $archivo;
                     return true;
                 } else {
-                    $this->imageError = 1;
+                    $this->fileError = 1;
                     return false;
                 }
+            }else{
+                $this->fileError=2;
+                return false;
             }
+    }
+    public function getFileName()
+    {
+        return $this->fileName;
+    }
+
+    public function getFileError()
+    {
+        switch ($this->fileError) {
+            case 1:
+                $error = "No se puede guardar la imagen";
+                break;
+            case 2:
+                $error = "El tipo de archivo debe ser pdf";
+                break;
+            default:
+                $error = "Ocurrió un problema con el archivo".$this->fileError;
         }
+        return $error;
     }
     public function validateImage($file, $value, $path, $max_width, $max_heigth)
     {
@@ -138,7 +159,7 @@ class Validator
     }
     public function validateAlphanumeric($value, $minimum, $maximum)
     {
-        if (preg_match("/^[a-zA-Z0-9ñÑáÁéÉíÍóÓúÚ\s\.,-]{" . $minimum . "," . $maximum . "}$/", $value)) {
+        if (preg_match("/^[a-zA-Z0-9ñÑáÁéÉíÍóÓúÚ#\s\.,-]{" . $minimum . "," . $maximum . "}$/", $value)) {
             return true;
         } else {
             return false;

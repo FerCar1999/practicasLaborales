@@ -67,6 +67,12 @@ class Categoria extends Validator
         return Database::executeRow($sql, $params);
     }
     //Funcion para obtener lista de registros de la tabla categoria sin json
+    public function getCategoriasR()
+    {
+        $sql    = "SELECT codi_cate, nomb_cate FROM categoria WHERE esta_cate=1 ORDER BY nomb_cate";
+        $params = array(null);
+        return Database::getRows($sql, $params);
+    }
     public function getCategoriasN($codiCasa)
     {
         $sql    = "SELECT c.codi_cate, c.nomb_cate FROM presupuesto_detalle as pd INNER JOIN presupuesto as p ON p.codi_pres=pd.codi_pres INNER JOIN categoria as c ON c.codi_cate=pd.codi_cate WHERE c.esta_cate=1 AND p.codi_casa=? ORDER BY c.codi_cate";

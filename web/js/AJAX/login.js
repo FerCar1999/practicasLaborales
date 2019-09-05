@@ -81,7 +81,7 @@ function recuperando() {
                 //se muestra el preloader
                 $('#preloader').hide();
                 //mensaje de error
-                M.toast({ html: JSON.parse(response), classes: 'rounded' });
+                M.toast({ html: JSON.parse(response), classes: 'rounded' ,displayLength: Infinity});
             }
         },
         error: function () {

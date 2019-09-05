@@ -220,7 +220,7 @@ try {
                                 if (enviandoCorreoCuentaCambioContrasenia($_POST['corrOlvi'], null, $password)) {
                                     throw new Exception("Exito");
                                 } else {
-                                    throw new Exception("Hemos tenido un problema al enviarle el correo. Favor anote la contraseña : "+$password);
+                                    throw new Exception("Hemos tenido un problema al enviarle el correo. Favor anote la contraseña : ". $password);
                                 }
                             } else {
                                 throw new Exception("No se pudo generar a nueva contraseña. Intentelo más tarde");

@@ -84,7 +84,7 @@ class Quedan extends Validator
     public function setArchQued($file)
     {
         if ($this->validateFile($file, $this->arch_qued, "../../web/quedan/")) {
-            $this->arch_qued = $this->getImageName();
+            $this->arch_qued = $this->getFileName();
             return true;
         } else {
             return false;

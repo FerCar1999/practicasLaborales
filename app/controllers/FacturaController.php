@@ -43,7 +43,7 @@ try {
 										}
 									}
 								} else {
-									throw new Exception($factura->getImageError());
+									throw new Exception($factura->getFileError());
 								}
 							} else {
 								throw new Exception("Seleccione un archivo");

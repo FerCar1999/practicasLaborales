@@ -14,6 +14,12 @@ try {
         //imprimiendo la lista en tipo json
         echo json_encode($data);
     }
+    if (isset($_POST['tipo'])) {
+        //se obtiene la lista sin array asociativo
+        $data = $categoria->getCategoriasR();
+        //imprimiendo la lista en tipo json
+        echo json_encode($data);
+    }
     //si el post es para la datatable del crud de categoria
     if (isset($_POST['tabla'])) {
         //se obtiene la lista en array asociativo con formato json

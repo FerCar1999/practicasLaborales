@@ -48,7 +48,7 @@ try {
                                                 }
                                             }
                                         } else {
-                                            throw new Exception($quedan->getImageError());
+                                            throw new Exception($quedan->getFileError());
                                         }
                                     } else {
                                         throw new Exception("Seleccione un archivo");

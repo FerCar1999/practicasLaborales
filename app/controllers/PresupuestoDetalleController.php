@@ -54,15 +54,11 @@ try {
                                     if ($presupuestoD->setCodiUsua($_SESSION['codi_usua'])) {
                                             if (isset($_POST['codiCate'])) {
                                                 if ($presupuestoD-> setCodiCate($_POST['codiCate'])) {
-                                                    if ($presupuestoD->verificarCategoriaDinero()) {
                                                         if ($presupuestoD-> agregarEgreso()) {
                                                             throw new Exception('Exito');
                                                         } else {
                                                             throw new Exception('No se pudo agregar el dinero a la categoria');
                                                         }
-                                                    } else {
-                                                        throw new Exception('La categoria que selecciono ya tiene una cantidad designada');
-                                                    }
                                                     
                                                 } else {
                                                     throw new Exception("Debe de seleccionar la categoria a la cual ira el dinero");

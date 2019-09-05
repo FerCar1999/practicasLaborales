@@ -188,5 +188,5 @@
         </div>
     </div>
 </div>
-<script src="<?= WEB_PATH ?>/js/AJAX/login.js"></script>
+<script src="<?= WEB_PATH ?>/js/AJAX/login.js" charset="utf-8"></script>
 <?php include APP_PATH . '/views/templates/footer.view.php'?>
