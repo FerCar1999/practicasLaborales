@@ -1,2 +1,2 @@
-# practicasLaborales
-Repositorio para las practicas laborales
+# SGCS
+SISTEMA DE GESTION DE CURSOS SALESIANOS
