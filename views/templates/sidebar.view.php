@@ -43,10 +43,10 @@ if (isset($_SESSION['codi_usua']) && isset($_SESSION['codi_tipo_usua'])) {
                     <a class="collapsible-header" id="drop">Catalogos<i class="material-icons" id="drop">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                       <ul>
-                        <li><a href="acreditacion"><i class="material-icons">monetization_on</i>Acreditacion</a></li>
+                        <li><a href="acreditacion"><i class="material-icons">assignment</i>Acreditacion</a></li>
                            <li><a href="docente"><i class="material-icons">people</i>Docentes</a></li>
                            <li><a href="horario"><i class="material-icons">alarm</i>Horarios</a></li>
-                           <li><a href="profesion"><i class="material-icons">monetization_on</i>Profesion</a></li>
+                           <li><a href="profesion"><i class="material-icons">assignment</i>Profesion</a></li>
                            <li><a href="salon"><i class="material-icons">list</i>Salones</a></li>
                            <li><a href="usuario"><i class="material-icons">person</i>Usuarios</a></li>
                 ');
@@ -121,10 +121,10 @@ if (isset($_SESSION['codi_usua']) && isset($_SESSION['codi_tipo_usua'])) {
                     <a class="collapsible-header" id="drop">Catalogos<i class="material-icons" id="drop">arrow_drop_down</i></a>
                     <div class="collapsible-body">
                       <ul>
-                        <li><a href="acreditacion"><i class="material-icons">monetization_on</i>Acreditacion</a></li>
+                        <li><a href="acreditacion"><i class="material-icons">assignment</i>Acreditacion</a></li>
                            <li><a href="docente"><i class="material-icons">people</i>Docentes</a></li>
                            <li><a href="horario"><i class="material-icons">alarm</i>Horarios</a></li>
-                           <li><a href="profesion"><i class="material-icons">monetization_on</i>Profesion</a></li>
+                           <li><a href="profesion"><i class="material-icons">assignment</i>Profesion</a></li>
                            <li><a href="salon"><i class="material-icons">list</i>Salones</a></li>
                 ');
 			//si el tipo de casa es 1 (encargada) se mostrara el menu para casas

@@ -8,10 +8,16 @@
             <div class="row">
                 <div class="col s12">
                     <div class="row">
-                        <div class="input-field col s12">
+                        <div class="input-field col s6">
                             <i class="material-icons prefix">library_books</i>
                             <input id="nombCate" name="nombCate" type="text" class="validate">
                             <label for="nombCate">Nombre de categoria:</label>
+                            <span class="helper-text" data-error="Campo requerido, ingrese solo letras" data-success="Correcto"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">library_books</i>
+                            <input id="corrCate" name="corrCate" type="text" class="validate">
+                            <label for="corrCate">Diminutivo de categoria:</label>
                             <span class="helper-text" data-error="Campo requerido, ingrese solo letras" data-success="Correcto"></span>
                         </div>
                     </div>

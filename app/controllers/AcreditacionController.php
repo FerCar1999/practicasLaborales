@@ -1,7 +1,7 @@
 <?php
 //llamando el archivo app
 require_once '../../config/app.php';
-//llamando el archivo modelo de la tabla categoria
+//llamando el archivo modelo de la tabla acreditacion
 require_once APP_PATH . '/app/models/Acreditacion.php';
 
 try {

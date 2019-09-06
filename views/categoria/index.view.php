@@ -27,6 +27,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
+                                <th>Diminutivo</th>
                                 <th>Estado</th>
                                 <th>Opciones</th>
                             </tr>

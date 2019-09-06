@@ -1,6 +1,6 @@
 <?php
-$title = "Usuarios";
-$page = "Usuarios";
+$title = "Cuenta";
+$page = "Cuenta";
 ?>
 <?php include APP_PATH . '/views/templates/head.view.php' ?>
 <?php include APP_PATH . '/views/templates/sidebar.view.php' ?>

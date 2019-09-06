@@ -17,6 +17,9 @@ try {
         }
         echo $data;
     }
+    if (isset($_POST['tipo'])) {
+        echo json_encode($_SESSION['codi_tipo_usua']);
+    }
     if (isset($_POST['accion'])) {
         switch ($_POST['accion']) {
             case 'create':

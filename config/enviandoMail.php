@@ -7,11 +7,12 @@ use PHPMailer\PHPMailer\PHPMailer;
 //Load Composer's autoloader
 require APP_PATH . '/app/libraries/vendor/autoload.php';
 
+
 function enviandoCorreoCuenta($destinatario, $nombreDestinatario, $password) {
 	$mail = new PHPMailer(true); // Passing `true` enables exceptions
 	try {
 		//Server settings
-		$mail->SMTPDebug = 2; // Enable verbose debug output
+		$mail->SMTPDebug = 0; // Enable verbose debug output
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
@@ -31,15 +32,6 @@ function enviandoCorreoCuenta($destinatario, $nombreDestinatario, $password) {
 		//Recipients
 		$mail->setFrom('carranzafernando99@gmail.com', 'Fernando Ernesto Carranza Guardado');
 		$mail->addAddress($destinatario, $nombreDestinatario); // Add a recipient
-		//$mail->addAddress('ellen@example.com');               // Name is optional
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
-
-		//Attachments
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
 		$mail->Subject = 'Creacion de Cuenta';
@@ -48,8 +40,12 @@ function enviandoCorreoCuenta($destinatario, $nombreDestinatario, $password) {
 		<center><p>Saludos ' . $nombreDestinatario . ', se le notifica por medio de este correo que se ha creado su cuenta con exito. Se le envia su contraseña : ' . $password . '</p><center>';
 		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 
-		$mail->send();
-		return true;
+		if ($mail->send()) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	} catch (Exception $e) {
 		return false;
 	}
@@ -79,21 +75,12 @@ function enviandoCorreoCuentaCambioContrasenia($destinatario, $nombreDestinatari
 		//Recipients
 		$mail->setFrom('carranzafernando99@gmail.com', 'Fernando Ernesto Carranza Guardado');
 		$mail->addAddress($destinatario, $nombreDestinatario); // Add a recipient
-		//$mail->addAddress('ellen@example.com');               // Name is optional
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
-
-		//Attachments
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
 		$mail->Subject = 'Recuperacion de Contraseña';
 		$mail->Body = '<center><h1>Contraseña Recuperada</h1><center>
 		</br>
-		<center><p>Saludos ' . $nombreDestinatario . ', se le notifica por medio de este correo que se cambiado con exito su
+		<center><p>Saludos, se le notifica por medio de este correo que se cambiado con exito su
 		contraseña. Se le envia su nueva contraseña : ' . $password . '</p><center>';
 		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 		if($mail->send()){
@@ -110,7 +97,7 @@ function enviandoCorreoCuentaModificaContra($destinatario, $nombreDestinatario, 
 	$mail = new PHPMailer(true); // Passing `true` enables exceptions
 	try {
 		//Server settings
-		$mail->SMTPDebug = 2; // Enable verbose debug output
+		$mail->SMTPDebug = 0; // Enable verbose debug output
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
@@ -126,19 +113,9 @@ function enviandoCorreoCuentaModificaContra($destinatario, $nombreDestinatario, 
 				'allow_self_signed' => true,
 			),
 		); // TCP port to connect to
-
 		//Recipients
 		$mail->setFrom('carranzafernando99@gmail.com', 'Fernando Ernesto Carranza Guardado');
 		$mail->addAddress($destinatario, $nombreDestinatario); // Add a recipient
-		//$mail->addAddress('ellen@example.com');               // Name is optional
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
-
-		//Attachments
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
 		$mail->Subject = 'Cambio de Contraseña';
@@ -147,9 +124,12 @@ function enviandoCorreoCuentaModificaContra($destinatario, $nombreDestinatario, 
 		<center><p>Saludos ' . $nombreDestinatario . ', se le notifica por medio de este correo que se cambiado con exito su
 		contraseña. Se le envia su contraseña de nuevo : ' . $password . '</p><center>';
 		$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-
-		$mail->send();
-		return true;
+		if ($mail->send()) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	} catch (Exception $e) {
 		return false;
 	}
@@ -158,7 +138,7 @@ function enviandoCorreoPeticion($nombreEmisor, $correoEmisor, $nombreReceptor, $
 	$mail = new PHPMailer(true); // Passing `true` enables exceptions
 	try {
 		//Server settings
-		$mail->SMTPDebug = 2; // Enable verbose debug output
+		$mail->SMTPDebug = 0; // Enable verbose debug output
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
@@ -178,15 +158,6 @@ function enviandoCorreoPeticion($nombreEmisor, $correoEmisor, $nombreReceptor, $
 		//Recipients
 		$mail->setFrom($correoEmisor, $nombreEmisor);
 		$mail->addAddress($correoReceptor, $nombreReceptor); // Add a recipient
-		//$mail->addAddress('ellen@example.com');               // Name is optional
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
-
-		//Attachments
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
 		if ($facturaOquedan==1) {
@@ -202,8 +173,12 @@ function enviandoCorreoPeticion($nombreEmisor, $correoEmisor, $nombreReceptor, $
 			<center><p>Saludos ' . $nombreReceptor . ', por este correo se le notifica que el usuario: '.$nombreEmisor.' ha realizado una peticion de eliminacion de un registro en el area de Quedan la cual es el quedan con el numero:'.$numeroQuedanOFactura.'. Le solicitamos que realice este proceso lo mas rapido posible</p><center>';
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 		}
-		$mail->send();
-		return true;
+		if ($mail->send()) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	} catch (Exception $e) {
 		return false;
 	}
@@ -212,7 +187,7 @@ function enviandoCorreoPresupuesto($nombreEmisor, $correoEmisor, $nombreReceptor
 	$mail = new PHPMailer(true); // Passing `true` enables exceptions
 	try {
 		//Server settings
-		$mail->SMTPDebug = 2; // Enable verbose debug output
+		$mail->SMTPDebug = 0; // Enable verbose debug output
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
@@ -228,19 +203,9 @@ function enviandoCorreoPresupuesto($nombreEmisor, $correoEmisor, $nombreReceptor
 				'allow_self_signed' => true,
 			),
 		); // TCP port to connect to
-
 		//Recipients
 		$mail->setFrom($correoEmisor, $nombreEmisor);
 		$mail->addAddress($correoReceptor, $nombreReceptor); // Add a recipient
-		//$mail->addAddress('ellen@example.com');               // Name is optional
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
-
-		//Attachments
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
 			$mail->Subject = 'Presupuesto Ingresado';
@@ -248,8 +213,11 @@ function enviandoCorreoPresupuesto($nombreEmisor, $correoEmisor, $nombreReceptor
 			</br>
 			<center><p>Saludos ' . $nombreReceptor . ', por este correo se le notifica que el usuario: '.$nombreEmisor.' de la casa '.$casa.' ha agregado su presupuesto con exito.</p><center>';
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-		$mail->send();
-		return true;
+			if ($mail->send()) {
+				return true;
+			} else {
+				return false;
+			}
 	} catch (Exception $e) {
 		return false;
 	}
@@ -258,7 +226,7 @@ function enviandoCorreoAlerta($nombreEmisor, $correoEmisor, $nombreReceptor, $co
 	$mail = new PHPMailer(true); // Passing `true` enables exceptions
 	try {
 		//Server settings
-		$mail->SMTPDebug = 2; // Enable verbose debug output
+		$mail->SMTPDebug = 0; // Enable verbose debug output
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
@@ -278,14 +246,6 @@ function enviandoCorreoAlerta($nombreEmisor, $correoEmisor, $nombreReceptor, $co
 		//Recipients
 		$mail->setFrom($correoEmisor, $nombreEmisor);
 		$mail->addAddress($correoReceptor, $nombreReceptor); // Add a recipient
-		//$mail->addAddress('ellen@example.com');               // Name is optional
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
-
-		//Attachments
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
 
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
@@ -314,8 +274,12 @@ function enviandoCorreoAlerta($nombreEmisor, $correoEmisor, $nombreReceptor, $co
 				$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
 					break;
 		}
-		$mail->send();
-		return true;
+		if ($mail->send()) {
+			return true;
+		} else {
+			return false;
+		}
+		
 	} catch (Exception $e) {
 		return false;
 	}
@@ -324,7 +288,7 @@ function enviandoCorreoQuedan($nombreEmisor, $correoEmisor, $casa ,$nombreRecept
 	$mail = new PHPMailer(true); // Passing `true` enables exceptions
 	try {
 		//Server settings
-		$mail->SMTPDebug = 2; // Enable verbose debug output
+		$mail->SMTPDebug = 0; // Enable verbose debug output
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
@@ -344,15 +308,6 @@ function enviandoCorreoQuedan($nombreEmisor, $correoEmisor, $casa ,$nombreRecept
 		//Recipients
 		$mail->setFrom($correoEmisor, $nombreEmisor);
 		$mail->addAddress($correoReceptor, $nombreReceptor); // Add a recipient
-		//$mail->addAddress('ellen@example.com');               // Name is optional
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
-
-		//Attachments
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
 		$mail->Subject = 'FACTURA AGREGADA A QUEDAN';
@@ -360,8 +315,12 @@ function enviandoCorreoQuedan($nombreEmisor, $correoEmisor, $casa ,$nombreRecept
 			</br>
 			<center><p>Saludos ' . $nombreReceptor . ', por este correo se le notifica que su factura: '.$factura.' Ha sido agregada al quedan: '.$quedan.', la cual la ingreso el usuario '.$nombreEmisor.' proveniente de la casa: '.$casa.'</p><center>';
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-		$mail->send();
-		return true;
+			if ($mail->send()) {
+				return true;
+			} else {
+				return false;
+			}
+			
 	} catch (Exception $e) {
 		return false;
 	}
@@ -370,7 +329,7 @@ function enviandoCorreoQuedanAbono($nombreEmisor, $correoEmisor, $casa ,$nombreR
 	$mail = new PHPMailer(true); // Passing `true` enables exceptions
 	try {
 		//Server settings
-		$mail->SMTPDebug = 2; // Enable verbose debug output
+		$mail->SMTPDebug = 0; // Enable verbose debug output
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
@@ -390,15 +349,6 @@ function enviandoCorreoQuedanAbono($nombreEmisor, $correoEmisor, $casa ,$nombreR
 		//Recipients
 		$mail->setFrom($correoEmisor, $nombreEmisor);
 		$mail->addAddress($correoReceptor, $nombreReceptor); // Add a recipient
-		//$mail->addAddress('ellen@example.com');               // Name is optional
-		//$mail->addReplyTo('info@example.com', 'Information');
-		//$mail->addCC('cc@example.com');
-		//$mail->addBCC('bcc@example.com');
-
-		//Attachments
-		//$mail->addAttachment('/var/tmp/file.tar.gz');         // Add attachments
-		//$mail->addAttachment('/tmp/image.jpg', 'new.jpg');    // Optional name
-
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
 		$mail->Subject = 'QUEDAN ABONADO';
@@ -406,8 +356,12 @@ function enviandoCorreoQuedanAbono($nombreEmisor, $correoEmisor, $casa ,$nombreR
 			</br>
 			<center><p>Saludos ' . $nombreReceptor . ', por este correo se le notifica que la casa salesiana encargada ya realizo el abono de su quedan : '.$quedan.' en el cual se ingresa su factura: '.$factura.', la cual la ingreso el usuario '.$nombreEmisor.' proveniente de la casa: '.$casa.'. Favor verificar si esta informacion es correcta y modificar el estado su quedan</p><center>';
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-		$mail->send();
-		return true;
+			if ($mail->send()) {
+				return true;
+			} else {
+				return false;
+			}
+			
 	} catch (Exception $e) {
 		return false;
 	}
@@ -416,7 +370,7 @@ function enviandoCorreoQuedanFin($nombreEmisor, $correoEmisor, $casa ,$nombreRec
 	$mail = new PHPMailer(true); // Passing `true` enables exceptions
 	try {
 		//Server settings
-		$mail->SMTPDebug = 2; // Enable verbose debug output
+		$mail->SMTPDebug = 0; // Enable verbose debug output
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
@@ -452,8 +406,12 @@ function enviandoCorreoQuedanFin($nombreEmisor, $correoEmisor, $casa ,$nombreRec
 			</br>
 			<center><p>Saludos ' . $nombreReceptor . ', por este correo se le notifica que el usuario: '.$nombreEmisor.' proveniente de la casa: '.$casa.', ha confirmado el recibimiento del dinero proveniente del quedan:'.$quedan.'.</p><center>';
 			$mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-		$mail->send();
-		return true;
+			if ($mail->send()) {
+				return true;
+			} else {
+				return false;
+			}
+			
 	} catch (Exception $e) {
 		return false;
 	}

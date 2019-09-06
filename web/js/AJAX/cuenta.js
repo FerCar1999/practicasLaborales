@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	$('.collapsible').collapsible();
     $('.tabs').tabs();
+    verificarTipoUsuario();
     misDatos();
     datosCasa();
     dataTable();
@@ -88,7 +89,25 @@ function getIdToDelete(tbody, table) {
         var codi_tele = $("#codiTeleDele").val(data.codi_tele);
     });
 }
-
+function verificarTipoUsuario() { 
+    $.ajax({
+        method : 'POST',
+        url : '../app/controllers/UsuarioController.php',
+        data:{
+            tipo: '2'
+        },
+        success:  function (data) { 
+            var resp = JSON.parse(data);
+            if (resp == 2) {
+                $('[href="#cuentaCasa"]').closest('li').hide();
+            } else {
+            }
+        },
+        error:  function () { 
+            M.toast({ html: 'Error al contactar con el servidor', classes: 'rounded' });
+         }
+    })
+ }
 function create() {
     //obteniendo los datos del formulario
     var datos = $('#frmAdd').serialize();

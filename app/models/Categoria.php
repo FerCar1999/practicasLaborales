@@ -5,6 +5,7 @@ class Categoria extends Validator
     // Declaraion de propiedades
     private $codi_cate = null;
     private $nomb_cate = null;
+    private $corr_cate = null;
     private $esta_cate = null;
 
     // Encapsulamiento de codigo de categoria
@@ -31,7 +32,7 @@ class Categoria extends Validator
     public function setNombCate($value)
     {
         //validando de que el valor sea alfabetico y que sea mayor a uno y menor a cien
-        if ($this->validateAlphabetic($value, 1, 100)) {
+        if ($this->validateAlphanumeric($value, 1, 100)) {
             //seteando valor a la variable de nombre de categoria
             $this->nomb_cate = $value;
             //retornando respuesta true
@@ -45,6 +46,25 @@ class Categoria extends Validator
     public function getNombCate()
     {
         return $this->nomb_cate;
+    }
+    //Encapsulamiento de nombre de categoria
+    public function setCorrCate($value)
+    {
+        //validando de que el valor sea alfabetico y que sea mayor a uno y menor a cien
+        if ($this->validateAlphabetic($value, 1, 100)) {
+            //seteando valor a la variable de nombre de categoria
+            $this->corr_cate = $value;
+            //retornando respuesta true
+            return true;
+        } else {
+            //retornando respuesta false
+            return false;
+        }
+    }
+
+    public function getCorrCate()
+    {
+        return $this->corr_cate;
     }
     //Encapsulamiento de estado de categoria
     public function setEstaCate($value)
@@ -62,27 +82,27 @@ class Categoria extends Validator
     //Funcion para crear categoria
     public function createCategoria()
     {
-        $sql    = "INSERT INTO categoria(nomb_cate, esta_cate) VALUES (?, 1)";
-        $params = array($this->nomb_cate);
+        $sql    = "INSERT INTO categoria(nomb_cate, corr_cate, esta_cate) VALUES (?, ?, 1)";
+        $params = array($this->nomb_cate, $this->corr_cate);
         return Database::executeRow($sql, $params);
     }
     //Funcion para obtener lista de registros de la tabla categoria sin json
     public function getCategoriasR()
     {
-        $sql    = "SELECT codi_cate, nomb_cate FROM categoria WHERE esta_cate=1 ORDER BY nomb_cate";
+        $sql    = "SELECT codi_cate, CONCAT(nomb_cate,'(',corr_cate,')') as nomb_cate FROM categoria WHERE esta_cate=1 ORDER BY nomb_cate";
         $params = array(null);
         return Database::getRows($sql, $params);
     }
     public function getCategoriasN($codiCasa)
     {
-        $sql    = "SELECT c.codi_cate, c.nomb_cate FROM presupuesto_detalle as pd INNER JOIN presupuesto as p ON p.codi_pres=pd.codi_pres INNER JOIN categoria as c ON c.codi_cate=pd.codi_cate WHERE c.esta_cate=1 AND p.codi_casa=? ORDER BY c.codi_cate";
+        $sql    = "SELECT c.codi_cate, CONCAT(c.nomb_cate,'(',c.corr_cate,')') as nomb_cate FROM presupuesto_detalle as pd INNER JOIN presupuesto as p ON p.codi_pres=pd.codi_pres INNER JOIN categoria as c ON c.codi_cate=pd.codi_cate WHERE c.esta_cate=1 AND p.codi_casa=? ORDER BY c.codi_cate";
         $params = array($codiCasa);
         return Database::getRows($sql, $params);
     }
     //Funcion para obtener lista de registros en la tabla categoria
     public function getCategorias()
     {
-        $sql    = "SELECT codi_cate, nomb_cate, esta_cate FROM categoria WHERE esta_cate=1 ORDER BY codi_cate";
+        $sql    = "SELECT codi_cate, nomb_cate, corr_cate, esta_cate FROM categoria WHERE esta_cate=1 ORDER BY codi_cate";
         $params = array(null);
         return Database::getRowsAjax($sql, $params);
     }
@@ -90,8 +110,8 @@ class Categoria extends Validator
     //Funcion para modificar tanto el nombre o el estado un registro de la tabla categoria
     public function updateCategoria()
     {
-        $sql    = "UPDATE categoria SET nomb_cate = ?, esta_cate = ? WHERE codi_cate = ?";
-        $params = array($this->nomb_cate, $this->esta_cate, $this->codi_cate);
+        $sql    = "UPDATE categoria SET nomb_cate = ?, corr_cate=?, esta_cate = ? WHERE codi_cate = ?";
+        $params = array($this->nomb_cate, $this->corr_cate, $this->esta_cate, $this->codi_cate);
         return Database::executeRow($sql, $params);
     }
 }

@@ -97,7 +97,7 @@ class PresupuestoDetalle extends Validator
         return Database::getRow($sql, $params);
     }
     public function obtenerCategoriasSinPresupuesto($casa, $anio) {
-		$sql = "SELECT c.codi_cate, c.nomb_cate FROM categoria as c WHERE c.esta_cate=1 AND c.codi_cate NOT IN(SELECT pd.codi_cate FROM presupuesto_detalle as pd INNER JOIN presupuesto as p ON p.codi_pres=pd.codi_pres WHERE p.codi_casa = ? AND YEAR(pd.fech_pres_deta) = ?)";
+		$sql = "SELECT c.codi_cate, c.nomb_cate FROM categoria as c WHERE c.esta_cate=1 AND c.codi_cate NOT IN(SELECT pd.codi_cate FROM presupuesto_detalle as pd INNER JOIN presupuesto as p ON p.codi_pres=pd.codi_pres WHERE pd.esta_pres_deta=1 AND p.codi_casa = ? AND YEAR(pd.fech_pres_deta) = ?)";
 		$params = array($casa,$anio);
 		return Database::getRows($sql, $params);
 	}

@@ -1,4 +1,15 @@
 $(document).ready(function () {
+  $("#preloader").hide();
+  $('.datepicker').datepicker({
+    format: 'yyyy-mm-dd',
+    i18n: {
+      months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sept", "Oct", "Nov", "Dic"],
+      weekdays: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+      weekdaysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+      weekdaysAbbrev: ["D", "L", "M", "M", "J", "V", "S"]
+    }
+  });
   finalizandoCursos();
   selectCursosPendientes();
   selectCursosPendientesInforme();
@@ -9,56 +20,55 @@ $(document).ready(function () {
 });
 //Funcion que obtiene los cursos pendientes de finalizar
 function selectCursosPendientes() {
-    $.ajax({
-      type: 'POST',
-      url: '../app/controllers/DashboardController.php',
-      data: {
-        dashboard: 'cursos'
-      },
-      dataType: 'JSON',
-      success: function (data) {
-        if (data.length>0) {
-          $("#cantidadCursos").text(data.length);
+  $.ajax({
+    type: 'POST',
+    url: '../app/controllers/DashboardController.php',
+    data: {
+      dashboard: 'cursos'
+    },
+    dataType: 'JSON',
+    success: function (data) {
+      if (data.length > 0) {
+        $("#cantidadCursos").text(data.length);
         for (var i = 0; i < data.length; i++) {
           var fechInic = moment(data[i].fech_fin);
-          var hoy =new Date;
-          var fechHoy = moment(hoy.getFullYear()+"-0"+(hoy.getMonth()+1)+"-"+hoy.getDate());
-          var cantDiasAct = (fechHoy.diff(fechInic,'days'));
-          var porcDiasPasa = (Math.abs(5+cantDiasAct)/5);
-          console.log(cantDiasAct)
+          var hoy = new Date;
+          var fechHoy = moment(hoy.getFullYear() + "-0" + (hoy.getMonth() + 1) + "-" + hoy.getDate());
+          var cantDiasAct = (fechHoy.diff(fechInic, 'days'));
+          var porcDiasPasa = (Math.abs(5 + cantDiasAct) / 5);
           switch (cantDiasAct) {
             case -1:
-              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias para finalizar (1 dia restante): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress cuatro' id='progress'><div class='determinate cuatro' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
+              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias para finalizar (1 dia restante): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cuatro' id='progress'><div class='determinate cuatro' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
               break;
             case -2:
-              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias para finalizar (2 dias restantes): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress tres' id='progress'><div class='determinate tres' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
+              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias para finalizar (2 dias restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress tres' id='progress'><div class='determinate tres' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
               break;
             case -3:
-              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias para finalizar (3 dias restantes): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress dos' id='progress'><div class='determinate dos' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
+              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias para finalizar (3 dias restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress dos' id='progress'><div class='determinate dos' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
               break;
             case -4:
-              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias para finalizar (4 dias restantes): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress uno' id='progress'><div class='determinate uno' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
+              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias para finalizar (4 dias restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress uno' id='progress'><div class='determinate uno' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
               break;
             case -5:
-              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias para finalizar (5 dias restantes): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress cero' id='progress'><div class='determinate cero' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
+              $("#cursosPendientes").append("<a id='boton1' href='curso' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias para finalizar (5 dias restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cero' id='progress'><div class='determinate cero' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
               break;
           }
         }
-        } else {
-          $("#ulPendienteFinalizar").hide();
-        }
-      },
-      error: function (data) {
-        console.log("Error al traer datos");
+      } else {
+        $("#ulPendienteFinalizar").hide();
       }
-    });
+    },
+    error: function (data) {
+      console.log("Error al traer datos");
+    }
+  });
 }
-function finalizandoCursos() { 
+function finalizandoCursos() {
   $.ajax({
     type: 'POST',
     url: '../app/controllers/CursoController.php',
     data: {
-      finalizar : 'curso'
+      finalizar: 'curso'
     },
     success: function (data) {
       //console.log(data);
@@ -74,44 +84,79 @@ function selectCursosPendientesInforme() {
     },
     dataType: 'JSON',
     success: function (data) {
-      if (data.length>0) {
+      if (data.length > 0) {
         $("#cantidadCursosInforme").text(data.length);
         for (var i = 0; i < data.length; i++) {
-          $("#cantidadCursosInforme").text(data.length);
-          var fechInic = moment(data[i].fech_fin);
-          var hoy =new Date;
-          var fechHoy = moment(hoy.getFullYear()+"-0"+(hoy.getMonth()+1)+"-"+hoy.getDate());
-          var cantDiasAct = (fechHoy.diff(fechInic,'days'));
-          var porcDiasPasa = ((cantDiasAct)/5);
-          if (cantDiasAct>=0) {
-            switch (cantDiasAct) {
-              case 0:
-                $("#cursosPendientesInforme").append("<a id='penFa"+data[i].codi_curs+"' onClick='enviarCodigo("+data[i].codi_curs+");' href='#informeAgregado' class='collection-item modal-trigger black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias restantes para agregar informe (5 dia restantes): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress cero' id='progress'><div class='determinate cero' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
-                break;
-              case 1:
-                $("#cursosPendientesInforme").append("<a id='penFa"+data[i].codi_curs+"' onClick='enviarCodigo("+data[i].codi_curs+");' href='#informeAgregado' class='collection-item modal-trigger black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias restantes para agregar informe (4 dia restantes): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress uno' id='progress'><div class='determinate uno' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
-                break;
-              case 2:
-                $("#cursosPendientesInforme").append("<a id='penFa"+data[i].codi_curs+"' onClick='enviarCodigo("+data[i].codi_curs+");' href='#informeAgregado' class='collection-item modal-trigger black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias restantes para agregar informe (3 dia restantes): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress dos' id='progress'><div class='determinate dos' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
-                break;
-              case 3:
-                $("#cursosPendientesInforme").append("<a id='penFa"+data[i].codi_curs+"' onClick='enviarCodigo("+data[i].codi_curs+");' href='#informeAgregado' class='collection-item modal-trigger black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias restantes para agregar informe (2 dia restantes): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress tres' id='progress'><div class='determinate tres' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
-                break;
-              case 4:
-                alerta('alerta',data[i].nomb_curs, 1);
-                $("#cursosPendientesInforme").append("<a id='penFa"+data[i].codi_curs+"' onClick='enviarCodigo("+data[i].codi_curs+");' href='#informeAgregado' class='collection-item modal-trigger black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias restantes para agregar informe (1 dia restante): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress cuatro' id='progress'><div class='determinate cuatro' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
-                break;
-              case 5:
-                var porcDiasPasa = 1;
-                $("#cursosPendientesInforme").append("<a id='penFa"+data[i].codi_curs+"' onClick='enviarCodigo("+data[i].codi_curs+");' href='#informeAgregado' class='collection-item modal-trigger black-text'>"+data[i].nomb_curs+"<br>Porcentaje de dias restantes para agregar informe (ULTIMO DIA PARA ENVIAR EL INFORME): "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
-                break;
-              default:
+          if (data[i].corr_cate != "FCO") {
+            $("#cantidadCursosInforme").text(data.length);
+            var fechInic = moment(data[i].fech_fin);
+            var hoy = new Date;
+            var fechHoy = moment(hoy.getFullYear() + "-0" + (hoy.getMonth() + 1) + "-" + hoy.getDate());
+            var cantDiasAct = (fechHoy.diff(fechInic, 'days'));
+            var porcDiasPasa = ((cantDiasAct) / 5);
+            if (cantDiasAct >= 0) {
+              switch (cantDiasAct) {
+                case 0:
+                  $("#cursosPendientesInforme").append("<a id='penFa" + data[i].codi_curs + "' onClick='enviarCodigo(" + data[i].codi_curs + ");' href='#informeAgregado' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (5 dia restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cero' id='progress'><div class='determinate cero' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 1:
+                  $("#cursosPendientesInforme").append("<a id='penFa" + data[i].codi_curs + "' onClick='enviarCodigo(" + data[i].codi_curs + ");' href='#informeAgregado' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (4 dia restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress uno' id='progress'><div class='determinate uno' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 2:
+                  $("#cursosPendientesInforme").append("<a id='penFa" + data[i].codi_curs + "' onClick='enviarCodigo(" + data[i].codi_curs + ");' href='#informeAgregado' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (3 dia restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress dos' id='progress'><div class='determinate dos' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 3:
+                  $("#cursosPendientesInforme").append("<a id='penFa" + data[i].codi_curs + "' onClick='enviarCodigo(" + data[i].codi_curs + ");' href='#informeAgregado' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (2 dia restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress tres' id='progress'><div class='determinate tres' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 4:
+                  alerta('alerta', data[i].nomb_curs, 1);
+                  $("#cursosPendientesInforme").append("<a id='penFa" + data[i].codi_curs + "' onClick='enviarCodigo(" + data[i].codi_curs + ");' href='#informeAgregado' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (1 dia restante): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cuatro' id='progress'><div class='determinate cuatro' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 5:
                   var porcDiasPasa = 1;
-                  $("#cursosPendientesInforme").append("<a id='penFa"+data[i].codi_curs+"' onClick='enviarCodigo("+data[i].codi_curs+");' href='#informeAgregado' class='collection-item modal-trigger black-text'>"+data[i].nomb_curs+"<br>Dias en los que se ha tardado("+(cantDiasAct-5)+") : "+(porcDiasPasa*100).toFixed(2)+"%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: "+(porcDiasPasa*100).toFixed(2)+"%'></div></div></a>");
-                break;
+                  $("#cursosPendientesInforme").append("<a id='penFa" + data[i].codi_curs + "' onClick='enviarCodigo(" + data[i].codi_curs + ");' href='#informeAgregado' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (ULTIMO DIA PARA ENVIAR EL INFORME): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                default:
+                  var porcDiasPasa = 1;
+                  $("#cursosPendientesInforme").append("<a id='penFa" + data[i].codi_curs + "' onClick='enviarCodigo(" + data[i].codi_curs + ");' href='#informeAgregado' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Dias en los que se ha tardado(" + (cantDiasAct - 5) + ") : " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+              }
             }
           } else {
-
+            $("#cantidadCursosInformeFactura").text(data.length);
+            var fechInic = moment(data[i].fech_fin);
+            var hoy = new Date;
+            var fechHoy = moment(hoy.getFullYear() + "-0" + (hoy.getMonth() + 1) + "-" + hoy.getDate());
+            var cantDiasAct = (fechHoy.diff(fechInic, 'days'));
+            var porcDiasPasa = ((cantDiasAct) / 5);
+            if (cantDiasAct >= 0) {
+              switch (cantDiasAct) {
+                case 0:
+                  $("#cursosPendientesInformeFactura").append("<a id='penFaIn" + data[i].codi_curs + "' onClick='enviarCodigoIF(" + data[i].codi_curs + ");' href='#informeAgregadoFactura' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (5 dia restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cero' id='progress'><div class='determinate cero' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 1:
+                  $("#cursosPendientesInformeFactura").append("<a id='penFaIn" + data[i].codi_curs + "' onClick='enviarCodigoIF(" + data[i].codi_curs + ");' href='#informeAgregadoFactura' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (4 dia restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress uno' id='progress'><div class='determinate uno' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 2:
+                  $("#cursosPendientesInformeFactura").append("<a id='penFaIn" + data[i].codi_curs + "' onClick='enviarCodigoIF(" + data[i].codi_curs + ");' href='#informeAgregadoFactura' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (3 dia restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress dos' id='progress'><div class='determinate dos' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 3:
+                  $("#cursosPendientesInformeFactura").append("<a id='penFaIn" + data[i].codi_curs + "' onClick='enviarCodigoIF(" + data[i].codi_curs + ");' href='#informeAgregadoFactura' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (2 dia restantes): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress tres' id='progress'><div class='determinate tres' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 4:
+                  alerta('alerta', data[i].nomb_curs, 1);
+                  $("#cursosPendientesInformeFactura").append("<a id='penFaIn" + data[i].codi_curs + "' onClick='enviarCodigoIF(" + data[i].codi_curs + ");' href='#informeAgregadoFactura' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (1 dia restante): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cuatro' id='progress'><div class='determinate cuatro' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                case 5:
+                  var porcDiasPasa = 1;
+                  $("#cursosPendientesInformeFactura").append("<a id='penFaIn" + data[i].codi_curs + "' onClick='enviarCodigoIF(" + data[i].codi_curs + ");' href='#informeAgregadoFactura' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Porcentaje de dias restantes para agregar informe (ULTIMO DIA PARA ENVIAR EL INFORME): " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+                default:
+                  var porcDiasPasa = 1;
+                  $("#cursosPendientesInformeFactura").append("<a id='penFaIn" + data[i].codi_curs + "' onClick='enviarCodigoIF(" + data[i].codi_curs + ");' href='#informeAgregadoFactura' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Dias en los que se ha tardado(" + (cantDiasAct - 5) + ") : " + (porcDiasPasa * 100).toFixed(2) + "%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: " + (porcDiasPasa * 100).toFixed(2) + "%'></div></div></a>");
+                  break;
+              }
+            }
           }
         }
       } else {
@@ -123,36 +168,39 @@ function selectCursosPendientesInforme() {
     }
   });
 }
-function alerta(alert,identificador, nume) { 
+function alerta(alert, identificador, nume) {
   $.ajax({
-    url : '../app/controllers/DashboardController.php',
+    url: '../app/controllers/DashboardController.php',
     method: 'POST',
-    data:{
+    data: {
       alerta: alert,
-      identificador : identificador,
-      nume : nume
+      identificador: identificador,
+      nume: nume
     }
   })
 }
-function enviarCodigo(x) {  
+function enviarCodigo(x) {
   $("#codiCurs").val(x);
 }
-function cambiarEstadoInforme() {  
+function enviarCodigoIF(x) {
+  $("#codiCursFact").val(x);
+}
+function cambiarEstadoInforme() {
   var datos = $("#frmInformeAgregado").serialize();
   var codi = $("#codiCurs").val();
   $.ajax({
     type: 'POST',
     url: '../app/controllers/CursoController.php',
     data: datos,
-    success: function (data) {  
+    success: function (data) {
       var res = data.indexOf("Exito");
-      if (res>=0) {
+      if (res >= 0) {
         successAlert("Curso modificado con exito");
         selectCursosPendientes();
-        $("#penFa"+codi).remove();
+        $("#penFa" + codi).remove();
         $('#informeAgregado').modal('close');
       } else {
-        errorAlert(JSON.parse(data));  
+        errorAlert(JSON.parse(data));
       }
     }
   })
@@ -169,8 +217,9 @@ function selectCursosPendientesInformeAprobacion() {
       if (data.length) {
         $("#cantidadCursosInformeAprov").text(data.length);
         for (var i = 0; i < data.length; i++) {
-          alerta("alertaAprov",data[i].nomb_curs, 2);
-          $("#informesPendientesAprovacion").append("<a id='penAp"+data[i].codi_curs+"' onClick='enviarCodigoAp("+data[i].codi_curs+");' href='#informeAprovacion' class='collection-item modal-trigger black-text'>"+data[i].nomb_curs+"<br>Pedir Informe a: "+data[i].nomb_usua+" "+data[i].apel_usua+"</a>");
+          alerta("alertaAprov", data[i].nomb_curs, 2);
+          var corr= "\""+data[i].corr_cate+"\"";
+          $("#informesPendientesAprovacion").append("<a id='penAp" + data[i].codi_curs + "' onClick='enviarCodigoAp(" + data[i].codi_curs +", "+corr+");' href='#informeAprovacion' class='collection-item modal-trigger black-text'>" + data[i].nomb_curs + "<br>Pedir Informe a: " + data[i].nomb_usua + " " + data[i].apel_usua + "</a>");
         }
       } else {
         $('#ulPendienteAprobacion').hide();
@@ -181,25 +230,26 @@ function selectCursosPendientesInformeAprobacion() {
     }
   });
 }
-function enviarCodigoAp(x) {  
-  $("#codiCursAp").val(x);
+function enviarCodigoAp(codi, cate) {
+  $("#codiCursAp").val(codi);
+  $("#codiCateAp").val(cate);
 }
-function cambiarEstadoInformeAprobacion() {  
+function cambiarEstadoInformeAprobacion() {
   var datos = $("#frmInformeAprovacion").serialize();
   var codi = $("#codiCursAp").val();
   $.ajax({
     type: 'POST',
     url: '../app/controllers/CursoController.php',
     data: datos,
-    success: function (data) {  
+    success: function (data) {
       var res = data.indexOf("Exito");
-      if (res>=0) {
+      if (res >= 0) {
         successAlert("Curso verificado con exito");
         selectCursosPendientesInformeAprobacion();
-        $("#penAp"+codi).remove();
+        $("#penAp" + codi).remove();
         $('#informeAprovacion').modal('close');
       } else {
-        errorAlert(JSON.parse(data));  
+        errorAlert(JSON.parse(data));
       }
     }
   })
@@ -213,37 +263,37 @@ function selectCursosPendientesFactura() {
     },
     dataType: 'JSON',
     success: function (data) {
-      if (data.length>0) {
+      if (data.length > 0) {
         $("#pendientesFactura").text(data.length);
         $("#x").remove();
         for (var i = 0; i < data.length; i++) {
           var fechInic = moment(data[i].fech_info);
-          var hoy =new Date;
-          var fechHoy = moment(hoy.getFullYear()+"-0"+(hoy.getMonth()+1)+"-"+hoy.getDate());
-          var cantDiasAct = (fechHoy.diff(fechInic,'days'));
-          var porcDiasPasa = ((cantDiasAct)/20);
-          if (cantDiasAct>=0 & cantDiasAct<4) {
-            $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de Avance: (Faltan "+(20-cantDiasAct)+" dias para recibir respuesta de INSAFORP sobre el informe de este curso): "+Math.round(porcDiasPasa*100)+"%<div class='progress cero' id='progress'><div class='determinate cero' style='width: "+Math.round(porcDiasPasa*100)+"%'></div></div></a>");
+          var hoy = new Date;
+          var fechHoy = moment(hoy.getFullYear() + "-0" + (hoy.getMonth() + 1) + "-" + hoy.getDate());
+          var cantDiasAct = (fechHoy.diff(fechInic, 'days'));
+          var porcDiasPasa = ((cantDiasAct) / 20);
+          if (cantDiasAct >= 0 & cantDiasAct < 4) {
+            $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de Avance: (Faltan " + (20 - cantDiasAct) + " dias para recibir respuesta de INSAFORP sobre el informe de este curso): " + Math.round(porcDiasPasa * 100) + "%<div class='progress cero' id='progress'><div class='determinate cero' style='width: " + Math.round(porcDiasPasa * 100) + "%'></div></div></a>");
           } else {
-            if (cantDiasAct>=4 & cantDiasAct<8) {
-              $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de Avance: (Faltan "+(20-cantDiasAct)+" dias para recibir respuesta de INSAFORP sobre el informe de este curso): "+Math.round(porcDiasPasa*100)+"%<div class='progress uno' id='progress'><div class='determinate uno' style='width: "+Math.round(porcDiasPasa*100)+"%'></div></div></a>");
+            if (cantDiasAct >= 4 & cantDiasAct < 8) {
+              $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de Avance: (Faltan " + (20 - cantDiasAct) + " dias para recibir respuesta de INSAFORP sobre el informe de este curso): " + Math.round(porcDiasPasa * 100) + "%<div class='progress uno' id='progress'><div class='determinate uno' style='width: " + Math.round(porcDiasPasa * 100) + "%'></div></div></a>");
             } else {
-              if (cantDiasAct>=8 & cantDiasAct<12){
-                $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de Avance: (Faltan "+(20-cantDiasAct)+" dias para recibir respuesta de INSAFORP sobre el informe de este curso): "+Math.round(porcDiasPasa*100)+"%<div class='progress dos' id='progress'><div class='determinate dos' style='width: "+Math.round(porcDiasPasa*100)+"%'></div></div></a>");
+              if (cantDiasAct >= 8 & cantDiasAct < 12) {
+                $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de Avance: (Faltan " + (20 - cantDiasAct) + " dias para recibir respuesta de INSAFORP sobre el informe de este curso): " + Math.round(porcDiasPasa * 100) + "%<div class='progress dos' id='progress'><div class='determinate dos' style='width: " + Math.round(porcDiasPasa * 100) + "%'></div></div></a>");
               } else {
-                if (cantDiasAct>=12 & cantDiasAct<16) {
-                  $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de Avance: (Faltan "+(20-cantDiasAct)+" dias para recibir respuesta de INSAFORP sobre el informe de este curso): "+Math.round(porcDiasPasa*100)+"%<div class='progress tres' id='progress'><div class='determinate tres' style='width: "+Math.round(porcDiasPasa*100)+"%'></div></div></a>");
+                if (cantDiasAct >= 12 & cantDiasAct < 16) {
+                  $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de Avance: (Faltan " + (20 - cantDiasAct) + " dias para recibir respuesta de INSAFORP sobre el informe de este curso): " + Math.round(porcDiasPasa * 100) + "%<div class='progress tres' id='progress'><div class='determinate tres' style='width: " + Math.round(porcDiasPasa * 100) + "%'></div></div></a>");
                 } else {
-                  if (cantDiasAct>=16 & cantDiasAct<20) {
+                  if (cantDiasAct >= 16 & cantDiasAct < 20) {
                     alerta('alertaFact', data[i].nomb_curs, 3);
-                    $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de Avance: (Faltan "+(20-cantDiasAct)+" dias para recibir respuesta de INSAFORP sobre el informe de este curso): "+Math.round(porcDiasPasa*100)+"%<div class='progress cuatro' id='progress'><div class='determinate cuatro' style='width: "+Math.round(porcDiasPasa*100)+"%'></div></div></a>");
+                    $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de Avance: (Faltan " + (20 - cantDiasAct) + " dias para recibir respuesta de INSAFORP sobre el informe de este curso): " + Math.round(porcDiasPasa * 100) + "%<div class='progress cuatro' id='progress'><div class='determinate cuatro' style='width: " + Math.round(porcDiasPasa * 100) + "%'></div></div></a>");
                   } else {
-                    if (cantDiasAct==20) {
-                      $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de Avance: (Hoy es el ULTIMO dia para recibir respuesta de INSAFORP sobre el informe de este curso): "+Math.round(porcDiasPasa*100)+"%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: "+Math.round(porcDiasPasa*100)+"%'></div></div></a>");
+                    if (cantDiasAct == 20) {
+                      $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de Avance: (Hoy es el ULTIMO dia para recibir respuesta de INSAFORP sobre el informe de este curso): " + Math.round(porcDiasPasa * 100) + "%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: " + Math.round(porcDiasPasa * 100) + "%'></div></div></a>");
                     } else {
-                      if (cantDiasAct>20) {
-                        $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>"+data[i].nomb_curs+"<br>Porcentaje de Avance: (Se ha retrasado  "+Math.abs(cantDiasAct)+" dias para recibir respuesta de INSAFORP sobre el informe de este curso): "+Math.round(1*100)+"%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: "+Math.round(porcDiasPasa*100)+"%'></div></div></a>");
-                      } 
+                      if (cantDiasAct > 20) {
+                        $("#cursosPendientesFactura").append("<a id='x' href='factura' class='collection-item black-text'>" + data[i].nomb_curs + "<br>Porcentaje de Avance: (Se ha retrasado  " + Math.abs(cantDiasAct) + " dias para recibir respuesta de INSAFORP sobre el informe de este curso): " + Math.round(1 * 100) + "%<div class='progress cinco' id='progress'><div class='determinate cinco' style='width: " + Math.round(porcDiasPasa * 100) + "%'></div></div></a>");
+                      }
                     }
                   }
                 }
@@ -269,15 +319,15 @@ function selectAbonoQuedan() {
     },
     dataType: 'JSON',
     success: function (data) {
-      if (data.length>0) {
+      if (data.length > 0) {
         for (var i = 0; i < data.length; i++) {
-        $("#cantidadCursosInforme").text(data.length);
+          $("#cantidadCursosInforme").text(data.length);
           var fechInic = moment(data[i].fech_fin);
-          var hoy =new Date;
-          var fechHoy = moment(hoy.getFullYear()+"-0"+(hoy.getMonth()+1)+"-"+hoy.getDate());
-          var cantDiasAct = (fechHoy.diff(fechInic,'days'));
-          var porcDiasPasa = ((cantDiasAct)/5);
-            $("#cursosPendientesFactura").append("<a href='quedan' class='collection-item'>"+data[i].numb_qued+"<br>Porcentaje de Avance: "+Math.round(porcDiasPasa*100)+"%<div class='progress' id='progress'><div class='determinate' style='width: "+Math.round(porcDiasPasa*100)+"%'></div></div></a>");
+          var hoy = new Date;
+          var fechHoy = moment(hoy.getFullYear() + "-0" + (hoy.getMonth() + 1) + "-" + hoy.getDate());
+          var cantDiasAct = (fechHoy.diff(fechInic, 'days'));
+          var porcDiasPasa = ((cantDiasAct) / 5);
+          $("#cursosPendientesFactura").append("<a href='quedan' class='collection-item'>" + data[i].numb_qued + "<br>Porcentaje de Avance: " + Math.round(porcDiasPasa * 100) + "%<div class='progress' id='progress'><div class='determinate' style='width: " + Math.round(porcDiasPasa * 100) + "%'></div></div></a>");
         }
       } else {
         $("#ulPendienteQuedan").hide();
@@ -299,11 +349,68 @@ function selectNotificaciones() {
     success: function (data) {
       $("#notififcacionesPendientes").text(data.length);
       for (var i = 0; i < data.length; i++) {
-        $("#todasNotificaciones").append("<a href='factura' class='collection-item active'>"+data[i].acci_noti+"</a>");
+        $("#todasNotificaciones").append("<a href='factura' class='collection-item active'>" + data[i].acci_noti + "</a>");
       }
     },
     error: function (data) {
       console.log("Error al traer datos");
+    }
+  });
+}
+
+function agregarFacturaInforme() {
+  var datos = new FormData($("#informefactura")[0]);
+  datos.append('archFact', $("#archFact")[0].files[0]);
+  datos.append('accion', "create");
+  $.ajax({
+    type: 'POST',
+    url: '../app/controllers/FacturaController.php',
+    processData: false,
+    contentType: false,
+    data: datos,
+    beforeSend: function () {
+      $("#preloader").show();
+      $(".modal-footer").hide();
+    },
+    success: function (data) {
+      var resp = JSON.parse(data);
+      if (resp > 0) {
+        var codiCurs = $("#codiCursFact").val();
+        $.ajax({
+          type: 'POST',
+          url: "../app/controllers/FacturaDetalleController.php",
+          data: {
+            codiCurs: codiCurs,
+            codiFact: JSON.parse(data),
+            accion: "createFactInforme"
+          },
+          success: function (datax) {
+            var resp = datax.indexOf("Exito");
+            if (resp >= 0) {
+              $("#preloader").hide();
+              $(".modal-footer").show();
+              $("#penFaIn" + codiCurs).remove();
+              successAlert("Curso modificado con exito");
+              selectCursosPendientesInforme();
+              selectCursosPendientesInformeAprobacion();
+              $('#informeAgregadoFactura').modal('close');
+            } else {
+              $("#preloader").hide();
+              $(".modal-footer").show();
+              errorAlert(JSON.parse(datax));
+            }
+          },
+          error: function () {
+            $("#preloader").hide();
+              $(".modal-footer").show();
+              errorAlert("Error al contactar con el servidor");
+          }
+        });
+      } else {
+        $("#preloader").hide();
+        $(".modal-footer").show();
+        errorAlert(resp);
+      }
     }
   });
 }

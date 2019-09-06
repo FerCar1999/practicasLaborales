@@ -26,14 +26,30 @@ $page = "Inicio";
                             </div>
                         </li>
                     </ul>
-                    <?php
+<?php
 if ($_SESSION['codi_tipo_usua'] == 2 || $_SESSION['codi_tipo_usua'] == 3) {
-	print('
-                        <ul class="collapsible" id="ulPendienteInforme">
+    if ($_SESSION['codi_cate']==4) {
+        print('<ul class="collapsible" id="ulPendienteInformeFactura">
+        <li>
+            <div class="collapsible-header">
+                <i class="material-icons">library_books</i>
+                Cursos a finalizados pendientes informe y factura
+                <span data-badge-caption="Pendientes" id="cantidadCursosInformeFactura" name="cantidadCursosInformeFactura" class="new badge blue"></span>
+            </div>
+            <div class="collapsible-body">
+                <div class="collection" id="cursosPendientesInformeFactura" name="cursosPendientesInformeFactura">
+
+                </div>
+            </div>
+        </li>
+    </ul>');
+    } else {
+        print('
+                    <ul class="collapsible" id="ulPendienteInforme">
                         <li>
                             <div class="collapsible-header">
                                 <i class="material-icons">library_books</i>
-                                Cursos a finalizados pendientes de informe
+                                Cursos a finalizados pendientes informe
                                 <span data-badge-caption="Pendientes" id="cantidadCursosInforme" name="cantidadCursosInforme" class="new badge blue"></span>
                             </div>
                             <div class="collapsible-body">
@@ -44,9 +60,10 @@ if ($_SESSION['codi_tipo_usua'] == 2 || $_SESSION['codi_tipo_usua'] == 3) {
                         </li>
                     </ul>
                     ');
+    }
 }
 ?>
-                    <?php
+<?php
 if ($_SESSION['codi_tipo_usua'] == 1) {
 	print("
                         <ul class='collapsible' id='ulPendienteAprobacion'>
@@ -85,7 +102,7 @@ if ($_SESSION['codi_tipo_usua'] == 2) {
         ');
 }
 ?>
-                    <?php
+<?php
 if ($_SESSION['codi_tipo_usua'] == 2) {
 	print("
                         <ul class='collapsible' id='ulPendienteQuedan'>
@@ -126,5 +143,6 @@ if ($_SESSION['codi_tipo_usua'] == 2) {
 <!-- SCRIPTS -->
 <script src="<?=WEB_PATH?>js/AJAX/dashboard.js"></script>
 <?php include APP_PATH . '/views/curso/informeAgregado.view.php'?>
+<?php include APP_PATH . '/views/curso/informeAgregadoFactura.view.php'?>
 <?php include APP_PATH . '/views/curso/informeAprovacion.view.php'?>
 <?php include APP_PATH . '/views/templates/footer.view.php'?>

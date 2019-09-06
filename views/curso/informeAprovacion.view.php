@@ -8,6 +8,7 @@
             <div class="row">
                 <div class="col s12">
                     <input type="hidden" id="codiCursAp" name="codiCursAp">
+                    <input type="hidden" id="codiCateAp" name="codiCateAp">
                     <input type="hidden" id="accion" name="accion" value="informeAprovacion">
                     <p>¿Ya recibio el informe de este curso?</p>
                     <p><b>Nota: </b>Esta operacion se tiene que realizar una vez ya haya revisado fisicamente el informe que se enviara a INSAFORP, una vez aceptado el informe LA RESPONSABILIDAD de esta accion caera en usted</p>

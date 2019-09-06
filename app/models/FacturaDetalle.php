@@ -53,9 +53,14 @@ class FacturaDetalle extends Validator {
 
 	// Funciones para CRUD
 	//Funcion para agregar un nuevo egreso
-	public function cambiandoEstadoDeLaFactura() {
-		$sql = "UPDATE factura SET esta_fact = 1 WHERE codi_fact = ?";
-		$params = array($this->codi_fact);
+	public function cambiandoEstadoDeLaFactura($estado) {
+		$sql = "UPDATE factura SET esta_fact = ? WHERE codi_fact = ?";
+		$params = array($estado, $this->codi_fact);
+		return Database::executeRow($sql, $params);
+	}
+	public function cambiandoEstadoDelCurso($fecha) {
+		$sql = "UPDATE curso SET esta_curs=3, fech_info=?, usua_info=? WHERE codi_curs=?";
+		$params = array($fecha, $_SESSION['codi_usua'],$this->codi_curs);
 		return Database::executeRow($sql, $params);
 	}
 	public function addFacturaDetalle() {

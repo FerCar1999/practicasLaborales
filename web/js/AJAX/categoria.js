@@ -40,8 +40,9 @@ function dataTable() {
         }, {
             //agregando datos de nombre de categoria
             data: 'nomb_cate'
-        },
-        {
+        }, {
+            data: 'corr_cate'
+        }, {
             //agregando dato de estado de categoria
             data: 'esta_cate',
             //pasando a invisible esta columna
@@ -106,6 +107,7 @@ function getDataToUpdate(tbody, table) {
         $("#nombCateUpda").next("label").addClass("active");
         var codi_cate = $("#codiCateUpda").val(data.codi_cate),
             nomb_cate = $("#nombCateUpda").val(data.nomb_cate),
+            corr_cate = $("#corrCateUpda").val(data.corr_cate),
             esta_cate = $("#estaCateUpda").val(data.esta_cate);
     });
 }

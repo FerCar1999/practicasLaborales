@@ -199,14 +199,32 @@ class Curso extends Validator {
 		return Database::executeRow($sql, $params);
 	}
 	public function updateCursoFinalizado($fecha) {
-		$sql = "UPDATE curso SET esta_curs = 2 WHERE TIMESTAMPDIFF(DAY, ?,fech_fin)=0 AND codi_casa=? AND esta_curs=1";
+		$sql = "UPDATE curso SET esta_curs = 2 WHERE TIMESTAMPDIFF(DAY, ?,fech_fin)<=0 AND codi_casa=? AND esta_curs=1";
 		$params = array($fecha,$this->codi_casa);
 		return Database::executeRow($sql, $params);
 	}
 	public function obtenerCantPresCate($anio)
 	{
-		$sql ="SELECT pd.cant_pres_deta -COALESCE((SELECT curso.mont_esti FROM curso WHERE curso.codi_casa=? AND curso.codi_cate=? AND curso.esta_curs=1),0) as cantidad FROM presupuesto_detalle as pd INNER JOIN presupuesto as p ON p.codi_pres=pd.codi_pres INNER JOIN categoria as c ON c.codi_cate=pd.codi_cate WHERE c.codi_cate=? AND p.codi_casa=? AND YEAR(p.fech_pres)=?";
+		$sql ="SELECT pd.cant_pres_deta -COALESCE((SELECT COALESCE(SUM(curso.mont_esti * curso.cant_part),0) as monto FROM curso WHERE curso.codi_casa=? AND curso.codi_cate=? AND curso.esta_curs=1),0) as cantidad FROM presupuesto_detalle as pd INNER JOIN presupuesto as p ON p.codi_pres=pd.codi_pres INNER JOIN categoria as c ON c.codi_cate=pd.codi_cate WHERE c.codi_cate=? AND p.codi_casa=? AND YEAR(p.fech_pres)=?";
 		$params=array($this->codi_casa,$this->codi_cate,$this->codi_cate, $this->codi_casa, $anio);
 		return Database::getRow($sql, $params);
+	}
+	public function obtenerCantPresCateUpda($anio, $codi)
+	{
+		$sql ="SELECT pd.cant_pres_deta - COALESCE((SELECT COALESCE(SUM(curso.mont_esti * curso.cant_part),0) as monto FROM curso WHERE curso.codi_casa=? AND curso.codi_cate=? AND curso.esta_curs=1 AND curso.codi_curs!=?),0) as cantidad FROM presupuesto_detalle as pd INNER JOIN presupuesto as p ON p.codi_pres=pd.codi_pres INNER JOIN categoria as c ON c.codi_cate=pd.codi_cate WHERE c.codi_cate=? AND p.codi_casa=? AND YEAR(p.fech_pres)=?";
+		$params=array($_SESSION['codi_casa'],$this->codi_cate, $this->codi_curs, $this->codi_cate, $_SESSION['codi_casa'], $anio);
+		return Database::getRow($sql, $params);
+	}
+	public function updateCursoFactura()
+	{
+		$sql = "UPDATE curso SET esta_curs=5 WHERE codi_curs=?";
+		$params = array($this->codi_curs);
+		return Database::executeRow($sql, $params);
+	}
+	public function updateFactura()
+	{
+		$sql = "UPDATE factura SET esta_fact=1 WHERE codi_fact=(SELECT codi_fact FROM factura_detalle WHERE codi_curs=?)";
+		$params = array($this->codi_curs);
+		return Database::executeRow($sql, $params);
 	}
 }

@@ -106,12 +106,12 @@ class Notificacion extends Validator {
 		return Database::getRows($sql, $params);
 	}
 	public function getCursosFinalizadosInformeEncargado($fechaActual, $estado) {
-		$sql = "SELECT codi_curs ,nomb_curs, fech_fin FROM curso WHERE  codi_casa=? AND codi_cate=? AND esta_curs=2";
+		$sql = "SELECT cu.codi_curs ,cu.nomb_curs, cu.fech_fin, c.corr_cate FROM curso as cu INNER JOIN categoria as c ON c.codi_cate=cu.codi_cate WHERE  cu.codi_casa=? AND cu.codi_cate=? AND cu.esta_curs=2";
 		$params = array($this->codi_casa, $estado);
 		return Database::getRows($sql, $params);
 	}
 	public function getCursosFinalizadosInformeAprovacion() {
-		$sql = "SELECT c.codi_curs ,c.nomb_curs, c.fech_info, u.nomb_usua, u.apel_usua FROM curso as c INNER JOIN usuario as u ON u.codi_usua=c.usua_info WHERE c.codi_casa=? AND c.esta_curs=3";
+		$sql = "SELECT c.codi_curs, ca.corr_cate ,c.nomb_curs, c.fech_info, u.nomb_usua, u.apel_usua FROM curso as c INNER JOIN usuario as u ON u.codi_usua=c.usua_info INNER JOIN categoria as ca ON ca.codi_cate=c.codi_cate WHERE c.codi_casa=? AND c.esta_curs=3";
 		$params = array($this->codi_casa);
 		return Database::getRows($sql, $params);
 	}

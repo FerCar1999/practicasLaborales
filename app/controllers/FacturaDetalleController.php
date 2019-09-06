@@ -24,29 +24,47 @@ try {
 		$_POST = $facturaD->validateForm($_POST);
 		//switch para verificar que accion es la que se va a realizar
 		switch ($_POST['accion']) {
-		case 'create':
-			if ($facturaD->setCodiFact($_POST['codiFact'])) {
-				if ($facturaD->setCodiCurs($_POST['codiCurs'])) {
-					if ($facturaD->cambiandoEstadoDeLaFactura()) {
-						if ($facturaD->addFacturaDetalle()) {
-							if ($facturaD->modificarEstadoCurso()) {
-								throw new Exception('Exito');
+			case 'create':
+				if ($facturaD->setCodiFact($_POST['codiFact'])) {
+					if ($facturaD->setCodiCurs($_POST['codiCurs'])) {
+						if ($facturaD->cambiandoEstadoDeLaFactura(1)) {
+							if ($facturaD->addFacturaDetalle()) {
+								if ($facturaD->modificarEstadoCurso()) {
+									throw new Exception('Exito');
+								} else {
+									throw new Exception('No se pudo modificar el estado del curso');
+								}
 							} else {
-								throw new Exception('No se pudo modificar el estado del curso');
+								throw new Exception('No se pudo agregar el curso a la factura');
 							}
 						} else {
-							throw new Exception('No se pudo agregar el curso a la factura');
+							throw new Exception('No se pudo cambiar el estado de la factura');
 						}
 					} else {
-						throw new Exception('No se pudo cambiar el estado de la factura');
+						throw new Exception('Debe seleccionar un curso para agregarlo');
 					}
 				} else {
-					throw new Exception('Debe seleccionar un curso para agregarlo');
+					throw new Exception('No se encontro la factura');
 				}
-			} else {
-				throw new Exception('No se encontro la factura');
-			}
-			break;
+				break;
+			case 'createFactInforme':
+				if ($facturaD->setCodiFact($_POST['codiFact'])) {
+					if ($facturaD->setCodiCurs($_POST['codiCurs'])) {
+						$fecha = date("Y-m-d");
+						if ($facturaD->cambiandoEstadoDelCurso($fecha)) {
+							if ($facturaD->addFacturaDetalle()) {
+								throw new Exception('Exito');
+							} else {
+								throw new Exception('No se pudo agregar el curso a la factura');
+							}
+						}
+					} else {
+						throw new Exception('Debe seleccionar un curso para agregarlo');
+					}
+				} else {
+					throw new Exception('No se encontro la factura');
+				}
+				break;
 		}
 	}
 } catch (Exception $error) {

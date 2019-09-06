@@ -10,10 +10,16 @@
                     <div class="row">
                         <input type="hidden" id="codiCateUpda" name="codiCateUpda">
                         <input type="hidden" id="estaCateUpda" name="estaCateUpda">
-                        <div class="input-field col s12">
+                        <div class="input-field col s6">
                             <i class="material-icons prefix">library_books</i>
                             <input id="nombCateUpda" name="nombCateUpda" type="text" class="validate">
                             <label for="nombCateUpda">Nombre de categoría:</label>
+                            <span class="helper-text" data-error="Campo requerido, ingrese solo letras" data-success="Correcto"></span>
+                        </div>
+                        <div class="input-field col s6">
+                            <i class="material-icons prefix">library_books</i>
+                            <input id="corrCateUpda" name="corrCateUpda" type="text" class="validate">
+                            <label for="corrCateUpda">Diminutivo de categoría:</label>
                             <span class="helper-text" data-error="Campo requerido, ingrese solo letras" data-success="Correcto"></span>
                         </div>
                     </div>
