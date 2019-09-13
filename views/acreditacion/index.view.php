@@ -6,11 +6,11 @@ $page = "Acreditacion";
 ?>
 <?php
 //llamando el archivo head
-include APP_PATH . '/views/templates/head.view.php'?>
+include APP_PATH . '/views/templates/head.view.php' ?>
 
 <?php
 //llamando al archivo sidebar que es el que trae las diferentes opciones para los usuarios y controla el tiempo de sesion
-include APP_PATH . '/views/templates/sidebar.view.php'?>
+include APP_PATH . '/views/templates/sidebar.view.php' ?>
 
 <main>
     <div class="container-fluid">
@@ -21,6 +21,7 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
                         <div class="col-sm-12 col-md-6 center">
                             <span class="card-title">Registro de Acreditaciones</span>
                         </div>
+                        <div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/acreditacion.pdf" target="_blank"><i class="material-icons">help</i></a></div>
                     </div>
                     <table id="table-acreditacion" class="responsive-table hover no-wrap row-border striped" style="width:100%">
                         <thead>
@@ -45,14 +46,14 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
     </div>
 
     <!-- Modal para agregar categoria -->
-    <?php include APP_PATH . '/views/acreditacion/addAcreditacion.view.php'?>
+    <?php include APP_PATH . '/views/acreditacion/addAcreditacion.view.php' ?>
     <!-- Modal para modificar categoria -->
-    <?php include APP_PATH . '/views/acreditacion/updateAcreditacion.view.php'?>
+    <?php include APP_PATH . '/views/acreditacion/updateAcreditacion.view.php' ?>
     <!-- Modal para eliminar categoria -->
-    <?php include APP_PATH . '/views/acreditacion/deleteAcreditacion.view.php'?>
+    <?php include APP_PATH . '/views/acreditacion/deleteAcreditacion.view.php' ?>
 </main>
 
 <!-- AJAX -->
-<script src="<?=WEB_PATH?>js/AJAX/acreditacion.js"></script>
+<script src="<?= WEB_PATH ?>js/AJAX/acreditacion.js"></script>
 
-<?php include APP_PATH . '/views/templates/footer.view.php'?>
+<?php include APP_PATH . '/views/templates/footer.view.php' ?>

@@ -57,7 +57,7 @@ try {
 		//switch para verificar que accion es la que se va a realizar
 		switch ($_POST['accion']) {
 			case 'verificarInfo':
-				if ($_SESSION['codi_casa'] == 1) {
+				if ($_SESSION['codi_tipo_casa'] == 1) {
 					throw new Exception('casas');
 				} else {
 					throw new Exception('casa');

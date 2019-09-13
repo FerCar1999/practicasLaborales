@@ -37,6 +37,7 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
                                         Mis Cursos
                                     </span>
                                 </div>
+                                <div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/curso.pdf" target="_blank"><i class="material-icons">help</i></a></div>
                             </div>
                             <table class="responsive-table hover no-wrap row-border striped" id="table-curso-casa" style="width:100%">
                                 <thead>

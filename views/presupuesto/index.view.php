@@ -37,6 +37,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                                         Mi Presupuesto
                                     </span>
                                 </div>
+                                <div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/presupuesto.pdf" target="_blank"><i class="material-icons">help</i></a></div>
                             </div>
                             <div class="row center-align" id="modificarLogoCasa">
                                 <div class="col s12">
@@ -77,6 +78,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                                         Presupuesto Casas
                                     </span>
                                 </div>
+                                <div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/presupuesto_casas.pdf" target="_blank"><i class="material-icons">help</i></a></div>
                             </div>
                             <div class="row center-align" id="agregarIngreso">
                                 <div class="col s12">

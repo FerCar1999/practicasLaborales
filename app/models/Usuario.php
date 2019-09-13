@@ -224,7 +224,7 @@ class Usuario extends Validator
     public function checkUser()
 	{
         //buscando datos del usuario con el correo ingresado
-		$sql = "SELECT u.codi_usua as codi_usua, u.nomb_usua as nomb_usua, u.apel_usua as apel_usua, u.codi_tipo_usua as codi_tipo_usua, u.codi_casa as codi_casa, c.nomb_casa as nomb_casa, c.logo_casa as logo_casa, c.codi_tipo_casa as codi_tipo_casa, u.codi_cate as codi_cate FROM usuario as u INNER JOIN casa as c USING (codi_casa) WHERE u.corre_usua=? AND c.esta_casa = 1";
+		$sql = "SELECT u.codi_usua as codi_usua, u.nomb_usua as nomb_usua, u.apel_usua as apel_usua, u.codi_tipo_usua as codi_tipo_usua, u.codi_casa as codi_casa, c.nomb_casa as nomb_casa, c.logo_casa as logo_casa, c.codi_tipo_casa as codi_tipo_casa, u.codi_cate as codi_cate FROM usuario as u INNER JOIN casa as c USING (codi_casa) WHERE u.corre_usua=? AND c.esta_casa = 1 AND u.esta_usua=1";
         //agregando parametros
         $params = array($this->corre_usua);
         //ejecutando consulta y obteniendo los datos

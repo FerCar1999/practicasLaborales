@@ -15,6 +15,7 @@ $page = "Usuarios";
                         <div class="col-sm-12 col-md-6">
                             <span class="card-title center">Registro de Usuarios</span>
                         </div>
+                        <div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/usuario.pdf" target="_blank"><i class="material-icons">help</i></a></div>
                     </div>
                     <table id="table-usuario" class="responsive-table hover no-wrap row-border striped" style="width:100%">
                         <thead>

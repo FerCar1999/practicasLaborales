@@ -38,6 +38,7 @@ function verificarCursoMostrar() {
         $('[href="#casas"]').closest('li').hide();
         dataTableCursoCasa();
       } else {
+        $('[href="#casas"]').closest('li').show();
         dataTableCursoCasa();
         dataTableCursoCasas();
       }

@@ -10,7 +10,21 @@ $page = "Inicio";
             <div class="card box-shadow-md mt-none">
                 <div class="card-content">
                     <div class="row">
+                        <?php
+                        switch ($_SESSION['codi_tipo_usua']) {
+                            case 1:
+                                print('<div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/dashboard_administrador.pdf" target="_blank"><i class="material-icons">help</i></a></div>');
+                                break;
+                            case 2:
+                            print('<div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/dashboard_financiero.pdf" target="_blank"><i class="material-icons">help</i></a></div>');
+                                break;
+                            case 3:
+                            print('<div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/dashboard_encargado.pdf" target="_blank"><i class="material-icons">help</i></a></div>');
+                                break;
+                        }
+                        ?>
                         <span class="card-title">Dashboard</span>
+                        
                     </div>
                     <ul class="collapsible" id="ulPendienteFinalizar">
                         <li>

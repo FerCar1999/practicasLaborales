@@ -103,8 +103,8 @@ php_value post_max_size 20M
 php_value max_execution_time 180
 
 RewriteEngine on
-RewriteCond %{HTTP_REFERER} !^http://localhost/practicasLaborales/dashboard*/.*$ [NC]
-RewriteCond %{HTTP_REFERER} !^http://localhost/practicasLaborales/dashboard*$ [NC]
+RewriteCond %{HTTP_REFERER} !^http://localhost/sgcs/dashboard*/.*$ [NC]
+RewriteCond %{HTTP_REFERER} !^http://localhost/sgcs/dashboard*$ [NC]
 RewriteRule .*\.(jpg|jpeg|gif|png|bmp|zip)$ - [F,NC]
 
 <IfModule mod_gzip.c>

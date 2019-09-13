@@ -23,6 +23,7 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
                         <div class="col-sm-12 col-md-6 center">
                             <span class="card-title">Registro de Docentes</span>
                         </div>
+                        <div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/docente.pdf" target="_blank"><i class="material-icons">help</i></a></div>
                     </div>
                     <table id="table-docente" class="responsive-table hover no-wrap row-border striped" style="width:100%">
                         <thead>
