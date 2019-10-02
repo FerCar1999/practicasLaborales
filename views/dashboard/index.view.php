@@ -2,8 +2,8 @@
 $title = "Inicio";
 $page = "Inicio";
 ?>
-<?php include APP_PATH . '/views/templates/head.view.php'?>
-<?php include APP_PATH . '/views/templates/sidebar.view.php'?>
+<?php include APP_PATH . '/views/templates/head.view.php' ?>
+<?php include APP_PATH . '/views/templates/sidebar.view.php' ?>
 <main>
     <div class="container-fluid">
         <div class="row">
@@ -16,17 +16,53 @@ $page = "Inicio";
                                 print('<div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/dashboard_administrador.pdf" target="_blank"><i class="material-icons">help</i></a></div>');
                                 break;
                             case 2:
-                            print('<div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/dashboard_financiero.pdf" target="_blank"><i class="material-icons">help</i></a></div>');
+                                print('<div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/dashboard_financiero.pdf" target="_blank"><i class="material-icons">help</i></a></div>');
                                 break;
                             case 3:
-                            print('<div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/dashboard_encargado.pdf" target="_blank"><i class="material-icons">help</i></a></div>');
+                                print('<div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/dashboard_encargado.pdf" target="_blank"><i class="material-icons">help</i></a></div>');
                                 break;
                         }
                         ?>
-                        <span class="card-title">Dashboard</span>
-                        
+                            <span class="card-title">Dashboard</span>
+
                     </div>
-                    <ul class="collapsible" id="ulPendienteFinalizar">
+                    <?php
+                    if ($_SESSION['codi_tipo_usua'] == 4 || $_SESSION['codi_tipo_usua'] == 5) {
+                        print('                    <div class="row">
+                    <div class="col-sm-12 col-md-6 center">
+                        <span class="card-title" id="eventoNombre">
+                            Mi evento
+                        </span>
+                    </div>
+                    <div class="col-md-6 right"><a id="helperx" class="waves-effect waves-green btn-flat btn-small" href="../web/manuales/curso.pdf" target="_blank"><i class="material-icons">help</i></a></div>
+                </div>
+                <table class="responsive-table hover no-wrap row-border striped" id="table-evento-detalle-dashboard" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+                            <th>
+                                Nombre de Invitado
+                            </th>
+                            <th>
+                                Empresa de Invitado
+                            </th>
+                            <th>
+                                Etiqueta de Invitado
+                            </th>
+                            <th>
+                                Asistencia
+                            </th>
+                        </tr>
+                    </thead>
+                </table>');
+                    }
+
+                    ?>
+                    <?php
+                    if ($_SESSION['codi_tipo_usua'] == 4 || $_SESSION['codi_tipo_usua'] == 5) { } else {
+                        print('<ul class="collapsible" id="ulPendienteFinalizar">
                         <li>
                             <div class="collapsible-header">
                                 <i class="material-icons">timer</i>
@@ -39,11 +75,13 @@ $page = "Inicio";
                                 </div>
                             </div>
                         </li>
-                    </ul>
-<?php
-if ($_SESSION['codi_tipo_usua'] == 2 || $_SESSION['codi_tipo_usua'] == 3) {
-    if ($_SESSION['codi_cate']==4) {
-        print('<ul class="collapsible" id="ulPendienteInformeFactura">
+                    </ul>');
+                    }
+                    ?>
+                    <?php
+                    if ($_SESSION['codi_tipo_usua'] == 2 || $_SESSION['codi_tipo_usua'] == 3) {
+                        if ($_SESSION['codi_cate'] == 4) {
+                            print('<ul class="collapsible" id="ulPendienteInformeFactura">
         <li>
             <div class="collapsible-header">
                 <i class="material-icons">library_books</i>
@@ -57,8 +95,8 @@ if ($_SESSION['codi_tipo_usua'] == 2 || $_SESSION['codi_tipo_usua'] == 3) {
             </div>
         </li>
     </ul>');
-    } else {
-        print('
+                        } else {
+                            print('
                     <ul class="collapsible" id="ulPendienteInforme">
                         <li>
                             <div class="collapsible-header">
@@ -74,12 +112,12 @@ if ($_SESSION['codi_tipo_usua'] == 2 || $_SESSION['codi_tipo_usua'] == 3) {
                         </li>
                     </ul>
                     ');
-    }
-}
-?>
-<?php
-if ($_SESSION['codi_tipo_usua'] == 1) {
-	print("
+                        }
+                    }
+                    ?>
+                    <?php
+                    if ($_SESSION['codi_tipo_usua'] == 1) {
+                        print("
                         <ul class='collapsible' id='ulPendienteAprobacion'>
                             <li>
                                 <div class='collapsible-header'>
@@ -94,11 +132,11 @@ if ($_SESSION['codi_tipo_usua'] == 1) {
                             </li>
                         </ul>
                         ");
-}
-?>
-<?php
-if ($_SESSION['codi_tipo_usua'] == 2) {
-	print('
+                    }
+                    ?>
+                    <?php
+                    if ($_SESSION['codi_tipo_usua'] == 2) {
+                        print('
         <ul class="collapsible" id="ulPendienteFactura">
                         <li>
                             <div class="collapsible-header">
@@ -114,11 +152,11 @@ if ($_SESSION['codi_tipo_usua'] == 2) {
                         </li>
                     </ul>
         ');
-}
-?>
-<?php
-if ($_SESSION['codi_tipo_usua'] == 2) {
-	print("
+                    }
+                    ?>
+                    <?php
+                    if ($_SESSION['codi_tipo_usua'] == 2) {
+                        print("
                         <ul class='collapsible' id='ulPendienteQuedan'>
                         <li>
                             <div class='collapsible-header'>
@@ -133,21 +171,8 @@ if ($_SESSION['codi_tipo_usua'] == 2) {
                         </li>
                     </ul>
                         ");
-}
-?>
-                    <ul class="collapsible">
-                        <li>
-                            <div class="collapsible-header">
-                                <i class="material-icons">notifications</i>
-                                Otras Notificaciones
-                                <span data-badge-caption="Nuevas" id="notififcacionesPendientes" name="notififcacionesPendientes" class="new badge blue">4</span>
-                            </div>
-                            <div class="collapsible-body">
-                                <div class="collection" id="todasNotificaciones" name="todasNotificaciones">
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    }
+                    ?>
                 </div>
             </div>
         </div>
@@ -155,8 +180,16 @@ if ($_SESSION['codi_tipo_usua'] == 2) {
 </main>
 
 <!-- SCRIPTS -->
-<script src="<?=WEB_PATH?>js/AJAX/dashboard.js"></script>
-<?php include APP_PATH . '/views/curso/informeAgregado.view.php'?>
-<?php include APP_PATH . '/views/curso/informeAgregadoFactura.view.php'?>
-<?php include APP_PATH . '/views/curso/informeAprovacion.view.php'?>
-<?php include APP_PATH . '/views/templates/footer.view.php'?>
+<?php
+if ($_SESSION['codi_tipo_usua'] == 4 || $_SESSION['codi_tipo_usua'] == 5) {
+    print('<script src="' . WEB_PATH . 'js/AJAX/dashboardEvento.js"></script>');
+} else {
+    print('<script src="' . WEB_PATH . 'js/AJAX/dashboard.js"></script>');
+}
+
+?>
+<?php include APP_PATH . '/views/evento/asistenciaInvitado.view.php' ?>
+<?php include APP_PATH . '/views/curso/informeAgregado.view.php' ?>
+<?php include APP_PATH . '/views/curso/informeAgregadoFactura.view.php' ?>
+<?php include APP_PATH . '/views/curso/informeAprovacion.view.php' ?>
+<?php include APP_PATH . '/views/templates/footer.view.php' ?>

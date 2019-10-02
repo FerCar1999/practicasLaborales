@@ -98,7 +98,7 @@ function verificarTipoUsuario() {
         },
         success:  function (data) { 
             var resp = JSON.parse(data);
-            if (resp == 2) {
+            if (resp != 1) {
                 $('[href="#cuentaCasa"]').closest('li').hide();
             } else {
             }

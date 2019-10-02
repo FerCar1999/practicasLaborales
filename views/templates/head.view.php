@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 ini_set("date.timezone","America/El_Salvador");
 ?>
@@ -24,6 +25,7 @@ ini_set("date.timezone","America/El_Salvador");
     <script src="<?= WEB_PATH ?>js/sweetalert2.js"></script>
     <script src="<?= WEB_PATH ?>js/datatables.js"></script>
     <script src="<?= WEB_PATH ?>js/jquery-confirm.min.js"></script>
+    <script src="<?= WEB_PATH ?>js/jsPDF132/dist/jspdf.min.js"></script>
     <script src="<?= WEB_PATH ?>js/mstepper.js"></script>
     <script src="<?= WEB_PATH ?>js/initialize.js"></script>
     <script src="<?= WEB_PATH ?>js/alertas.js"></script>

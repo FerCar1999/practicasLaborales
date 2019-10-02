@@ -2,7 +2,7 @@ var tableUno, tableDos, tableTres;
 $(document).ready(function () {
   $('.progress').hide();
   $('#progressAvance2').show();
-  $('#progressAvance2N').show();  
+  $('#progressAvance2N').show();
   $(".modal").modal({
     dismissible: false
   });
@@ -88,7 +88,7 @@ function selectHorarios() {
       $("#codiHora").append('<option value="0" selected disabled>Seleccione el horario:</option>');
       //$("#codiHoraUpda").empty().append('whatever');
       //$("#codiHoraUpda").append('<option value="0" selected disabled>Seleccione el horario:</option>');
-      for (var i = 0; i < data.length ; i++) {
+      for (var i = 0; i < data.length; i++) {
         $("#codiHora").append('<option value=' + data[i].codi_hora + '>' + data[i].hora_inic + ' - ' + data[i].hora_fin + '</option>');
         //$("#codiHoraUpda").append('<option value=' + data[i].codi_hora + '>' + data[i].hora_inic + ' - ' + data[i].hora_fin + '</option>');
       }
@@ -111,7 +111,7 @@ function selectHorariosU() {
     success: function (data) {
       $("#codiHoraUpda").empty().append('whatever');
       $("#codiHoraUpda").append('<option value="0" selected disabled>Seleccione el horario:</option>');
-      for (var i = 0; i < data.length ; i++) {
+      for (var i = 0; i < data.length; i++) {
         $("#codiHoraUpda").append('<option value=' + data[i].codi_hora + '>' + data[i].hora_inic + ' - ' + data[i].hora_fin + '</option>');
       }
     },
@@ -327,26 +327,26 @@ function getIdToUpdateCurso(tobyd, table) {
     var fechInic = new Date(data.fech_inic).getTime();
     var fechFina = new Date(data.fech_fin).getTime();
     //Obteneindo cantidad de dias entre la fecha inicial y la fechafinal del curso
-    var cantDiasGlob = (fechFina-fechInic)/(1000*60*60*24);
+    var cantDiasGlob = (fechFina - fechInic) / (1000 * 60 * 60 * 24);
     //Obteniendo cantidad de dias entre la fecha inicial y la fecha actual
     var hoy = new Date();
-    var cantDiasAct = (fechFina-hoy.getTime())/(1000*60*60*24);
+    var cantDiasAct = (fechFina - hoy.getTime()) / (1000 * 60 * 60 * 24);
     //porcentaje de dias que han pasado entre las fechas
-    var porcDiasPasa = 1-(cantDiasAct/cantDiasGlob);
+    var porcDiasPasa = 1 - (cantDiasAct / cantDiasGlob);
     //sacando el valor procentual de los dias
-    if (porcDiasPasa<0) {
-      var porcDiasCien = (0*100);
+    if (porcDiasPasa < 0) {
+      var porcDiasCien = (0 * 100);
     } else {
-      if (porcDiasPasa>1) {
-        var porcDiasCien = (1*100);
+      if (porcDiasPasa > 1) {
+        var porcDiasCien = (1 * 100);
       } else {
-        var porcDiasCien = (porcDiasPasa.toFixed(2)*100);
+        var porcDiasCien = (porcDiasPasa.toFixed(2) * 100);
       }
     }
     //agregando width al progress de avance de proyecto
-    $("#determinateAvanceN").width(porcDiasCien+"%");
+    $("#determinateAvanceN").width(porcDiasCien + "%");
     //agregando cantidad de progreso
-    $("#progresoCursoCN").text(porcDiasCien+"% / 100%");
+    $("#progresoCursoCN").text(porcDiasCien + "% / 100%");
     $("#nombCursUpda").next("label").addClass("active");
     $("#fechInicUpda").next("label").addClass("active");
     $("#fechFinUpda").next("label").addClass("active");
@@ -461,7 +461,7 @@ function update() {
       if (resp >= 0) {
         //creando modal para el mensaje de confirmación
         successAlert("Curso modificado con exito");
-        
+
         //Mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
@@ -516,7 +516,7 @@ function remove() {
       if (resp >= 0) {
         // Mensaje de confirmación
         successAlert("Curso eliminado con exito");
-        
+
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
@@ -648,59 +648,59 @@ function getIdSeeCursos(tobyd, table) {
     var fechInic = new Date(data.fech_inic).getTime();
     var fechFina = new Date(data.fech_fin).getTime();
     //Obteneindo cantidad de dias entre la fecha inicial y la fechafinal del curso
-    var cantDiasGlob = (fechFina-fechInic)/(1000*60*60*24);
+    var cantDiasGlob = (fechFina - fechInic) / (1000 * 60 * 60 * 24);
     //Obteniendo cantidad de dias entre la fecha inicial y la fecha actual
     var hoy = new Date();
-    var cantDiasAct = (fechFina-hoy.getTime())/(1000*60*60*24);
+    var cantDiasAct = (fechFina - hoy.getTime()) / (1000 * 60 * 60 * 24);
     console.log(cantDiasAct);
     //porcentaje de dias que han pasado entre las fechas
-    var porcDiasPasa = 1-(cantDiasAct/cantDiasGlob);
+    var porcDiasPasa = 1 - (cantDiasAct / cantDiasGlob);
     //sacando el valor procentual de los dias
-    if (porcDiasPasa<0) {
-      var porcDiasCien = (0*100);
+    if (porcDiasPasa < 0) {
+      var porcDiasCien = (0 * 100);
     } else {
-      if (porcDiasPasa>1) {
-        var porcDiasCien = (1*100);
+      if (porcDiasPasa > 1) {
+        var porcDiasCien = (1 * 100);
       } else {
-        var porcDiasCien = (porcDiasPasa.toFixed(2)*100);
+        var porcDiasCien = (porcDiasPasa.toFixed(2) * 100);
       }
     }
     //agregando width al progress de avance de proyecto
-    $("#determinateAvance").width(porcDiasCien+"%");
+    $("#determinateAvance").width(porcDiasCien + "%");
     //agregando cantidad de progreso
-    $("#progresoCursoC").text(porcDiasCien+"% / 100%");
+    $("#progresoCursoC").text(porcDiasCien + "% / 100%");
     llenandoListaMaestros(data.codi_curs);
     //agregando informacion al formulario
     var codi_curs = $("#codiCursSee").val(data.codi_curs),
-      nomb_curs = $("#tituloCurso").text(data.nomb_curs+" ("+ data.corr_curs+")"),
-      fech_inic = $("#fechasCursoInic").text("Fecha Inicio del Curso : "+data.fech_inic.split('-').reverse().join('/')),
-      fech_fin = $("#fechasCursoFin").text("Fecha Fin del Curso : "+data.fech_fin.split('-').reverse().join('/')),
-      cant_part = $("#cantidadParticipantes").text("Cantidad de Participantes: " +data.cant_part),
+      nomb_curs = $("#tituloCurso").text(data.nomb_curs + " (" + data.corr_curs + ")"),
+      fech_inic = $("#fechasCursoInic").text("Fecha Inicio del Curso : " + data.fech_inic.split('-').reverse().join('/')),
+      fech_fin = $("#fechasCursoFin").text("Fecha Fin del Curso : " + data.fech_fin.split('-').reverse().join('/')),
+      cant_part = $("#cantidadParticipantes").text("Cantidad de Participantes: " + data.cant_part),
       mont_esti = $("#montoEstimado").text("Monto Estimado: " + data.mont_esti),
-      codi_cate = $("#categoriaCurso").text("Categoria: "+data.nomb_cate);
+      codi_cate = $("#categoriaCurso").text("Categoria: " + data.nomb_cate);
   });
-  
+
 }
-function llenandoListaMaestros(codi) { 
+function llenandoListaMaestros(codi) {
   $.ajax({
-    method : 'POST',
-    url : '../app/controllers/DocenteController.php',
-    data : {
-      lista : 'listaMaestros',
-      codiCurs : codi
+    method: 'POST',
+    url: '../app/controllers/DocenteController.php',
+    data: {
+      lista: 'listaMaestros',
+      codiCurs: codi
     },
     dataType: 'JSON',
-    success : function (data) {
+    success: function (data) {
       for (var s = 1; s < 10; s++) {
-          $("#" + s).remove();
+        $("#" + s).remove();
       }
       for (var i = 0; i < data.length; i++) {
         //agregandole los elementos a la lista
-        $("#maestros").append("<li id="+(i+1)+" class='collection-item'>"+data[i].nomb_doce+" "+data[i].apel_doce+"</li> ");
+        $("#maestros").append("<li id=" + (i + 1) + " class='collection-item'>" + data[i].nomb_doce + " " + data[i].apel_doce + "</li> ");
       }
-     }
+    }
   });
- }
+}
 //PARTE DE LOS HORARIOS DE MI CASA
 //Funcion para agregar los horarios cuando se crea el curso
 function agregarHorario() {
@@ -817,7 +817,7 @@ function agregarHorarioDocenteN(codi) {
       if (resp >= 0) {
         // Mensaje de confirmación
         successAlert("Horario agregado con exito");
-        
+
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
@@ -1064,7 +1064,7 @@ function removeHorario() {
       if (resp >= 0) {
         // Mensaje de confirmación
         successAlert("Horario eliminado con exito");
-        
+
         //mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader
@@ -1100,44 +1100,44 @@ function updateHorario() {
     errorAlert("Debe seleccionar un horario");
   } else {
     //datos del formulario
-  var datos = $("#frmUpdaHoraCursoInfo").serialize();
-  //realizando peticion ajax
-  $.ajax({
-    //metodo que se va a usar
-    method: "POST",
-    //ruta del controlador
-    url: "../app/controllers/IntermediaCursoSalonController.php",
-    //datos que se enviaran por el post
-    data: datos,
-    beforeSend: function () {
-      //ocultando el footer del modal
-      $('.modal-footer').hide();
-      //mostrando el preloader
-      $('#preloader').show();
-    },
-    //funcion en el caso de que responda correctamente el servidor
-    success: function (data) {
-      //obteniendo el valor de respuesta del servidor
-      var resp = data.indexOf("Exito");
-      //verificando que si sea exitosa la operacion
-      if (resp >= 0) {
-        updateHorario2();
-      } else {
-        //Mostrando el footer del modal
-        $('.modal-footer').show();
-        //ocultando el preloader
-        $('#preloader').hide();
-        ///creando el mensaje de error
-        var mensaje = data.replace(/['"]+/g, '');
-        errorAlert(mensaje);
+    var datos = $("#frmUpdaHoraCursoInfo").serialize();
+    //realizando peticion ajax
+    $.ajax({
+      //metodo que se va a usar
+      method: "POST",
+      //ruta del controlador
+      url: "../app/controllers/IntermediaCursoSalonController.php",
+      //datos que se enviaran por el post
+      data: datos,
+      beforeSend: function () {
+        //ocultando el footer del modal
+        $('.modal-footer').hide();
+        //mostrando el preloader
+        $('#preloader').show();
+      },
+      //funcion en el caso de que responda correctamente el servidor
+      success: function (data) {
+        //obteniendo el valor de respuesta del servidor
+        var resp = data.indexOf("Exito");
+        //verificando que si sea exitosa la operacion
+        if (resp >= 0) {
+          updateHorario2();
+        } else {
+          //Mostrando el footer del modal
+          $('.modal-footer').show();
+          //ocultando el preloader
+          $('#preloader').hide();
+          ///creando el mensaje de error
+          var mensaje = data.replace(/['"]+/g, '');
+          errorAlert(mensaje);
+        }
+      },
+      //funcion en el caso de que el servidor no responda
+      error: function () {
+        //creando modal de error
+        errorAlert("No se pudo contactar con el servidor");
       }
-    },
-    //funcion en el caso de que el servidor no responda
-    error: function () {
-      //creando modal de error
-      errorAlert("No se pudo contactar con el servidor");
-    }
-  });
+    });
   }
 }
 // Funcion para modificar el curso
@@ -1166,7 +1166,7 @@ function updateHorario2() {
       if (resp >= 0) {
         //creando modal para el mensaje de confirmación
         successAlert("Horario de curso modificado con exito");
-        
+
         //Mostrando el footer del modal
         $('.modal-footer').show();
         //ocultando el preloader

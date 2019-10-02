@@ -103,9 +103,10 @@ function verificandoExistencia() {
             accion: 'verficandoExistenciaUsuarios'
         },
         success: function (data) {
+            console.log(JSON.parse(data));
             //si la respuesta es cero
-            var respuesta = data.indexOf("0");
-            if (respuesta >= 0) {
+            //var respuesta = data.indexOf("0");
+            if (JSON.parse(data) == 0) {
                 //se muestra el formulario de registro
                 $("#registro").show();
                 //se ocultan los formularios de login y de recuperar contrasenia

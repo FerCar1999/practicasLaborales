@@ -489,3 +489,18 @@ ul.stepper .step.active::before {
 .progress.cinco{
     background-color: #ef9a9a;
 }
+#addEventoDetalle {
+    display: none;
+    position: fixed;
+    left: 0;
+    right: 0;
+    background-color: #fafafa;
+    padding: 0;
+    max-height: 80%;
+    height: 80%;
+    width: 94%;
+    margin: auto;
+    overflow-y: auto;
+    border-radius: 2px;
+    will-change: top, opacity;
+}
