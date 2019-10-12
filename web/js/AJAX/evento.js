@@ -4,6 +4,7 @@ var table;
 $(document).ready(function () {
     //ejecutando la funcion datatable
     dataTable();
+    $("#tablaEven").hide();
     $('.datepicker').datepicker({
         format: 'yyyy-mm-dd',
         i18n: {
@@ -23,7 +24,8 @@ $(document).ready(function () {
         dismissible: false
     });
     $('select').select2();
-    selectEtiquetas();
+    selectEtiquetaEventoE();
+    selectEventosEventoE();
 });
 // Cargar datos a la tabla
 function dataTable() {
@@ -58,9 +60,9 @@ function dataTable() {
             data: 'fech_even'
         }, {
             //agregando botones para abrir el modal de modificar o de eliminar categoria
-            defaultContent: "<a href='#updateEvento' class='update btn-small blue darken-1 waves-effect waves-ligth modal-trigger'>Modificar</a>"
-                + "  <a href='#deleteEvento' class='delete btn-small red darken-1 waves-effect waves-ligth modal-trigger'>Eliminar</a>"
-                + "  <a href='#addEventoDetalle' class='ver btn-small blue darken-1 waves-effect waves-ligth modal-trigger'>Invitados</a>"
+            defaultContent: "<a href='#updateEvento' class='update btn-small blue darken-1 waves-effect waves-ligth modal-trigger'><i class='medium material-icons'>create</i></a>"
+                + "  <a href='#deleteEvento' class='delete btn-small red darken-1 waves-effect waves-ligth modal-trigger'><i class='medium material-icons'>delete</i></a>"
+                + "  <a href='#addEventoDetalle' class='ver btn-small blue darken-1 waves-effect waves-ligth modal-trigger'><i class='medium material-icons'>contacts</i></a>"
         }],
         //cambiando el idioma de las diferentes opciones
         language: {
@@ -105,6 +107,7 @@ function dataTable() {
         iDisplayLength: 5
     });
     $('select').select2();
+
     getDataToSee("#table-evento tbody", table);
     // Llamamos al metodo para obtener los datos, para actualizar
     getDataToUpdate("#table-evento tbody", table);
@@ -133,6 +136,7 @@ function getDataToSee(tobyd, table) {
         llenadoTabla(data.codi_even)
     });
 }
+
 function getIdToDelete(tobyd, table) {
     $('tbody').on("click", "a.delete", function () {
         var data = table.row($(this).parents("tr")).data();
@@ -169,13 +173,15 @@ function llenadoTabla(id) {
             //agregando datos de nombre de categoria
             data: 'empr_cont'
         }, {
+            data: 'tele_cont'
+        }, {
             data: 'nomb_etiq'
         }, {
             data: 'conf_even_deta',
             "aTargets": [0],
             "render": function (data) {
                 if (data == 0) {
-                    return "<a class='disabled update btn-small green darken-1 waves-effect waves-ligth modal-trigger'>No Realizada</a>";
+                    return "<a class='update-asistencia btn-small green darken-1 waves-effect waves-ligth modal-trigger'>Realizar</a>";
                 } else {
                     if (data == 1) {
                         return "<a class='disabled btn-small green darken-1 waves-effect waves-ligth modal-trigger'>Realizada</a>";
@@ -244,11 +250,58 @@ function llenadoTabla(id) {
     });
     $('select').select2();
     getDataToDelete("#table-evento-detalle tbody", tablex);
+    getDataToAsistencia("#table-evento-detalle tbody", tablex);
+
+    //tablex.reload();
 }
 function getDataToDelete(tobyd, table) {
     $('tbody').on("click", "a.delete", function () {
         var data = table.row($(this).parents("tr")).data();
         var codi_even_deta = $("#codiEvenDetaDele").val(data.codi_even_deta)
+    });
+}
+function getDataToAsistencia(tobyd, table) {
+    $('tbody').on("click", "a.update-asistencia", function () {
+        var data = table.row($(this).parents("tr")).data();
+        var codiEvenDeta = data.codi_even_deta;
+        Swal.fire({
+            title: 'Estas seguro/a?',
+            text: "Una vez enviados los correos no se puede revertir esta accion",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, modificar!',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.value) {
+                //var codigo = $("#codiInviX").val();
+                $.ajax({
+                    url: '../app/controllers/EventoDetalleController',
+                    method: 'POST',
+                    data: {
+                        accion: 'asistenciaNoToken',
+                        codiEvenDeta: codiEvenDeta
+                    },
+                    success: function (data) {
+                        var resp = data.indexOf("Exito");
+                        if (resp >= 0) {
+                            Swal.fire(
+                                'Asistencia confirmada con exito!',
+                                'Se ha tomadado la confirmacion de la persona.',
+                                'success'
+                            );
+                            table.ajax.reload();
+                        } else {
+                            M.toast({ html: JSON.parse(data), classes: 'rounded' });
+                        }
+                    },
+                    error: function () {
+                        M.toast({ html: "Error al contactar con el servidor", classes: 'rounded' });
+                    }
+                })
+            }
+        })
     });
 }
 // Funcion para agregar
@@ -436,6 +489,14 @@ function asistencia(codi) {
             codiEvenDetaAsis: codi
         },
         beforeSend: function () {
+            swal({
+                title: 'Un momento por favor...',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                onOpen: () => {
+                    swal.showLoading();
+                }
+            });
             //se oculta el footer del modal
             $('.modal-footer').hide();
             //se muestra el preloader
@@ -560,7 +621,7 @@ function removeInvitado() {
     });
 }
 
-function selectEtiquetas() {
+function selectEtiquetaEventoE() {
     $.ajax({
         type: 'POST',
         url: '../app/controllers/EtiquetaController.php',
@@ -580,7 +641,7 @@ function selectEtiquetas() {
         }
     });
 }
-function selectContactosEtiquetas() {
+function selectContactosEtiquetasC() {
     var etiqueta = $("#codiEtiq").val();
     var codigo = $("#codiEven").val();
     $.ajax({
@@ -626,6 +687,16 @@ function enviarInvitaciones() {
                     accion: 'enviarInvitacion',
                     codiEven: codigo
                 },
+                beforeSend: function () {
+                    swal({
+                        title: 'Un momento por favor...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        onOpen: () => {
+                            swal.showLoading();
+                        }
+                    });
+                },
                 success: function (data) {
                     var resp = data.indexOf("Exito");
                     if (resp >= 0) {
@@ -645,8 +716,110 @@ function enviarInvitaciones() {
         }
     })
 }
-function selectTodos() {
-    $('#codiCont option').prop('selected', true);
-    $('#codiCont').change();
-    $('#codiCont').trigger('change.select2');
+function selectEventosEventoE() {
+    $.ajax({
+        type: 'POST',
+        url: '../app/controllers/EventoController.php',
+        data: {
+            tipo: 'eventos'
+        },
+        dataType: 'JSON',
+        success: function (data) {
+            $("#codiEvenRepo").empty().append('whatever');
+            $("#codiEvenRepo").append('<option value="0" selected disabled>Seleccione el evento:</option>');
+            for (var i = 0; i < data.length; i++) {
+                $("#codiEvenRepo").append('<option value=' + data[i].codi_even + '>' + data[i].nomb_even + '</option>');
+            }
+        },
+        error: function (data) {
+            console.log("Error al traer datos");
+        }
+    });
+}
+function selectEtiquetaEventosE() {
+    $.ajax({
+        type: 'POST',
+        url: '../app/controllers/EtiquetaController.php',
+        data: {
+            etiquetasEvento: 'eventos',
+            codiEven: $('#codiEvenRepo').val()
+        },
+        dataType: 'JSON',
+        success: function (data) {
+            $("#codiEtiqRepoEven").empty().append('whatever');
+            for (var i = 0; i < data.length; i++) {
+                $("#codiEtiqRepoEven").append('<option value=' + data[i].codi_etiq + '>' + data[i].nomb_etiq + '</option>');
+            }
+        },
+        error: function (data) {
+            console.log("Error al traer datos");
+        }
+    });
+}
+//AJAX GENERADOR DE REPORTES
+function convertImageToCanvas(image) {
+    var canvas = document.createElement("canvas");
+    canvas.width = image.width;
+    canvas.height = image.height;
+    canvas.getContext("2d").drawImage(image, 0, 0);
+
+    return canvas;
+}
+function reporteEvento() {
+    var evento = $('#codiEvenRepo').val();
+    var etiqueta = $('#codiEtiqRepoEven').val();
+    for (var i = 0; i < etiqueta.length; i++) {
+        $.ajax({
+            url: '../app/controllers/EventoDetalleController',
+            method: 'POST',
+            data: {
+                accion: 'reporte',
+                codiEvenRepo: evento,
+                codiEtiqRepo: etiqueta[i]
+            },
+            dataType: 'JSON',
+            beforeSend: function () {
+
+            },
+            success: function (data) {
+                if (data.length > 0) {
+                    console.log(data);
+                    $("#tablitaEven tbody").empty();
+                    var doc = new jsPDF({
+                        orientation: 'p',
+                        unit: 'mm',
+                        format: 'letter'
+                    });
+                    var logo = new Image();
+                    logo.src = '../logos/RICALDONE.jpg';
+                    doc.addImage(logo, 'JPG', 95, 15, 25, 25)
+                    doc.setFontSize(15);
+                    var textWidth = doc.getStringUnitWidth("Evento: " + $('#codiEvenRepo option:selected').text()) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    var x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 50, "Evento: " + $('#codiEvenRepo option:selected').text());
+                    let finalY = 60;
+                    doc.setFontSize(12);
+                    var textWidth = doc.getStringUnitWidth("Evento: " + data[0].nomb_etiq) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    var equis = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(equis, finalY, "Etiqueta: " + data[0].nomb_etiq);
+                    for (var s = 0; s < data.length; s++) {
+                        $('#tablitaEven tbody').append('<tr>' +
+                            '<td>' + data[s].nomb_cont + '</td>' +
+                            '<td>' + data[s].empr_cont + '</td>' +
+                            '<td>' + (data[s].conf_even_deta == 0 ? 'No Realizada' : 'Realizada') + '</td>' +
+                            '<td>' + (data[s].asis_even_deta == 0 ? 'No Realizada' : 'Realizada') + '</td>' +
+                            '</tr>'
+                        );
+                    }
+                    doc.autoTable({
+                        startY: finalY + 10,
+                        html: '#tablitaEven'
+                    });
+                    window.open(doc.output('bloburl', 'reporte.pdf'), '_blank');
+                } else {
+                    M.toast({ html: "No se encontraron datos de esta etiqueta", classes: 'rounded' });
+                }
+            }
+        });
+    }
 }

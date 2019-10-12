@@ -4,11 +4,11 @@ $title = "Salon";
 //Nombre de pagina
 $page = "Salon";
 ?>
-<?php 
+<?php
 //llamando el archivo head
 include APP_PATH . '/views/templates/head.view.php' ?>
 
-<?php 
+<?php
 //llamando al archivo sidebar que es el que trae las diferentes opciones para los usuarios y controla el tiempo de sesion
 include APP_PATH . '/views/templates/sidebar.view.php' ?>
 
@@ -42,6 +42,9 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
         <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large blue darken-2" data-target="addSalon">
             <i class="large material-icons">add</i>
         </button>
+        <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large red darken-1" data-target="reporteSalon">
+            <i class="large material-icons">picture_as_pdf</i>
+        </button>
     </div>
 
     <!-- Modal para agregar categoria -->
@@ -50,6 +53,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
     <?php include APP_PATH . '/views/salon/updateSalon.view.php' ?>
     <!-- Modal para eliminar categoria -->
     <?php include APP_PATH . '/views/salon/deleteSalon.view.php' ?>
+    <?php include APP_PATH . '/views/salon/reporte.view.php' ?>
 </main>
 
 <!-- AJAX -->

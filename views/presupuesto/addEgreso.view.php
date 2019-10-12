@@ -2,7 +2,7 @@
     <form action="" class="add" id="frmAddEgreso">
         <div class="modal-header green darken-1 white-text">
             <h5 class="mt-none mb-none">
-                Agregar Sub Presupuesto
+                Agregar Adenda
             </h5>
             <i class="material-icons modal-close">
                 close

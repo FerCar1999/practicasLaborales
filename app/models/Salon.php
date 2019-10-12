@@ -1,7 +1,7 @@
 <?php
 
 class Salon extends Validator
-{   
+{
     // Declaraion de propiedades
     private $codi_salo = null;
     private $codi_casa = null;
@@ -85,7 +85,7 @@ class Salon extends Validator
     public function createSalon()
     {
         $sql    = "INSERT INTO salon(codi_casa,nomb_salo,esta_salo) VALUES (?,?,1)";
-        $params = array($this->codi_casa,$this->nomb_salo);
+        $params = array($this->codi_casa, $this->nomb_salo);
         return Database::executeRow($sql, $params);
     }
     //Funcion para obtener lista de registros de la tabla categoria sin json
@@ -115,5 +115,33 @@ class Salon extends Validator
         $sql    = "UPDATE salon SET esta_salo = 0 WHERE codi_salo = ?";
         $params = array($this->codi_salo);
         return Database::executeRow($sql, $params);
+    }
+    public function reporteHorarioSalon()
+    {
+        $sql = "SELECT sa.nomb_salo,CONCAT(time_format(ho.hora_inic, '%r'), ' - ', time_format(ho.hora_fin, '%r')) AS hora, 
+        ho.codi_dia, cu.nomb_curs, CONCAT(doc.nomb_doce,' ',doc.apel_doce) AS nomb_doce 
+        FROM intermedia_horario_docente AS ihd
+        INNER JOIN intermedia_curso_salon AS ics ON ics.codi_inte_curs_salo=ihd.codi_inte_curs_salo
+        INNER JOIN horario AS ho ON ho.codi_hora=ihd.codi_hora
+        INNER JOIN docente AS doc ON doc.codi_doce=ihd.codi_doce
+        INNER JOIN curso AS cu ON cu.codi_curs=ics.codi_curs
+        INNER JOIN salon AS sa ON sa.codi_salo=ics.codi_salo
+        WHERE sa.codi_salo = ?";
+        $params = array($this->codi_salo);
+        return Database::getRows($sql, $params);
+    }
+    public function reporteHorarioSalonCompleto()
+    {
+        $sql = "SELECT sa.nomb_salo,CONCAT(time_format(ho.hora_inic, '%r'), ' - ', time_format(ho.hora_fin, '%r')) AS hora, 
+        ho.codi_dia, cu.nomb_curs, CONCAT(doc.nomb_doce,' ',doc.apel_doce) AS nomb_doce 
+        FROM intermedia_horario_docente AS ihd
+        INNER JOIN intermedia_curso_salon AS ics ON ics.codi_inte_curs_salo=ihd.codi_inte_curs_salo
+        INNER JOIN horario AS ho ON ho.codi_hora=ihd.codi_hora
+        INNER JOIN docente AS doc ON doc.codi_doce=ihd.codi_doce
+        INNER JOIN curso AS cu ON cu.codi_curs=ics.codi_curs
+        INNER JOIN salon AS sa ON sa.codi_salo=ics.codi_salo
+        ORDER BY sa.nomb_salo,ho.codi_dia,time_format(ho.hora_inic, '%r') DESC";
+        $params = array(null);
+        return Database::getRows($sql, $params);
     }
 }

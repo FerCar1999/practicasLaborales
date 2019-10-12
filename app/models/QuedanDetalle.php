@@ -115,5 +115,39 @@ class QuedanDetalle extends Validator
 		$sql = "SELECT corre_usua FROM usuario WHERE codi_usua=?";
 		$params = array($codi);
 		return Database::getRow($sql, $params);
+    }
+    
+    public function getReporteQuedan()
+	{
+		$sql = "SELECT f.nume_fact, f.fech_emis_fact, f.cant_fact, f.esta_fact, c.corr_curs, c.nomb_curs, CONCAT(ca.nomb_cate, ' (', ca.corr_cate, ')') as nomb_cate 
+		FROM factura_detalle AS fd
+		INNER JOIN factura AS f ON f.codi_fact=fd.codi_fact
+		INNER JOIN curso AS c ON c.codi_curs=fd.codi_curs
+		INNER JOIN categoria as ca ON ca.codi_cate=c.codi_cate
+		WHERE f.codi_fact=?";
+		$params = array($this->codi_fact);
+		return Database::getRows($sql, $params);
+	}
+	public function getReporteCasa($categoria, $inicio, $final, $casa)
+	{
+		$sql = "SELECT f.nume_fact, f.fech_emis_fact, f.cant_fact, f.esta_fact, c.corr_curs, c.nomb_curs, CONCAT(ca.nomb_cate, ' (', ca.corr_cate, ')') as nomb_cate 
+		FROM factura_detalle AS fd
+		INNER JOIN factura AS f ON f.codi_fact=fd.codi_fact
+		INNER JOIN curso AS c ON c.codi_curs=fd.codi_curs
+		INNER JOIN categoria as ca ON ca.codi_cate=c.codi_cate
+		WHERE ca.codi_cate=? AND c.codi_casa =? AND f.fech_emis_fact BETWEEN ? AND ?";
+		$params = array($categoria, $casa, $inicio, $final);
+		return Database::getRows($sql, $params);
+	}
+	public function getReporteFecha($inicio, $final, $casa)
+	{
+		$sql = "SELECT f.nume_fact, f.fech_emis_fact, f.cant_fact, f.esta_fact, c.corr_curs, c.nomb_curs, CONCAT(ca.nomb_cate, ' (', ca.corr_cate, ')') as nomb_cate 
+		FROM factura_detalle AS fd
+		INNER JOIN factura AS f ON f.codi_fact=fd.codi_fact
+		INNER JOIN curso AS c ON c.codi_curs=fd.codi_curs
+		INNER JOIN categoria as ca ON ca.codi_cate=c.codi_cate
+		WHERE c.codi_casa =? AND f.fech_emis_fact BETWEEN ? AND ?";
+		$params = array($casa, $inicio, $final);
+		return Database::getRows($sql, $params);
 	}
 }

@@ -73,7 +73,7 @@
         </div>
         <div class="modal-footer">
             <button type="button" class="modal-close waves-effect btn-flat">Cancelar</button>
-            <button type="button" class="waves-effect waves-green btn blue darken-1" onclick="update();">Modificar</button>
+            <button type="button" class="waves-effect waves-green btn blue darken-1" onclick="update();">Guardar Cambios</button>
         </div>
     </form>
 </div>

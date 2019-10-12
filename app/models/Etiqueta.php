@@ -73,6 +73,12 @@ class Etiqueta extends Validator
         $params = array(null);
         return Database::getRows($sql, $params);
     }
+    public function getEtiquetasEvento($codiEven)
+    {
+        $sql    = "SELECT DISTINCT et.codi_etiq, et.nomb_etiq FROM evento_detalle as ev INNER JOIN etiqueta as et ON et.codi_etiq=ev.codi_etiq WHERE et.esta_etiq=1 AND ev.codi_even=? AND ev.esta_even_deta=1";
+        $params = array($codiEven);
+        return Database::getRows($sql, $params);
+    }
     public function getEtiquetasN($codi)
     {
         $sql    = "SELECT codi_etiq, nomb_etiq FROM etiqueta WHERE esta_etiq=1 AND codi_etiq!=?";

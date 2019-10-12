@@ -33,7 +33,7 @@ class Validator
     public function validateForm($fields)
     {
         foreach ($fields as $index => $value) {
-            $value          = trim($value);
+            $value          = strip_tags(trim($value));
             $fields[$index] = htmlspecialchars($value);
         }
         return $fields;
@@ -49,20 +49,20 @@ class Validator
     public function validateFile($file, $value, $path)
     {
         $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
-            if ($extension == 'pdf') {
-                $archivo   = uniqid() . "." . $extension;
-                $url       = $path . $archivo;
-                if (move_uploaded_file($file['tmp_name'], $url)) {
-                    $this->fileName = $archivo;
-                    return true;
-                } else {
-                    $this->fileError = 1;
-                    return false;
-                }
-            }else{
-                $this->fileError=2;
+        if ($extension == 'pdf') {
+            $archivo   = uniqid() . "." . $extension;
+            $url       = $path . $archivo;
+            if (move_uploaded_file($file['tmp_name'], $url)) {
+                $this->fileName = $archivo;
+                return true;
+            } else {
+                $this->fileError = 1;
                 return false;
             }
+        } else {
+            $this->fileError = 2;
+            return false;
+        }
     }
     public function getFileName()
     {
@@ -73,13 +73,13 @@ class Validator
     {
         switch ($this->fileError) {
             case 1:
-                $error = "No se puede guardar la imagen";
+                $error = "No se puede guardar el archivo";
                 break;
             case 2:
                 $error = "El tipo de archivo debe ser pdf";
                 break;
             default:
-                $error = "Ocurrió un problema con el archivo".$this->fileError;
+                $error = "Ocurrió un problema con el archivo" . $this->fileError;
         }
         return $error;
     }
@@ -123,7 +123,6 @@ class Validator
         } else {
             return false;
         }
-        
     }
     public function validateHour($value)
     {

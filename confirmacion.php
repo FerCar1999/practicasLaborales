@@ -21,7 +21,7 @@ require_once APP_PATH . '/app/models/EventoDetalle.php';
     <?php
     try {
         $eventodetalle = new EventoDetalle;
-        $eventod = $eventodetalle->infoEventoDetalle($_GET['token']);
+        $eventod = $eventodetalle->infoEventoDetalle(strip_tags(trim($_GET['token'])));
         if ($eventodetalle->setCodiEven($eventod['codi_even'])) { }
 
         $evento = $eventodetalle->infoEvento();
@@ -53,7 +53,8 @@ require_once APP_PATH . '/app/models/EventoDetalle.php';
                 <div class="col m1 l1"></div>
             </div>
                 ';
-        } else { }
+        } else {
+        }
     } catch (Exception $error) {
         //enviando el mensaje ya sea de exito o de error en json
         echo json_encode($error->getMessage());
@@ -73,6 +74,16 @@ require_once APP_PATH . '/app/models/EventoDetalle.php';
                     accion: 'confirmacion',
                     token: token
                 },
+                beforeSend: function() {
+                    swal({
+                        title: 'Un momento por favor...',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        onOpen: () => {
+                            swal.showLoading();
+                        }
+                    });
+                },
                 success: function(data) {
                     var resp = data.indexOf("Exito");
                     if (resp >= 0) {
@@ -88,6 +99,14 @@ require_once APP_PATH . '/app/models/EventoDetalle.php';
                             html: JSON.parse(data)
                         });
                     }
+                },
+                error: function() {
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Hubo un error al contactarse con el servidor, intentelo más tarde.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
                 }
             })
         }

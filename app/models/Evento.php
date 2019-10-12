@@ -135,4 +135,9 @@ class Evento extends Validator {
 		$params = array($fecha);
 		return Database::getRows($sql, $params);
 	}
+	public function getEventos() {
+		$sql = "SELECT codi_even, nomb_even FROM evento WHERE esta_even=1";
+		$params = array(null);
+		return Database::getRows($sql, $params);
+	}
 }

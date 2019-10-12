@@ -3,6 +3,8 @@
 
 //use PHPMailer\PHPMailer\Exception;
 
+use PHPMailer\PHPMailer\Exception;
+
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
 require_once APP_PATH . '/app/models/Evento.php';
@@ -20,6 +22,10 @@ try {
     }
     if (isset($_POST['dashboard'])) {
         $data = $evento->getEventoAhora(date('Y-m-d'));
+        echo json_encode($data);
+    }
+    if (isset($_POST['tipo'])) {
+        $data = $evento->getEventos();
         echo json_encode($data);
     }
     //si el post es para una de las acciones del crud

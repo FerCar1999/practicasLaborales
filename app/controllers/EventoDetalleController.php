@@ -1,5 +1,8 @@
 <?php
 //llamando el archivo app
+
+use PHPMailer\PHPMailer\Exception;
+
 require_once '../../config/app.php';
 //llamando el archivo modelo de la tabla categoria
 require_once APP_PATH . '/app/models/EventoDetalle.php';
@@ -83,7 +86,18 @@ try {
                     throw new Exception('No se encontro el invitado');
                 }
                 break;
+            case 'asistenciaNoToken':
+                if ($eventodetalle->setCodiEvenDeta($_POST['codiEvenDeta'])) {
+                    if ($eventodetalle->confirmarAsistenciaEventoSinToken()) {
+                        throw new Exception('Exito');
+                    } else {
+                        throw new Exception('No se pudo modificar la confirmacion de el contacto, favor contactar con el administrador del sitio');
+                    }
+                } else {
+                    throw new Exception('No se encontro el contacto');
+                }
 
+                break;
             case 'confirmacion':
                 $asistencia = $eventodetalle->obtenerConfirmacion($_POST['token']);
                 $existencia = $eventodetalle->existenciaToken($_POST['token']);
@@ -128,6 +142,18 @@ try {
                     throw new Exception('No se encontro el evento');
                 }
 
+                break;
+            case 'reporte':
+                if ($eventodetalle->setCodiEven($_POST['codiEvenRepo'])) {
+                    if ($eventodetalle->setCodiEtiq($_POST['codiEtiqRepo'])) {
+                        $data = $eventodetalle->getEventoDetalleN();
+                        echo json_encode($data);
+                    } else {
+                        throw new Exception('No se encontro la etiqueta');
+                    }
+                } else {
+                    throw new Exception('No se encontro el evento');
+                }
                 break;
         }
     }

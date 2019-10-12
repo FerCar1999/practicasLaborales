@@ -6,10 +6,10 @@ $page = "Cursos";
 ?>
 <?php
 //llamando el archivo head
-include APP_PATH . '/views/templates/head.view.php'?>
+include APP_PATH . '/views/templates/head.view.php' ?>
 <?php
 //llamando al archivo sidebar que es el que trae las diferentes opciones para los usuarios y controla el tiempo de sesion
-include APP_PATH . '/views/templates/sidebar.view.php'?>
+include APP_PATH . '/views/templates/sidebar.view.php' ?>
 <main>
     <div class="container-fluid">
         <div class="row col-sm-12">
@@ -24,7 +24,7 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
                             </li>
                             <li class="tab" id="casasLi">
                                 <a href="#casas">
-                                    Cursos de  otras Casas
+                                    Cursos de otras Casas
                                 </a>
                             </li>
                         </ul>
@@ -78,6 +78,9 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
                             <div class="fixed-action-btn">
                                 <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large blue darken-2" data-target="addCurso">
                                     <i class="large material-icons">add</i>
+                                </button>
+                                <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large red darken-1" data-target="reporte">
+                                    <i class="large material-icons">picture_as_pdf</i>
                                 </button>
                             </div>
                         </div>
@@ -139,18 +142,18 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
     </div>
 </main>
 <!-- Modal para agregar categoria -->
-<?php include APP_PATH . '/views/curso/addCurso.view.php'?>
-<?php include APP_PATH . '/views/curso/addHorarioCurso.view.php'?>
-<?php include APP_PATH . '/views/curso/addHorarioCursoN.view.php'?>
-<?php include APP_PATH . '/views/curso/updateCurso.view.php'?>
-<?php include APP_PATH . '/views/curso/updateHorarioCurso.view.php'?>
-<?php include APP_PATH . '/views/curso/updateHorarioInfo.view.php'?>
+<?php include APP_PATH . '/views/curso/addCurso.view.php' ?>
+<?php include APP_PATH . '/views/curso/addHorarioCurso.view.php' ?>
+<?php include APP_PATH . '/views/curso/addHorarioCursoN.view.php' ?>
+<?php include APP_PATH . '/views/curso/updateCurso.view.php' ?>
+<?php include APP_PATH . '/views/curso/updateHorarioCurso.view.php' ?>
+<?php include APP_PATH . '/views/curso/updateHorarioInfo.view.php' ?>
 <!-- Modal para modificar categoria -->
-<?php include APP_PATH . '/views/curso/deleteCurso.view.php'?>
-<?php include APP_PATH . '/views/curso/deleteHorarioCurso.view.php'?>
+<?php include APP_PATH . '/views/curso/deleteCurso.view.php' ?>
+<?php include APP_PATH . '/views/curso/deleteHorarioCurso.view.php' ?>
 <!-- Modal para eliminar categoria -->
-<?php include APP_PATH . '/views/curso/verCurso.view.php'?>
+<?php include APP_PATH . '/views/curso/verCurso.view.php' ?>
 <!-- AJAX -->
-<script src="<?=WEB_PATH?>js/AJAX/curso.js">
+<script src="<?= WEB_PATH ?>js/AJAX/curso.js">
 </script>
-<?php include APP_PATH . '/views/templates/footer.view.php'?>
+<?php include APP_PATH . '/views/templates/footer.view.php' ?>

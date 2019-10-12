@@ -98,7 +98,7 @@
                 Cancelar
             </button>
             <button class="waves-effect waves-green btn blue darken-1" onclick="update();" type="button">
-                Modificar
+                Guardar Cambios
             </button>
         </div>
     </form>

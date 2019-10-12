@@ -33,7 +33,7 @@
                 Cancelar
             </button>
             <button class="waves-effect waves-green btn blue darken-2" onclick="updateLogoCasa();" type="button">
-                Modificar
+                Guardar Cambios
             </button>
         </div>
     </form>

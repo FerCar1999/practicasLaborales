@@ -17,8 +17,8 @@ function enviandoCorreoCuenta($destinatario, $nombreDestinatario, $password)
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
-		$mail->Password = 'Fernando12345'; // SMTP password
+		$mail->Username = 'sgcs_administrador@ricaldone.edu.sv'; // SMTP username
+		$mail->Password = 'superadminricaldoneitr2019'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -31,7 +31,7 @@ function enviandoCorreoCuenta($destinatario, $nombreDestinatario, $password)
 		); // TCP port to connect to
 
 		//Recipients
-		$mail->setFrom('carranzafernando99@gmail.com', 'Fernando Ernesto Carranza Guardado');
+		$mail->setFrom('sgcs_administrador@ricaldone.edu.sv', 'SGCS');
 		$mail->addAddress($destinatario, $nombreDestinatario); // Add a recipient
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
@@ -60,8 +60,8 @@ function enviandoCorreoCuentaCambioContrasenia($destinatario, $nombreDestinatari
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
-		$mail->Password = 'Fernando12345'; // SMTP password
+		$mail->Username = 'sgcs_administrador@ricaldone.edu.sv'; // SMTP username
+		$mail->Password = 'superadminricaldoneitr2019'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -74,7 +74,7 @@ function enviandoCorreoCuentaCambioContrasenia($destinatario, $nombreDestinatari
 		); // TCP port to connect to
 
 		//Recipients
-		$mail->setFrom('carranzafernando99@gmail.com', 'Fernando Ernesto Carranza Guardado');
+		$mail->setFrom('sgcs_administrador@ricaldone.edu.sv', 'SGCS');
 		$mail->addAddress($destinatario, $nombreDestinatario); // Add a recipient
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
@@ -103,8 +103,8 @@ function enviandoCorreoCuentaModificaContra($destinatario, $nombreDestinatario, 
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
-		$mail->Password = 'Fernando12345'; // SMTP password
+		$mail->Username = 'sgcs_administrador@ricaldone.edu.sv'; // SMTP username
+		$mail->Password = 'superadminricaldoneitr2019'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -115,8 +115,9 @@ function enviandoCorreoCuentaModificaContra($destinatario, $nombreDestinatario, 
 				'allow_self_signed' => true,
 			),
 		); // TCP port to connect to
+
 		//Recipients
-		$mail->setFrom('carranzafernando99@gmail.com', 'Fernando Ernesto Carranza Guardado');
+		$mail->setFrom('sgcs_administrador@ricaldone.edu.sv', 'SGCS');
 		$mail->addAddress($destinatario, $nombreDestinatario); // Add a recipient
 		//Content
 		$mail->isHTML(true); // Set email format to HTML
@@ -144,8 +145,8 @@ function enviandoCorreoPeticion($nombreEmisor, $correoEmisor, $nombreReceptor, $
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
-		$mail->Password = 'Fernando12345'; // SMTP password
+		$mail->Username = 'sgcs_administrador@ricaldone.edu.sv'; // SMTP username
+		$mail->Password = 'superadminricaldoneitr2019'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -193,8 +194,8 @@ function enviandoCorreoPresupuesto($nombreEmisor, $correoEmisor, $nombreReceptor
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
-		$mail->Password = 'Fernando12345'; // SMTP password
+		$mail->Username = 'sgcs_administrador@ricaldone.edu.sv'; // SMTP username
+		$mail->Password = 'superadminricaldoneitr2019'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -233,8 +234,8 @@ function enviandoCorreoAlerta($nombreEmisor, $correoEmisor, $nombreReceptor, $co
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
-		$mail->Password = 'Fernando12345'; // SMTP password
+		$mail->Username = 'sgcs_administrador@ricaldone.edu.sv'; // SMTP username
+		$mail->Password = 'superadminricaldoneitr2019'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -295,8 +296,8 @@ function enviandoCorreoQuedan($nombreEmisor, $correoEmisor, $casa, $nombreRecept
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
-		$mail->Password = 'Fernando12345'; // SMTP password
+		$mail->Username = 'sgcs_administrador@ricaldone.edu.sv'; // SMTP username
+		$mail->Password = 'superadminricaldoneitr2019'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -336,8 +337,8 @@ function enviandoCorreoQuedanAbono($nombreEmisor, $correoEmisor, $casa, $nombreR
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
-		$mail->Password = 'Fernando12345'; // SMTP password
+		$mail->Username = 'sgcs_administrador@ricaldone.edu.sv'; // SMTP username
+		$mail->Password = 'superadminricaldoneitr2019'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -377,8 +378,8 @@ function enviandoCorreoQuedanFin($nombreEmisor, $correoEmisor, $casa, $nombreRec
 		$mail->isSMTP(); // Set mailer to use SMTP
 		$mail->Host = 'smtp.gmail.com'; // Specify main and backup SMTP servers
 		$mail->SMTPAuth = true; // Enable SMTP authentication
-		$mail->Username = 'carranzafernando99@gmail.com'; // SMTP username
-		$mail->Password = 'Fernando12345'; // SMTP password
+		$mail->Username = 'sgcs_administrador@ricaldone.edu.sv'; // SMTP username
+		$mail->Password = 'superadminricaldoneitr2019'; // SMTP password
 		$mail->SMTPSecure = 'tls'; // Enable TLS encryption, `ssl` also accepted
 		$mail->Port = 587;
 		$mail->CharSet = 'UTF-8';
@@ -472,7 +473,7 @@ function enviarCorreoInvitacion($codigoEvento, $evento, $destinatario, $nombreDe
 		min-height: 1px;
 		text-align: center;
 		">
-            <img src="http://sgcs.ricaldone.edu.sv/logos/RICALDONE.png" width="25%" style="margin-top: 20px;" alt="imagenEvento">
+            <img src="http://sgcs.ricaldone.edu.sv/logos/RICALDONE.png" width="15%" style="margin-top: 20px; margin-bottom: 15px;" alt="imagenEvento">
         </div>
     </div>
     <div style="    margin-left: auto;
@@ -559,7 +560,7 @@ function enviarCorreoInvitacion($codigoEvento, $evento, $destinatario, $nombreDe
 	color: #000 !important;
 	background-color: #ffc107 !important;
 		" href="http://sgcs.ricaldone.edu.sv/confirmacion.php?token=' . $codigoEvento . '">
-                Confirmar asistencia
+                Confirmar asistencia 
             </a>
             <br>
         </div>
@@ -676,7 +677,7 @@ function enviarCorreoConfirmacionPersona($nombre, $correo, $evento, $corrEven)
 		min-height: 1px;
 		text-align: center;
 		">
-            <img src="http://sgcs.ricaldone.edu.sv/logos/RICALDONE.png" width="25%" style="margin-top: 20px;" alt="imagenEvento">
+            <img src="http://sgcs.ricaldone.edu.sv/logos/RICALDONE.png" width="15%" style="margin-top: 20px; margin-bottom: 15px;" alt="imagenEvento">
         </div>
     </div>
     <div style="    margin-left: auto;
@@ -805,7 +806,7 @@ function enviarCorreoConfirmacionEncargado($nombre, $correo, $evento, $contacto)
 		min-height: 1px;
 		text-align: center;
 		">
-            <img src="http://sgcs.ricaldone.edu.sv/logos/RICALDONE.png" width="25%" style="margin-top: 20px;" alt="imagenEvento">
+            <img src="http://sgcs.ricaldone.edu.sv/logos/RICALDONE.png" width="15%" style="margin-top: 20px; margin-bottom: 15px;" alt="imagenEvento">
         </div>
     </div>
     <div style="    margin-left: auto;
@@ -830,7 +831,7 @@ function enviarCorreoConfirmacionEncargado($nombre, $correo, $evento, $contacto)
 			margin-block-start: 2.33em;
 			margin-block-end: 2.33em;
 			margin-inline-start: 0px;
-			margin-inline-end: 0px;">Buen día: '.$nombre.', el contacto: '.$contacto.' ha confirmado su asistencia al evento: '.$evento.'. Favor confirmar en sistema la confirmacion del contacto.</h6>
+			margin-inline-end: 0px;">Buen día: '.$nombre.', el contacto: '.$contacto.' ha confirmado su asistencia al evento: '.$evento.'. Favor verificar en sistema la confirmacion del contacto.</h6>
         </div>
         <div style="width: 100%;
 		margin-left: auto;

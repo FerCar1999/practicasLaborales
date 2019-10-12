@@ -42,7 +42,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                             <div class="row center-align" id="modificarLogoCasa">
                                 <div class="col s12">
                                     <a class="waves-effect waves-green btn green darken-2 modal-trigger" href="#addEgreso">
-                                        Modificar Presupuesto
+                                        Agregar Adenda
                                     </a>
                                 </div>
                             </div>

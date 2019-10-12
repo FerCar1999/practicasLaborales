@@ -32,7 +32,7 @@ try {
         $_POST = $salon->validateForm($_POST);
         //switch para verificar que accion es la que se va a realizar
         switch ($_POST['accion']) {
-            //en el caso que la accion sea de crear una nueva categoria
+                //en el caso que la accion sea de crear una nueva categoria
             case 'create':
                 //si se setea con exito el nombre de la categoria
                 if ($salon->setNombSalo($_POST['nombSalo'])) {
@@ -50,7 +50,7 @@ try {
                     throw new Exception('Verifique el nombre del salon');
                 }
                 break;
-            //en el caso de que la accion sea de modificar la categoria
+                //en el caso de que la accion sea de modificar la categoria
             case 'update':
                 //si se setea con exito el codigo del registro
                 if ($salon->setCodiSalo($_POST['codiSaloUpda'])) {
@@ -82,9 +82,21 @@ try {
                     throw new Exception('No se encontro el salon');
                 }
                 break;
+            case 'reporte':
+                if ($salon->setCodiSalo($_POST['codiSaloRepo'])) {
+                    $data = $salon->reporteHorarioSalon();
+                    echo json_encode($data);
+                } else {
+                    throw new Exception("No se encontro el salon");
+                }
+
+                break;
+            case 'reporteCompleto':
+                $data = $salon->reporteHorarioSalonCompleto();
+                echo json_encode($data);
+                break;
         }
     }
-
 } catch (Exception $error) {
     //enviando el mensaje ya sea de exito o de error en json
     echo json_encode($error->getMessage());

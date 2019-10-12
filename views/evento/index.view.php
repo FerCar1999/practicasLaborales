@@ -44,6 +44,9 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
         <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large blue darken-1" data-target="addEvento">
             <i class="large material-icons">add</i>
         </button>
+        <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large red darken-1" data-target="reporteEvento">
+            <i class="large material-icons">picture_as_pdf</i>
+        </button>
     </div>
 
     <!-- Modal para agregar categoria -->
@@ -54,6 +57,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
     <?php include APP_PATH . '/views/evento/deleteEvento.view.php' ?>
     <?php include APP_PATH . '/views/evento/addEventoDetalle.view.php' ?>
     <?php include APP_PATH . '/views/evento/addInvitado.view.php' ?>
+    <?php include APP_PATH . '/views/evento/reporte.view.php' ?>
     <!-- Modal para modificar categoria -->
     <?php include APP_PATH . '/views/evento/asistenciaInvitado.view.php' ?>
     <!-- Modal para eliminar categoria -->

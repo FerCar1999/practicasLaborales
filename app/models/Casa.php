@@ -168,4 +168,11 @@ class Casa extends Validator
         $params = array($this->codi_casa);
         return Database::executeRow($sql, $params);
     }
+
+    public function verificarEstadoCasas()
+    {
+        $sql    = "SELECT COUNT(*) as conteo FROM casa WHERE esta_casa = 1 AND codi_tipo_casa=1";
+        $params = array(null);
+        return Database::getRow($sql, $params);
+    }
 }

@@ -20,6 +20,12 @@ try {
         //imprimiendo la lista en tipo json
         echo json_encode($data);
     }
+    if (isset($_POST['etiquetasEvento'])) {
+        //se obtiene la lista sin array asociativo
+        $data = $etiqueta->getEtiquetasEvento($_POST['codiEven']);
+        //imprimiendo la lista en tipo json
+        echo json_encode($data);
+    }
     //si el post es para la datatable del crud de categoria
     if (isset($_POST['tabla'])) {
         //se obtiene la lista en array asociativo con formato json

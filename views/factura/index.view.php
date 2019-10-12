@@ -46,6 +46,9 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
         <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large blue darken-2" data-target="addFactura">
             <i class="large material-icons">add</i>
         </button>
+        <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large red darken-1" data-target="reporteFactura">
+            <i class="large material-icons">picture_as_pdf</i>
+        </button>
     </div>
 
     <!-- Modal para agregar categoria -->
@@ -58,6 +61,7 @@ include APP_PATH . '/views/templates/sidebar.view.php'?>
     <?php include APP_PATH . '/views/factura/deleteFactura.view.php'?>
     <?php include APP_PATH . '/views/factura/addFacturaDetalle.view.php'?>
     <?php include APP_PATH . '/views/factura/verDetalleFactura.view.php'?>
+    <?php include APP_PATH . '/views/factura/reporte.view.php'?>
 </main>
 
 <!-- AJAX -->

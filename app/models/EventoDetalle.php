@@ -127,24 +127,29 @@ class EventoDetalle extends Validator {
 	}
 	//Funcion para obtener lista de registros de la tabla categoria sin json
 	public function getEventoDetalle() {
-		$sql = "SELECT ed.codi_even_deta, CONCAT(co.nomb_cont,' ',co.apel_cont) as nomb_cont, co.empr_cont, et.nomb_etiq, ed.conf_even_deta, ed.asis_even_deta FROM evento_detalle as ed INNER JOIN contacto as co ON co.codi_cont= ed.codi_cont INNER JOIN etiqueta as et ON et.codi_etiq= ed.codi_etiq WHERE ed.esta_even_deta=1 AND ed.codi_even=?";
+		$sql = "SELECT ed.codi_even_deta, CONCAT(co.nomb_cont,' ',co.apel_cont) as nomb_cont, CONCAT(co.tele_fijo_cont, ' o ', co.tele_celu_cont) as tele_cont, co.empr_cont, et.nomb_etiq, ed.conf_even_deta, ed.asis_even_deta FROM evento_detalle as ed INNER JOIN contacto as co ON co.codi_cont= ed.codi_cont INNER JOIN etiqueta as et ON et.codi_etiq= ed.codi_etiq WHERE ed.esta_even_deta=1 AND ed.codi_even=?";
 		$params = array($this->codi_even);
 		return Database::getRowsAjax($sql, $params);
+	}
+	public function getEventoDetalleN() {
+		$sql = "SELECT CONCAT(co.nomb_cont,' ',co.apel_cont) as nomb_cont, co.empr_cont, ed.conf_even_deta, ed.asis_even_deta, et.nomb_etiq FROM evento_detalle as ed INNER JOIN contacto as co ON co.codi_cont= ed.codi_cont INNER JOIN etiqueta as et ON et.codi_etiq= ed.codi_etiq WHERE ed.esta_even_deta=1 AND ed.codi_even=? AND ed.codi_etiq=?";
+		$params = array($this->codi_even, $this->codi_etiq);
+		return Database::getRows($sql, $params);
 	}
 	public function updateEstadoEvento() {
 		$sql = "UPDATE evento SET esta_even=1 WHERE codi_even=?";
 		$params = array($this->codi_even);
-		return Database::getRowsAjax($sql, $params);
+		return Database::executeRow($sql, $params);
 	}
 	public function updateAsistenciaEvento() {
 		$sql = "UPDATE evento_detalle SET asis_even_deta=1, codi_usua=? WHERE codi_even_deta=?";
 		$params = array($this->codi_usua, $this->codi_even_deta);
-		return Database::getRowsAjax($sql, $params);
+		return Database::executeRow($sql, $params);
 	}
 	public function confirmarAsistenciaEvento($token) {
 		$sql = "UPDATE evento_detalle SET conf_even_deta=1 WHERE toke_conf=?";
 		$params = array($token);
-		return Database::getRowsAjax($sql, $params);
+		return Database::executeRow($sql, $params);
 	}
 	public function infoEvento()
 	{
@@ -196,6 +201,11 @@ class EventoDetalle extends Validator {
 	{
 		$sql = "UPDATE evento_detalle SET esta_asis_corr = 1 WHERE codi_even =?";
 		$params= array($this->codi_even);
+		return Database::executeRow($sql, $params);
+	}
+	public function confirmarAsistenciaEventoSinToken() {
+		$sql = "UPDATE evento_detalle SET conf_even_deta=1 WHERE codi_even_deta=?";
+		$params = array($this->codi_even_deta);
 		return Database::executeRow($sql, $params);
 	}
 }

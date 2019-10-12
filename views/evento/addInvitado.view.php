@@ -12,7 +12,7 @@
                         <input type="hidden" name="codiEven" id="codiEven">
                         <div class="col s12">
                             <label for="codiEtiq">Etiqueta del contacto:
-                                <select class="select-2 w-100" name="codiEtiq" id="codiEtiq" onchange="selectContactosEtiquetas();">
+                                <select class="select-2 w-100" name="codiEtiq" id="codiEtiq" onchange="selectContactosEtiquetasC();">
                                 </select>
                             </label>
 
@@ -22,7 +22,7 @@
                                 <select multiple class="select-2 w-100" name="codiCont[]" id="codiCont">
                                 </select>
                             </label>
-                            <a onclick="selectTodos();"">Seleccionar todos</a>
+                            <a onclick="selectTodos('codiCont');"">Seleccionar todos</a>
                         </div>
                     </div>
                 </div>

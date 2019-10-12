@@ -14,10 +14,10 @@ $(document).ready(function () {
     $('.modal').modal({
         dismissible: false
     });
-    selectEtiquetas();
-    selectProfesiones();
+    selectEtiquetasContacto();
+    selectProfesionesContacto();
 });
-function selectEtiquetas() {
+function selectEtiquetasContacto() {
     $.ajax({
         type: 'POST',
         url: '../app/controllers/EtiquetaController.php',
@@ -28,13 +28,13 @@ function selectEtiquetas() {
         success: function (data) {
             $("#codiEtiq").empty().append('whatever');
             $("#codiEtiqUpda").empty().append('whatever');
-            $("#codiEtiqRepo").empty().append('whatever');
+            $("#codiEtiqRepoCont").empty().append('whatever');
             $("#codiEtiqTabl").empty().append('whatever');
             $("#codiEtiqTabl").append('<option value="0" selected disabled>Seleccione la etiqueta:</option>');
             for (var i = 0; i < data.length; i++) {
                 $("#codiEtiq").append('<option value=' + data[i].codi_etiq + '>' + data[i].nomb_etiq + '</option>');
                 $("#codiEtiqUpda").append('<option value=' + data[i].codi_etiq + '>' + data[i].nomb_etiq + '</option>');
-                $("#codiEtiqRepo").append('<option value=' + data[i].codi_etiq + '>' + data[i].nomb_etiq + '</option>');
+                $("#codiEtiqRepoCont").append('<option value=' + data[i].codi_etiq + '>' + data[i].nomb_etiq + '</option>');
                 $("#codiEtiqTabl").append('<option value=' + data[i].codi_etiq + '>' + data[i].nomb_etiq + '</option>');
             }
         },
@@ -44,7 +44,7 @@ function selectEtiquetas() {
     });
 }
 function selectContactosEtiquetas() {
-    var etiqueta = $("#codiEtiqRepo").val();
+    var etiqueta = $("#codiEtiqRepoCont").val();
     $.ajax({
         type: 'POST',
         url: '../app/controllers/ContactoController.php',
@@ -65,7 +65,7 @@ function selectContactosEtiquetas() {
     });
 }
 
-function selectProfesiones() {
+function selectProfesionesContacto() {
     $.ajax({
         type: 'POST',
         url: '../app/controllers/ProfesionController.php',
@@ -485,11 +485,9 @@ function remove() {
 //posiciones de las cartas
 var x = [10, 115];
 var y = [20, 70, 120, 170, 220];
-var info = ['Nombre: ', 'Cargo: ', 'Empresa: ', 'Direccion: \n'];
+var info = ['Nombre: ', 'Cargo: \n', 'Empresa:', 'Dirección: \n'];
 var col = 0;
-function reporte() {
-    //datos del formulario
-    var datos = $("#frmReporte").serialize();
+function reporteContacto() {
     var codigos = $("#codiContRepo").val();
     var concatenado = "";
     for (var d = 0; d < codigos.length; d++) {
@@ -505,7 +503,7 @@ function reporte() {
         {
             accion: 'reporte',
             codiContRepo: concatenado,
-            codiEtiqRepo: $("#codiEtiqRepo").val()
+            codiEtiqRepo: $("#codiEtiqRepoCont").val()
         },
         dataType: 'JSON',
         success: function (data) {
@@ -517,106 +515,247 @@ function reporte() {
             //console.log(data);
             for (var h = 0; h < data.length; h++) {
                 //verificando si se necesita otra pagina
-                var modPag = h % 10;
-                var posicionX = (h) % 2;
+                var modPag = h%10;
+                var posicionX = h%2;
                 //obteniedo ultimo dato de la posicion del dato
                 var toText = h.toString(); //convert to string
                 var lastChar = toText.slice(-1); //gets last character
                 var posicionY = +(lastChar); //convert last character to number
                 if (modPag == 0 & h > 0) {
-                    console.log('aqui');
                     doc.addPage();
                 }
+                doc.setFontSize(12);
                 if (posicionX == 0) {
                     switch (posicionY) {
                         case 0: case 1:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[0] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[0] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[0] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[0] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[0] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                         case 2: case 3:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[1] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[1] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[1] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[1] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[1] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                         case 4: case 5:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[2] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[2] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[2] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[2] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[2] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                         case 6: case 7:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[3] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[3] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[3] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[3] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[3] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                         case 8: case 9:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[4] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[4] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[4] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[4] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[4] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                     }
+                    col=0;
                 } else {
                     switch (posicionY) {
                         case 0: case 1:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[0] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[0] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[0] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[0] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[0] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                         case 2: case 3:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[1] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[1] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[1] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[1] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[1] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                         case 4: case 5:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[2] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[2] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[2] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[2] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[2] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                         case 6: case 7:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[3] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[3] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[3] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[3] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[3] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                         case 8: case 9:
                             for (var i = 0; i < 4; i++) {
-                                doc.setFontSize(13);
-                                doc.text(x[posicionX], (y[4] + col), info[i] + data[h][i]);
-                                col += 6;
+                                switch (i) {
+                                    case 0:
+                                        doc.text(x[posicionX], (y[4] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 1:
+                                        doc.text(x[posicionX], (y[4] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 15;
+                                        break;
+                                    case 2:
+                                        doc.text(x[posicionX], (y[4] + col), info[i] + data[h][i]);
+                                        col += 6;
+                                        break;
+                                    case 3:
+                                        doc.text(x[posicionX], (y[4] + col), info[i] + concatenarTextoLargo(data[h][i]));
+                                        col += 6;
+                                        break;
+                                }
                             }
-                            col = 0;
                             break;
                     }
+                    col = 0;
                 }
             }
             window.open(doc.output('bloburl', 'reporte.pdf'), '_blank');
         }
     });
-
 }

@@ -74,7 +74,7 @@ $page = "Cuenta";
                                             <div class="row center-align" id="modificarInformacion">
                                                 <div class="col s12">
                                                     <button class="waves-effect waves-green btn blue darken-2" onclick="updateInfo();" type="button">
-                                                        Modificar
+                                                        Guardar Cambios
                                                     </button>
                                                 </div>
                                             </div>
@@ -177,7 +177,7 @@ $page = "Cuenta";
                                                 <div class="row center-align" id="modificarInformacionCasa">
                                                     <div class="col s12">
                                                         <button class="waves-effect waves-green btn blue darken-2" onclick="updateInfoCasa();" type="button">
-                                                            Modificar
+                                                            Guardar Cambios
                                                         </button>
                                                     </div>
                                                 </div>
@@ -203,7 +203,7 @@ $page = "Cuenta";
                                             <div class="row center-align" id="modificarLogoCasa">
                                                 <div class="col s12">
                                                     <a class="waves-effect waves-green btn blue darken-2 modal-trigger" href="#updateLogoCasa">
-                                                        Modificar
+                                                        Guardar Cambios
                                                     </a>
                                                 </div>
                                             </div>

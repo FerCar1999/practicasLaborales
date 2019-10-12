@@ -2,8 +2,22 @@
 var table;
 //creando variable para el regex
 var reAlpha = /^[a-zA-ZñÑáÁéÉíÍóÓúÚ\s]{1,100}/; // Regex
-$(document).ready(function() {
+$(document).ready(function () {
     $('.js-example-basic-single').select2();
+    $("#tablaDoce").hide();
+    $("#tabla2Doce").hide();
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd',
+        i18n: {
+            months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+            monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dic"],
+            weekdays: ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+            weekdaysShort: ["Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+            weekdaysAbbrev: ["D", "L", "M", "M", "J", "V", "S"]
+        },
+        container: 'body'
+    });
+    selectDocentes();
     selectProfesiones();
     selectAcreditaciones();
     //ejecutando la funcion datatable
@@ -25,7 +39,7 @@ function selectAcreditaciones() {
             type: 'acreditaciones'
         },
         dataType: 'JSON',
-        success: function(data) {
+        success: function (data) {
             $("#codiAcre").empty().append('whatever');
             $("#codiAcre").append('<option value="0" selected disabled>Seleccione la acreditacion:</option>');
             $("#codiAcreUpda").empty().append('whatever');
@@ -35,7 +49,7 @@ function selectAcreditaciones() {
                 $("#codiAcreUpda").append('<option value=' + data[i].codi_acre + '>' + data[i].tipo_acre + '</option>');
             }
         },
-        error: function(data) {
+        error: function (data) {
             console.log("Error al traer datos");
         }
     });
@@ -49,7 +63,7 @@ function selectProfesiones() {
             type: 'profesion'
         },
         dataType: 'JSON',
-        success: function(data) {
+        success: function (data) {
             $("#codiProf").empty().append('whatever');
             $("#codiProf").append('<option value="0" selected disabled>Seleccione la profesion:</option>');
             $("#codiProfUpda").empty().append('whatever');
@@ -59,7 +73,7 @@ function selectProfesiones() {
                 $("#codiProfUpda").append('<option value=' + data[i].codi_prof + '>' + data[i].nomb_prof + '</option>');
             }
         },
-        error: function(data) {
+        error: function (data) {
             console.log("Error al traer datos");
         }
     });
@@ -158,7 +172,7 @@ function dataTable() {
 }
 // Funcion para obtener datos para modificar
 function getDataToUpdate(tbody, table) {
-    $('tbody').on("click", "a.update", function() {
+    $('tbody').on("click", "a.update", function () {
         var data = table.row($(this).parents("tr")).data();
         $("#nombDoceUpda").next("label").addClass("active");
         $("#apelDoceUpda").next("label").addClass("active");
@@ -177,7 +191,7 @@ function getDataToUpdate(tbody, table) {
 }
 // Funcion para obtener el ID
 function getIdToDelete(tobyd, table) {
-    $('tbody').on("click", "a.delete", function() {
+    $('tbody').on("click", "a.delete", function () {
         var data = table.row($(this).parents("tr")).data();
         var codi_doce = $("#codiDoceDele").val(data.codi_doce);
     });
@@ -205,7 +219,7 @@ function create() {
                 //data que se va a enviar por post
                 data: datos,
                 //funcion en el caso de que la peticion sea correcta
-                success: function(data) {
+                success: function (data) {
                     //si la respuesta del servidores mayor o igual a 0
                     if (JSON.parse(data) >= 0) {
                         //se oculta el footer del modal
@@ -216,7 +230,7 @@ function create() {
                             method: "POST",
                             url: "../app/controllers/IntermediaDocenteProfesionController.php",
                             data: datos + '&codiDoce=' + JSON.parse(data),
-                            success: function(dato) {
+                            success: function (dato) {
                                 var resp = data.indexOf("Exito");
                                 if (resp > 0) {
                                     console.log('');
@@ -229,7 +243,7 @@ function create() {
                             method: "POST",
                             url: "../app/controllers/IntermediaAcreditacionDocenteController.php",
                             data: datos + '&codiDoce=' + JSON.parse(data),
-                            success: function(dato) {
+                            success: function (dato) {
                                 var resp = data.indexOf("Exito");
                                 if (resp > 0) {
                                     console.log('');
@@ -258,7 +272,7 @@ function create() {
                     }
                 },
                 //funcion en el caso de que exista un error con el servidor
-                error: function() {
+                error: function () {
                     //creando toast para el error
                     errorAlert("Error al contactar con el servidor");
                 }
@@ -289,7 +303,7 @@ function update() {
                 //datos que se enviaran por el post
                 data: datos + '&accion=' + accion,
                 //funcion en el caso de que responda correctamente el servidor
-                success: function(data) {
+                success: function (data) {
                     //obteniendo el valor de respuesta del servidor
                     var resp = data.indexOf("Exito");
                     //verificando que si sea exitosa la operacion
@@ -302,7 +316,7 @@ function update() {
                             method: "POST",
                             url: "../app/controllers/IntermediaAcreditacionDocenteController.php",
                             data: datos,
-                            success: function(dato) {
+                            success: function (dato) {
                                 var resp = data.indexOf("Exito");
                                 if (resp > 0) {
                                     console.log('');
@@ -315,7 +329,7 @@ function update() {
                             method: "POST",
                             url: "../app/controllers/IntermediaAcreditacionDocenteController.php",
                             data: datos,
-                            success: function(dato) {
+                            success: function (dato) {
                                 var resp = data.indexOf("Exito");
                                 if (resp > 0) {
                                     console.log('');
@@ -344,7 +358,7 @@ function update() {
                     }
                 },
                 //funcion en el caso de que el servidor no responda
-                error: function() {
+                error: function () {
                     //creando modal de error
                     errorAlert("No se pudo contactar con el servidor");
                 }
@@ -367,7 +381,7 @@ function remove() {
         //datos que se enviaran en el post
         data: datos + '&accion=' + accion,
         //funcion si el servidor responde
-        success: function(data) {
+        success: function (data) {
             //obteniendo valor de la respuesta del servidor
             var resp = data.indexOf("Exito");
             //verificando si la respuesta es exitosa
@@ -396,9 +410,141 @@ function remove() {
             }
         },
         //funcion en el caso de que el servidor no responda
-        error: function() {
+        error: function () {
             // Mensaje de confirmación
             errorAlert("Error al contactar con el servidor");
+        }
+    });
+}
+function selectDocentes() {
+    $.ajax({
+        type: 'POST',
+        url: '../app/controllers/DocenteController.php',
+        data: {
+            type: 'categoria'
+        },
+        dataType: 'JSON',
+        success: function (data) {
+            $("#codiDoceRepo").empty().append('whatever');
+            $("#codiDoceRepo").append('<option value="0" selected disabled>Seleccione el docente:</option>');
+            for (var i = 0; i < data.length; i++) {
+                $("#codiDoceRepo").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + '</option>');
+            }
+        },
+        error: function (data) {
+            console.log("Error al traer datos");
+        }
+    });
+}
+//AJAX GENERADOR DE REPORTES
+function generarReporteDocente() {
+    var docente = $('#codiDoceRepo').val();
+    var desde = $('#fechInicRepoDoce').val();
+    var hasta = $('#fechFinaRepoDoce').val();
+    $.ajax({
+        url: '../app/controllers/DocenteController',
+        method: 'POST',
+        data: {
+            accion: 'reporte',
+            codiDoceRepo: docente,
+            fechInicRepo: desde,
+            fechFinaRepo: hasta
+        },
+        dataType: 'JSON',
+        beforeSend: function () {
+
+        },
+        success: function (data) {
+            if (data.length > 0) {
+                $("#tablitaDoce tbody").empty();
+                var doc = new jsPDF({
+                    orientation: 'p',
+                    unit: 'mm',
+                    format: 'letter'
+                });
+                var logo = new Image();
+                logo.src = '../logos/RICALDONE.jpg';
+                doc.addImage(logo, 'JPG', 95, 15, 25, 25)
+                doc.setFontSize(15);
+                var textWidth = doc.getStringUnitWidth("Docente: " + $('#codiDoceRepo option:selected').text()) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                var x = (doc.internal.pageSize.width - textWidth) / 2;
+                doc.text(x, 50, "Docente: " + $('#codiDoceRepo option:selected').text());
+                let finalY = 53;
+                for (var s = 0; s < data.length; s++) {
+                    var dias = ["", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+                    $('#tablitaDoce tbody').append('<tr>' +
+                        '<td>' + dias[data[s].codi_dia] + '</td>' +
+                        '<td>' + data[s].hora + '</td>' +
+                        '<td>' + data[s].nomb_salo + '</td>' +
+                        '<td>' + data[s].nomb_curs + '</td>' +
+                        '<td>' + (data[s].finalizacion >= 0 ? 'En curso' : 'Finalizado') + '</td>' +
+                        '</tr>'
+                    );
+                }
+                doc.autoTable({
+                    startY: finalY,
+                    html: '#tablitaDoce',
+                    theme: 'grid'
+                });
+                window.open(doc.output('bloburl', 'reporte.pdf'), '_blank');
+            } else {
+                M.toast({ html: 'No se han encontrado datos para este salon', classes: 'rounded' });
+            }
+        }
+    });
+}
+function generarReporteCompletoDocente() {
+    var desde = $('#fechInicRepoDoce').val();
+    var hasta = $('#fechFinaRepoDoce').val();
+    $.ajax({
+        url: '../app/controllers/DocenteController',
+        method: 'POST',
+        data: {
+            accion: 'reporteCompleto',
+            fechInicRepo: desde,
+            fechFinaRepo: hasta
+        },
+        dataType: 'JSON',
+        beforeSend: function () {
+
+        },
+        success: function (data) {
+            if (data.length > 0) {
+                $("#tablita2Doce tbody").empty();
+                var doc = new jsPDF({
+                    orientation: 'p',
+                    unit: 'mm',
+                    format: 'letter'
+                });
+                var logo = new Image();
+                logo.src = '../logos/RICALDONE.jpg';
+                doc.addImage(logo, 'JPG', 95, 15, 25, 25)
+                doc.setFontSize(15);
+                var textWidth = doc.getStringUnitWidth("Horarios por Docente") * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                var x = (doc.internal.pageSize.width - textWidth) / 2;
+                doc.text(x, 50, "Horarios por Docente");
+                let finalY = 53;
+                for (var s = 0; s < data.length; s++) {
+                    var dias = ["", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"];
+                    $('#tablita2Doce tbody').append('<tr>' +
+                        '<td>' + dias[data[s].codi_dia] + '</td>' +
+                        '<td>' + data[s].hora + '</td>' +
+                        '<td>' + data[s].nomb_salo + '</td>' +
+                        '<td>' + data[s].nomb_curs + '</td>' +
+                        '<td>' + data[s].nomb_doce + '</td>' +
+                        '<td>' + (data[s].finalizacion >= 0 ? 'En curso' : 'Finalizado') + '</td>' +
+                        '</tr>'
+                    );
+                }
+                doc.autoTable({
+                    startY: finalY,
+                    html: '#tablita2Doce',
+                    theme: 'grid'
+                });
+                window.open(doc.output('bloburl', 'reporte.pdf'), '_blank');
+            } else {
+                M.toast({ html: 'No se encontraron datos', classes: 'rounded' });
+            }
         }
     });
 }

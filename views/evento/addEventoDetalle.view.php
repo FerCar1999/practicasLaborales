@@ -22,7 +22,12 @@
                                 <th>
                                     Nombre de Invitado
                                 </th>
-                                <th>Empresa</th>
+                                <th>
+                                    Empresa
+                                </th>
+                                <th>
+                                    Telefonos
+                                </th>
                                 <th>
                                     Etiqueta de Invitado
                                 </th>

@@ -31,14 +31,13 @@ try {
             case 'getCasa':
                 if ($casa->setCodiCasa($_SESSION['codi_casa'])) {
                     $data = $casa->getInfoCasa();
-
                 } else {
                     throw new Exception('No se encontro la casa');
                 }
                 echo json_encode($data);
 
                 break;
-            //en el caso que la accion sea de crear una nueva categoria
+                //en el caso que la accion sea de crear una nueva categoria
             case 'create':
                 //si se setea con exito el nombre de la categoria
                 if ($casa->setNombCasa($_POST['nombCasa'])) {
@@ -64,17 +63,54 @@ try {
                         } else {
                             throw new Exception("Error con el tipo de casa");
                         }
-
                     } else {
                         throw new Exception("Verifique la direccion de la casa");
                     }
-
                 } else {
                     //se envia mensaje de error
                     throw new Exception('Verifique el nombre de la casa');
                 }
                 break;
-            //en el caso de que la accion sea de modificar la categoria
+                //en el caso que la accion sea de crear una nueva categoria
+            case 'createPrimera':
+            $cantidad = $casa->verificarEstadoCasas();
+                if ($cantidad['conteo'] == 0) {
+                    //si se setea con exito el nombre de la categoria
+                    if ($casa->setNombCasa($_POST['nombCasa'])) {
+                        if ($casa->setDireCasa($_POST['direCasa'])) {
+                            if ($casa->setCodiTipoCasa($_POST['codiTipoCasa'])) {
+                                if (is_uploaded_file($_FILES['logoCasa']['tmp_name'])) {
+                                    if ($casa->setImagen($_FILES['logoCasa'])) {
+                                        if ($casa->createCasa()) {
+                                            throw new Exception($casa->obtenerIdUltimaCasaCreadad());
+                                        } else {
+                                            if ($casa->unsetImagen()) {
+                                                throw new Exception(Database::getException());
+                                            } else {
+                                                throw new Exception("Elimine la imagen manualmente");
+                                            }
+                                        }
+                                    } else {
+                                        throw new Exception($casa->getImageError());
+                                    }
+                                } else {
+                                    throw new Exception("Seleccione una imagen");
+                                }
+                            } else {
+                                throw new Exception("Error con el tipo de casa");
+                            }
+                        } else {
+                            throw new Exception("Verifique la direccion de la casa");
+                        }
+                    } else {
+                        //se envia mensaje de error
+                        throw new Exception('Verifique el nombre de la casa');
+                    }
+                } else {
+                    throw new Exception("Ya hay una casa encargada");
+                }
+                break;
+                //en el caso de que la accion sea de modificar la categoria
             case 'update':
                 if ($casa->setCodiCasa($_POST['codiCasa'])) {
                     if ($casa->setNombCasa($_POST['nombCasa'])) {
@@ -89,11 +125,9 @@ try {
                             } else {
                                 throw new Exception(Database::getException());
                             }
-
                         } else {
                             throw new Exception("Verifique la direccion de la casa");
                         }
-
                     } else {
                         //se envia mensaje de error
                         throw new Exception('Verifique el nombre de la casa');
@@ -128,11 +162,9 @@ try {
                             } else {
                                 throw new Exception(Database::getException());
                             }
-
                         } else {
                             throw new Exception("Verifique la direccion de la casa");
                         }
-
                     } else {
                         //se envia mensaje de error
                         throw new Exception('Verifique el nombre de la casa');
@@ -159,7 +191,6 @@ try {
                 break;
         }
     }
-
 } catch (Exception $error) {
     //enviando el mensaje ya sea de exito o de error en json
     echo json_encode($error->getMessage());

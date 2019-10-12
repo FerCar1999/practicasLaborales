@@ -19,6 +19,11 @@ try {
 		//se imprime la lista
 		echo $data;
 	}
+	if (isset($_POST['facturaCategoria'])) {
+		$_POST = $factura->validateForm($_POST);
+		$data = $factura->getFacturasCategoria($_POST['codiCateRepoFact'], $_SESSION['codi_casa']);
+		echo json_encode($data);
+	}
 	//si el post es para una de las acciones del crud
 	if (isset($_POST['accion'])) {
 		//Validando los datos del formulario

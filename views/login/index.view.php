@@ -1,3 +1,9 @@
+<?php
+//Titulo de pagina
+$title = "Login";
+//Nombre de pagina
+$page = "Login";
+?>
 <?php include APP_PATH . '/views/templates/head.view.php'?>
 <div class="row mb-none">
     <div class="flex-container-column blue darken-2">
@@ -63,7 +69,7 @@
                             <div class="step-content">
                                 <form id="infoCasa" enctype="multipart/form-data">
                                     <div class="row">
-                                    <input type="hidden" name="accion" value="create">
+                                    <input type="hidden" name="accion" value="createPrimera">
                                     <input type="hidden" name="codiTipoCasa" value="1">
                                         <div class="input-field col s12">
                                             <i class="material-icons prefix">

@@ -65,6 +65,20 @@ try {
 					throw new Exception('No se encontro la factura');
 				}
 				break;
+			case 'reporteFactura':
+				if ($facturaD->setCodiFact($_POST['codiFactRepo'])) {
+					$data = $facturaD->getReporteFactura();
+				}
+				echo json_encode($data);
+				break;
+			case 'reporteCategoria':
+				$data = $facturaD->getReporteCategoria($_POST['codiCateRepoFact'], $_POST['fechInicRepoFact'], $_POST['fechFinaRepoFact'], $_SESSION['codi_casa']);
+				echo json_encode($data);
+				break;
+			case 'reporteFecha':
+				$data = $facturaD->getReporteFecha($_POST['fechInicRepoFact'], $_POST['fechFinaRepoFact'], $_SESSION['codi_casa']);
+				echo json_encode($data);
+				break;
 		}
 	}
 } catch (Exception $error) {

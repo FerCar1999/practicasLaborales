@@ -1,6 +1,6 @@
-$(document).ready(function() {
+$(document).ready(function () {
     //Inicializando stepper
-     $('.collapsible').collapsible();
+    $('.collapsible').collapsible();
     $('.dropdown-trigger').dropdown();
     //inicializando sidenav
     $('.sidenav').sidenav();
@@ -25,23 +25,42 @@ function someFunction(destroyFeedback) {
     }, 1000);
 }
 
-
-function cerrarSesion() { 
+function concatenarTextoLargo(texto) {
+    concatenar = "";
+    if (!texto == "") {
+        cadena = texto.split(" ");
+        for (let m = 0; m < cadena.length; m++) {
+            mod = m % 5;
+            if (mod == 0 && m != 0) {
+                concatenar += "\n";
+            }
+            concatenar += cadena[m] + " ";
+        }
+    }
+    return concatenar;
+}
+//SELECCIONAR TODOS LOS ELEMENTOS DE UN MULTIPLE SELECT
+function selectTodos(select) {
+    $('#' + select + ' option').prop('selected', true);
+    $('#' + select + '').change();
+    $('#' + select + '').trigger('change.select2');
+}
+function cerrarSesion() {
     $.ajax({
         method: "POST",
         url: "../app/controllers/UsuarioController.php",
         data: {
-            accion : "logout"
+            accion: "logout"
         },
         success: function (response) {
             console.log(response);
             var url = window.location.pathname;
             var urlSplit = url.split("/");
             var ruta = url.replace(urlSplit.pop(), '');
-            window.location.replace(ruta+'login');
+            window.location.replace(ruta + 'login');
         },
-        error: function (param) { 
+        error: function (param) {
             console.log('Error al contactar al servidor');
-         }
+        }
     });
- }
+}

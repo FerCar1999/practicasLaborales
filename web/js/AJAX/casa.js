@@ -175,7 +175,7 @@ function create() {
                     }
                 });
             } else {
-                M.toast({ html: JSON.parse(data), classes: 'rounded' });
+                M.toast({ html: data, classes: 'rounded' });
             }
         },
         error: function(resp) {

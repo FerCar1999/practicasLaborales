@@ -10,6 +10,7 @@ ini_set("date.timezone","America/El_Salvador");
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?= $title ?? '' ?></title>
+    <link rel="shortcut icon" href="<?= WEB_PATH ?>img/logos/icono.png" />
     <link rel="stylesheet" href="<?= WEB_PATH ?>css/materialize.min.css">
     <link rel="stylesheet" href="<?= WEB_PATH ?>css/mstepper.css">
     <link rel="stylesheet" href="<?= WEB_PATH ?>css/material-icons.css">
@@ -26,6 +27,7 @@ ini_set("date.timezone","America/El_Salvador");
     <script src="<?= WEB_PATH ?>js/datatables.js"></script>
     <script src="<?= WEB_PATH ?>js/jquery-confirm.min.js"></script>
     <script src="<?= WEB_PATH ?>js/jsPDF132/dist/jspdf.min.js"></script>
+    <script src="<?= WEB_PATH ?>js/jsPDF132/dist/jspdfAutoTable.js"></script>
     <script src="<?= WEB_PATH ?>js/mstepper.js"></script>
     <script src="<?= WEB_PATH ?>js/initialize.js"></script>
     <script src="<?= WEB_PATH ?>js/alertas.js"></script>
