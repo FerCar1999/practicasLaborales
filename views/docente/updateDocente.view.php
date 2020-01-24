@@ -24,15 +24,16 @@
                             <label for="apelDoceUpda">Apellidos del docente:</label>
                             <span class="helper-text" data-error="Campo requerido, ingrese solo letras" data-success="Correcto"></span>
                         </div>
-                        <div class="col s12 m6">
-                            <select class="js-example-basic-single" name="codiAcreUpda" id="codiAcreUpda">
-
-                            </select>
+                        <div class="input-field col s12 m6">
+                            <i class="material-icons prefix">contacts</i>
+                            <input id="duiDoceUpda" name="duiDoceUpda" type="text" class="validate" onkeypress="agregarGuionDui();">
+                            <label for="duiDoceUpda">DUI del docente:</label>
                         </div>
                         <div class="col s12 m6">
-                            <select class="js-example-basic-single" name="codiProfUpda" id="codiProfUpda">
-
-                            </select>
+                            <label for="codiProfUpda">Seleccionela profesion del docente:
+                                <select class="select-2 w-100" name="codiProfUpda" id="codiProfUpda">
+                                </select>
+                            </label>
                         </div>
                     </div>
                 </div>

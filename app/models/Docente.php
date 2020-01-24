@@ -7,6 +7,7 @@ class Docente extends Validator
 	private $codi_casa = null;
 	private $nomb_doce = null;
 	private $apel_doce = null;
+	private $dui_doce = null;
 	private $esta_doce = null;
 
 	// Encapsulamiento de codigo de categoria
@@ -87,6 +88,24 @@ class Docente extends Validator
 	{
 		return $this->apel_doce;
 	}
+	public function setDuiDoce($value)
+	{
+		//validando de que el valor sea alfabetico y que sea mayor a uno y menor a cien
+		if ($this->validateDUI($value)) {
+			//seteando valor a la variable de nombre de categoria
+			$this->dui_doce = $value;
+			//retornando respuesta true
+			return true;
+		} else {
+			//retornando respuesta false
+			return false;
+		}
+	}
+
+	public function getDuiDoce()
+	{
+		return $this->dui_doce;
+	}
 	//Encapsulamiento de estado de categoria
 	public function setEstaDoce($value)
 	{
@@ -103,30 +122,29 @@ class Docente extends Validator
 	//Funcion para crear categoria
 	public function createDocente()
 	{
-		$sql = "INSERT INTO docente(codi_casa,nomb_doce,apel_doce,esta_doce) VALUES (?,?,?,1)";
-		$params = array($this->codi_casa, $this->nomb_doce, $this->apel_doce);
+		$sql = "INSERT INTO docente(codi_casa,nomb_doce,apel_doce, dui_doce,esta_doce) VALUES (?,?,?,?,1)";
+		$params = array($this->codi_casa, $this->nomb_doce, $this->apel_doce, $this->dui_doce);
 		return Database::executeRow($sql, $params);
 	}
 	//Funcion para obtener lista de registros de la tabla categoria sin json
 	public function getDocentesN()
 	{
-		$sql = "SELECT codi_doce, nomb_doce, apel_doce FROM docente WHERE esta_doce = 1 AND codi_casa = ? ORDER BY codi_doce";
+		$sql = "SELECT codi_doce, nomb_doce, apel_doce, dui_doce FROM docente WHERE esta_doce = 1 AND codi_casa = ? ORDER BY codi_doce";
 		$params = array($this->codi_casa);
 		return Database::getRows($sql, $params);
 	}
 	//Funcion para obtener lista de registros en la tabla categoria
 	public function getDocentes()
 	{
-		$sql = "SELECT d.codi_doce, d.nomb_doce, d.apel_doce,iad.codi_inte_acre_doce, a.codi_acre, idp.codi_inte_doce_prof ,p.codi_prof FROM intermedia_acreditacion_docente as iad INNER JOIN acreditacion as a ON a.codi_acre=iad.codi_acre INNER JOIN docente as d ON d.codi_doce=iad.codi_doce INNER JOIN intermedia_docente_profesion as idp ON idp.codi_doce = d.codi_doce INNER JOIN profesion as p ON p.codi_prof=idp.codi_prof WHERE esta_doce=1 AND codi_casa=? ORDER BY codi_doce";
+		$sql = "SELECT d.codi_doce, d.nomb_doce, d.apel_doce, d.dui_doce, idp.codi_inte_doce_prof ,p.codi_prof FROM docente as d INNER JOIN intermedia_docente_profesion as idp ON idp.codi_doce = d.codi_doce INNER JOIN profesion as p ON p.codi_prof=idp.codi_prof WHERE esta_doce=1 AND codi_casa=? ORDER BY codi_doce";
 		$params = array($this->codi_casa);
 		return Database::getRowsAjax($sql, $params);
 	}
-
 	//Funcion para modificar tanto el nombre o el estado un registro de la tabla categoria
 	public function updateDocente()
 	{
-		$sql = "UPDATE docente SET nomb_doce = ?, apel_doce = ? WHERE codi_doce = ?";
-		$params = array($this->nomb_doce, $this->apel_doce, $this->codi_doce);
+		$sql = "UPDATE docente SET nomb_doce = ?, apel_doce = ?, dui_doce = ? WHERE codi_doce = ?";
+		$params = array($this->nomb_doce, $this->apel_doce, $this->dui_doce, $this->codi_doce);
 		return Database::executeRow($sql, $params);
 	}
 	public function deleteDocente()
@@ -170,5 +188,11 @@ class Docente extends Validator
 		ORDER BY doc.nomb_doce,ho.codi_dia, ho.hora_inic ASC";
 		$params = array($fechaInic, $fechaFin);
 		return Database::getRows($sql, $params);
+	}
+	public function verificarExistenciaDui()
+	{
+		$sql = "SELECT COUNT(*) as cantidad FROM docente WHERE dui_doce=? AND esta_doce=1";
+		$params = array($this->dui_doce);
+		return Database::executeRow($sql, $params);
 	}
 }

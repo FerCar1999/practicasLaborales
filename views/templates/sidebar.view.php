@@ -203,6 +203,35 @@ if (isset($_SESSION['codi_usua']) && isset($_SESSION['codi_tipo_usua'])) {
                 ');
 
             //Encargado Informativo
+        } else if ($_SESSION['codi_tipo_usua'] == 6) {
+            print('
+            <ul id="slide-out" class="sidenav sidenav-fixed blue">
+            <li>
+                <div class="user-view">
+                    <div class="row">
+                        <div class="col s12">
+                        <a href="index" class="center-align"><img class="responsive-img" src="' . IMG_PATH . 'logos/' . $_SESSION['logo_casa'] . '"></a>
+                        </div>
+                    </div>
+                    <a href="index"><h6 class="white-text">' . $_SESSION['nomb_casa'] . '</h6>
+                    <h6 class="white-text">' . $_SESSION['nomb_usua'] . '</h6>
+                    </a>
+                </div>
+            </li>
+                <li>
+                    <div class="divider grey lighten-1"></div>
+                </li>
+                <li>
+                    <a class="subheader">Menú</a>
+                </li>
+                <li><a href="index"><i class="material-icons">dashboard</i>Dashboard</a></li>
+                <li><a href="curso"><i class="material-icons">event</i>Cursos</a></li>
+                <li><a href="cuenta"><i class="material-icons">perm_identity</i>Mi Cuenta</a></li>
+                <li class="red white-text"><a onClick="cerrarSesion();"><i class="material-icons">exit_to_app</i>Cerrar Sesion</a></li>
+            </ul>
+                ');
+
+            //Encargado Informativo
         } else if ($_SESSION['codi_tipo_usua'] == 3) {
             print('
             <ul id="slide-out" class="sidenav sidenav-fixed blue darken-2">

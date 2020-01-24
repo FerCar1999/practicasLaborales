@@ -31,8 +31,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                                 <th>ID</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
-                                <th>codis</th>
-                                <th>codi_acre</th>
+                                <th>DUI</th>
                                 <th>codil</th>
                                 <th>codi_prof</th>
                                 <th>Opciones</th>

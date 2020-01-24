@@ -201,5 +201,17 @@ class Quedan extends Validator
 		$sql = "SELECT corre_usua FROM usuario WHERE codi_usua=?";
 		$params = array($codi);
 		return Database::getRow($sql, $params);
-	}
+    }
+    public function obtenerListaQuedanCasa($casa)
+    {
+        $sql = "SELECT qm.codi_qued, qm.nume_qued 
+        FROM quedan_detalle as qd
+        INNER JOIN quedan_maestro as qm ON qm.codi_qued=qd.codi_qued 
+        INNER JOIN factura as f on f.codi_fact=qd.codi_fact 
+        INNER JOIN factura_detalle as fd ON fd.codi_fact=f.codi_fact 
+        INNER JOIN curso as c ON c.codi_curs = fd.codi_curs 
+        WHERE c.codi_casa=? AND qm.esta_qued!=0";
+        $params = array($casa);
+        return Database::getRows($sql, $params);
+    }
 }

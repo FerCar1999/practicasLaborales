@@ -86,7 +86,7 @@ class IntermediaHorarioDocente extends Validator {
 	}
 	//Funcion para verificar que no exista otro horario en un mismo salon
 	public function verificarExistenciaHorario($codi_curso, $codi_salon) {
-		$sql = "SELECT COUNT(*) as cant FROM intermedia_horario_docente as ihd INNER JOIN intermedia_curso_salon as ics ON ihd.codi_inte_curs_salo=ics.codi_inte_curs_salo INNER JOIN curso as c ON ics.codi_curs=c.codi_curs WHERE ics.codi_salo=? AND ihd.codi_hora=? AND c.codi_casa=? AND ics.esta_inte_curs_salo=1";
+		$sql = "SELECT COUNT(*) as cant FROM intermedia_horario_docente as ihd INNER JOIN intermedia_curso_salon as ics ON ihd.codi_inte_curs_salo=ics.codi_inte_curs_salo INNER JOIN curso as c ON ics.codi_curs=c.codi_curs WHERE ics.codi_salo=? AND ihd.codi_hora=? AND c.codi_casa=? AND c.esta_curs=1 AND ics.esta_inte_curs_salo=1";
 		$params = array($codi_salon, $this->codi_hora, $_SESSION['codi_casa']);
 		return Database::getRow($sql, $params);
 	}

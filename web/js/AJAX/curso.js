@@ -1,6 +1,8 @@
 var tableUno, tableDos, tableTres;
 $(document).ready(function () {
+  $('.tooltipped').tooltip();
   $('.progress').hide();
+  $("#descripcion").hide();
   $('#progressAvance2').show();
   $('#progressAvance2N').show();
   $(".modal").modal({
@@ -209,9 +211,9 @@ function selectDocentes() {
       $("#codiDoceUpda").empty().append('whatever');
       $("#codiDoceUpda").append('<option value="0" selected disabled>Seleccione el docente:</option>');
       for (var i = 0; i < data.length; i++) {
-        $("#codiDoce").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + '</option>');
-        $("#codiDoceN").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + '</option>');
-        $("#codiDoceUpda").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + '</option>');
+        $("#codiDoce").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + ' (' + data[i].dui_doce + ')</option>');
+        $("#codiDoceN").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + ' (' + data[i].dui_doce + ')</option>');
+        $("#codiDoceUpda").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + ' (' + data[i].dui_doce + ')</option>');
       }
     },
     error: function (data) {
@@ -265,12 +267,70 @@ function dataTableCursoCasa() {
       data: 'mont_esti',
       "visible": false
     }, {
-      //agregando botones para abrir el modal de modificar o de eliminar categoria
-      defaultContent: "<div class='center-btn'>" +
-        "<a href='#updateHorarioCurso' class='update btn-small blue darken-1 waves-effect waves-light modal-trigger'><i class='material-icons'>list</i></a> " +
-        "<a href='#updateCurso' class='update  btn-small blue darken-1 waves-effect waves-light modal-trigger'><i class='material-icons'>create</i></a> " +
-        "<a href='#deleteCurso' class='delete btn-small red waves-effect waves-light modal-trigger'><i class='material-icons'>delete</i></a>" +
-        "</div>"
+      data: 'desc_curs',
+      "visible": false
+    }, {
+      data: 'esta_curs',
+      "aTargets": [0],
+      "render": function (data) {
+        if (data == 1) {
+          return "Activo"
+        } else {
+          if (data == 2) {
+            return "Finalizado Pendiente Informe y Factura"
+          }
+          else {
+            if (data == 3) {
+              return "Pendiente Factura"
+            } else {
+              if (data == 4) {
+                return "Agregado Factura"
+              } else {
+                return "Factura Agregada a Quedan"
+              }
+            }
+          }
+        }
+      }
+    }, {
+      data: 'esta_curs',
+      "aTargets": [0],
+      "render": function (data) {
+        if (data == 1) {
+          return "<div class='center-btn'>" +
+            "<a href='#updateHorarioCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Horarios'><i class='material-icons'>date_range</i></a> " +
+            "<a href='#updateCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Modificar'><i class='material-icons'>create</i></a> " +
+            "<a href='#deleteCurso' class='delete btn-small red waves-effect waves-light modal-trigger'><i class='material-icons'>delete</i></a>" +
+            "</div>";
+        } else {
+          if (data == 2) {
+            return "<div class='center-btn'>" +
+              "<a href='#updateHorarioCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Horarios'><i class='material-icons'>date_range</i></a> " +
+              "<a href='#updateCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Modificar'><i class='material-icons'>create</i></a> " +
+              "</div>";
+          }
+          else {
+            if (data == 3) {
+              return "<div class='center-btn'>" +
+                "<a href='#updateHorarioCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Horarios'><i class='material-icons'>date_range</i></a> " +
+                "<a href='#updateCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Modificar'><i class='material-icons'>create</i></a> " +
+                "</div>";
+            } else {
+              if (data == 4) {
+                return "<div class='center-btn'>" +
+                  "<a href='#updateHorarioCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Horarios'><i class='material-icons'>date_range</i></a> " +
+                  "<a href='#updateCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Modificar'><i class='material-icons'>create</i></a> " +
+                  "</div>";
+              } else {
+                return "<div class='center-btn'>" +
+                  "<a href='#updateHorarioCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Horarios'><i class='material-icons'>date_range</i></a> " +
+                  "<a href='#updateCurso' class='btn update btn-small blue darken-1 waves-effect waves-light modal-trigger tooltipped' data-position='left' data-tooltip='Modificar'><i class='material-icons'>create</i></a> " +
+                  "</div>";
+              }
+            }
+          }
+        }
+      }
     }],
     //cambiando el idioma de las diferentes opciones
     language: {
@@ -343,6 +403,48 @@ function getIdToUpdateCurso(tobyd, table) {
         var porcDiasCien = (porcDiasPasa.toFixed(2) * 100);
       }
     }
+    switch (data.esta_curs) {
+      case '1':
+        $("#nombCursUpda").prop('disabled', false);
+        $("#fechInicUpda").prop('disabled', false);
+        $("#fechFinUpda").prop('disabled', false);
+        $("#montEstiUpda").prop('disabled', false);
+        $("#corrCursUpda").prop('disabled', false);
+        $("#cantPartUpda").prop('disabled', false);
+        $("#codiCateUpda").prop('disabled', false);
+        $("#descripcion").hide();
+        $(".modify").val('update');
+        $("#guardar").show();
+        $("#detalle").hide();
+        break;
+      case '2':
+        $("#nombCursUpda").prop('disabled', true);
+        $("#fechInicUpda").prop('disabled', true);
+        $("#fechFinUpda").prop('disabled', true);
+        $("#montEstiUpda").prop('disabled', true);
+        $("#corrCursUpda").prop('disabled', true);
+        $("#cantPartUpda").prop('disabled', true);
+        $("#codiCateUpda").prop('disabled', true);
+        $("#descripcion").show();
+        $(".modify").val('updateDetalle');
+        $("#guardar").hide();
+        $("#detalle").show();
+        break;
+      default:
+        $("#nombCursUpda").prop('disabled', true);
+        $("#fechInicUpda").prop('disabled', true);
+        $("#fechFinUpda").prop('disabled', true);
+        $("#montEstiUpda").prop('disabled', true);
+        $("#corrCursUpda").prop('disabled', true);
+        $("#cantPartUpda").prop('disabled', true);
+        $("#codiCateUpda").prop('disabled', true);
+        $("#descCursUpda").prop('disabled', true);
+        $("#descripcion").show();
+        $(".modify").val('updateDetalle');
+        $("#guardar").hide();
+        $("#detalle").hide();
+        break;
+    }
     //agregando width al progress de avance de proyecto
     $("#determinateAvanceN").width(porcDiasCien + "%");
     //agregando cantidad de progreso
@@ -353,6 +455,7 @@ function getIdToUpdateCurso(tobyd, table) {
     $("#montEstiUpda").next("label").addClass("active");
     $("#corrCursUpda").next("label").addClass("active");
     $("#cantPartUpda").next("label").addClass("active");
+    $("#descCursUpda").next("label").addClass("active");
     var codi_curs = $("#codiCursUpda").val(data.codi_curs),
       nomb_curs = $("#nombCursUpda").val(data.nomb_curs),
       fech_inic = $("#fechInicUpda").val(data.fech_inic),
@@ -360,7 +463,9 @@ function getIdToUpdateCurso(tobyd, table) {
       cant_part = $("#cantPartUpda").val(data.cant_part),
       mont_esti = $("#montEstiUpda").val(data.mont_esti),
       corr_curs = $("#corrCursUpda").val(data.corr_curs),
-      codi_cate = $("#codiCateUpda").val(data.codi_cate);
+      codi_cate = $("#codiCateUpda").val(data.codi_cate),
+      desc_curs = $("#descCursUpda").val(data.desc_curs);
+    M.textareaAutoResize($('#descCursUpda'));
     $("#codiCateUpda").change();
     $("#codiCateUpda").trigger('change.select2');
   });
@@ -370,6 +475,9 @@ function getIdToUpdateHorarioCurso(tobyd, table) {
   $('tbody').on("click", "a.update", function () {
     var data = table.row($(this).parents("tr")).data();
     var codi_curs = $("#codiCursHoraMod").val(data.codi_curs);
+    $("#codiDiaHoraCurs").val(0);
+    $("#codiDiaHoraCurs").change();
+    $("#codiDiaHoraCurs").trigger('change.select2');
   });
 }
 //Funcion para enviar datos para eliminar el elemento seleccionado
@@ -437,6 +545,60 @@ function create() {
 }
 // Funcion para modificar el curso
 function update() {
+  //datos del formulario
+  var datos = $("#frmUpdaCurso").serialize();
+  //realizando peticion ajax
+  $.ajax({
+    //metodo que se va a usar
+    method: "POST",
+    //ruta del controlador
+    url: "../app/controllers/CursoController.php",
+    //datos que se enviaran por el post
+    data: datos,
+    beforeSend: function () {
+      //ocultando el footer del modal
+      $('.modal-footer').hide();
+      //mostrando el preloader
+      $('#preloader').show();
+    },
+    //funcion en el caso de que responda correctamente el servidor
+    success: function (data) {
+      //obteniendo el valor de respuesta del servidor
+      var resp = data.indexOf("Exito");
+      //verificando que si sea exitosa la operacion
+      if (resp >= 0) {
+        //creando modal para el mensaje de confirmación
+        successAlert("Curso modificado con exito");
+
+        //Mostrando el footer del modal
+        $('.modal-footer').show();
+        //ocultando el preloader
+        $('#preloader').hide();
+        //ocultando modal para modificar la categoria
+        $('#updateCurso').modal('close');
+        //reseteando el formulario
+        $('#frmUpdaCurso')[0].reset();
+        // Recargando la tabla
+        tableUno.ajax.reload();
+        tableDos.ajax.reload();
+      } else {
+        //Mostrando el footer del modal
+        $('.modal-footer').show();
+        //ocultando el preloader
+        $('#preloader').hide();
+        ///creando el mensaje de error
+        var mensaje = data.replace(/['"]+/g, '');
+        errorAlert(mensaje);
+      }
+    },
+    //funcion en el caso de que el servidor no responda
+    error: function () {
+      //creando modal de error
+      errorAlert("No se pudo contactar con el servidor");
+    }
+  });
+}
+function updateDetalle() {
   //datos del formulario
   var datos = $("#frmUpdaCurso").serialize();
   //realizando peticion ajax

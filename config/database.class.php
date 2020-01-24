@@ -18,7 +18,7 @@ class Database
         //variable con el usuario de la base
         $username = "root";
         //variable con la contra de la base
-        $password = "";
+        $password = "1234";
         try {
             //realizando conexion
             @self::$connection = new PDO("mysql:host=$server; dbname=$database; charset=utf8", $username, $password);

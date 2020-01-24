@@ -14,7 +14,6 @@ class QuedanDetalle extends Validator
         if ($this->validateId($value)) {
             $this->codi_qued_deta = $value;
             return true;
-
         } else {
             return false;
         }
@@ -28,7 +27,6 @@ class QuedanDetalle extends Validator
         if ($this->validateId($value)) {
             $this->codi_qued = $value;
             return true;
-
         } else {
             return false;
         }
@@ -52,8 +50,8 @@ class QuedanDetalle extends Validator
     }
     public function setEstaQuedDeta($value)
     {
-            $this->esta_qued_deta = $value;
-            return true;
+        $this->esta_qued_deta = $value;
+        return true;
     }
     public function getEstaQuedDeta($value)
     {
@@ -71,7 +69,7 @@ class QuedanDetalle extends Validator
     public function updateFactura($estado)
     {
         $sql    = "UPDATE factura SET esta_fact=? WHERE codi_fact=?";
-        $params = array($estado,$this->codi_fact);
+        $params = array($estado, $this->codi_fact);
         return Database::executeRow($sql, $params);
     }
     //Funcion para modificar el archivo agregado con el egreso
@@ -90,13 +88,13 @@ class QuedanDetalle extends Validator
     //Funcion para obtener Egresos de cada casa por mes y año
     public function getQuedanDetalle()
     {
-        $sql="SELECT qd.codi_fact, f.nume_fact FROM presupuesto_detalle WHERE codi_casa = ? AND MONTH(fech_pres_deta)=? AND YEAR(fech_pres_deta)=?";
+        $sql = "SELECT qd.codi_fact, f.nume_fact FROM presupuesto_detalle WHERE codi_casa = ? AND MONTH(fech_pres_deta)=? AND YEAR(fech_pres_deta)=?";
         $params = array($this->codi_casa, $mes, $anio);
         return Database::getRowsAjax($sql, $params);
     }
     public function getCantidadDeQuedanRestantes()
     {
-        $sql ="SELECT qm.cant_fact-COUNT(qd.codi_fact) as cant FROM quedan_detalle as qd INNER JOIN quedan_maestro as qm ON qm.codi_qued=qd.codi_qued WHERE qm.codi_qued=?";
+        $sql = "SELECT qm.cant_fact-COUNT(qd.codi_fact) as cant FROM quedan_detalle as qd INNER JOIN quedan_maestro as qm ON qm.codi_qued=qd.codi_qued WHERE qm.codi_qued=?";
         $params = array($this->codi_qued);
         return Database::getRow($sql, $params);
     }
@@ -106,48 +104,47 @@ class QuedanDetalle extends Validator
         $params = array($this->codi_qued);
         return Database::getRow($sql, $params);
     }
-        public function obtenerInfoCasaQuedan() {
-		$sql = "SELECT u.nomb_usua, u.apel_usua, u.corre_usua, qm.nume_qued, f.nume_fact FROM quedan_detalle as qd INNER JOIN quedan_maestro as qm on qm.codi_qued=qd.codi_qued INNER JOIN factura as f ON f.codi_fact=qd.codi_fact INNER JOIN factura_detalle AS fd ON f.codi_fact=fd.codi_fact INNER JOIN curso as c ON c.codi_curs=fd.codi_curs INNER JOIN usuario as u ON u.codi_casa=c.codi_casa WHERE qd.codi_qued=? AND u.codi_tipo_usua=1";
-		$params = array($this->codi_qued);
-		return Database::getRows($sql, $params);
+    public function obtenerInfoCasaQuedan()
+    {
+        $sql = "SELECT u.nomb_usua, u.apel_usua, u.corre_usua, qm.nume_qued, f.nume_fact FROM quedan_detalle as qd INNER JOIN quedan_maestro as qm on qm.codi_qued=qd.codi_qued INNER JOIN factura as f ON f.codi_fact=qd.codi_fact INNER JOIN factura_detalle AS fd ON f.codi_fact=fd.codi_fact INNER JOIN curso as c ON c.codi_curs=fd.codi_curs INNER JOIN usuario as u ON u.codi_casa=c.codi_casa WHERE qd.codi_qued=? AND u.codi_tipo_usua=1";
+        $params = array($this->codi_qued);
+        return Database::getRows($sql, $params);
     }
-    public function obtenerCorreoEmisor($codi) {
-		$sql = "SELECT corre_usua FROM usuario WHERE codi_usua=?";
-		$params = array($codi);
-		return Database::getRow($sql, $params);
+    public function obtenerCorreoEmisor($codi)
+    {
+        $sql = "SELECT corre_usua FROM usuario WHERE codi_usua=?";
+        $params = array($codi);
+        return Database::getRow($sql, $params);
     }
-    
+
     public function getReporteQuedan()
-	{
-		$sql = "SELECT f.nume_fact, f.fech_emis_fact, f.cant_fact, f.esta_fact, c.corr_curs, c.nomb_curs, CONCAT(ca.nomb_cate, ' (', ca.corr_cate, ')') as nomb_cate 
-		FROM factura_detalle AS fd
-		INNER JOIN factura AS f ON f.codi_fact=fd.codi_fact
-		INNER JOIN curso AS c ON c.codi_curs=fd.codi_curs
-		INNER JOIN categoria as ca ON ca.codi_cate=c.codi_cate
-		WHERE f.codi_fact=?";
-		$params = array($this->codi_fact);
-		return Database::getRows($sql, $params);
-	}
-	public function getReporteCasa($categoria, $inicio, $final, $casa)
-	{
-		$sql = "SELECT f.nume_fact, f.fech_emis_fact, f.cant_fact, f.esta_fact, c.corr_curs, c.nomb_curs, CONCAT(ca.nomb_cate, ' (', ca.corr_cate, ')') as nomb_cate 
-		FROM factura_detalle AS fd
-		INNER JOIN factura AS f ON f.codi_fact=fd.codi_fact
-		INNER JOIN curso AS c ON c.codi_curs=fd.codi_curs
-		INNER JOIN categoria as ca ON ca.codi_cate=c.codi_cate
-		WHERE ca.codi_cate=? AND c.codi_casa =? AND f.fech_emis_fact BETWEEN ? AND ?";
-		$params = array($categoria, $casa, $inicio, $final);
-		return Database::getRows($sql, $params);
-	}
-	public function getReporteFecha($inicio, $final, $casa)
-	{
-		$sql = "SELECT f.nume_fact, f.fech_emis_fact, f.cant_fact, f.esta_fact, c.corr_curs, c.nomb_curs, CONCAT(ca.nomb_cate, ' (', ca.corr_cate, ')') as nomb_cate 
-		FROM factura_detalle AS fd
-		INNER JOIN factura AS f ON f.codi_fact=fd.codi_fact
-		INNER JOIN curso AS c ON c.codi_curs=fd.codi_curs
-		INNER JOIN categoria as ca ON ca.codi_cate=c.codi_cate
-		WHERE c.codi_casa =? AND f.fech_emis_fact BETWEEN ? AND ?";
-		$params = array($casa, $inicio, $final);
-		return Database::getRows($sql, $params);
-	}
+    {
+        $sql = "SELECT codi_qued, nume_qued, fech_emis, fech_abon, cant_fact, esta_qued 
+        FROM quedan_maestro WHERE codi_qued=?";
+        $params = array($this->codi_qued);
+        return Database::getRows($sql, $params);
+    }
+    public function getReporteQuedanDetalle()
+    {
+        $sql = "SELECT DISTINCT f.nume_fact, c.nomb_curs, c.corr_curs, ca.nomb_casa
+        FROM quedan_detalle AS qd
+        INNER JOIN factura AS f ON f.codi_fact=qd.codi_fact
+        INNER JOIN factura_detalle AS fd ON fd.codi_fact=f.codi_fact
+        INNER JOIN curso AS c ON c.codi_curs=fd.codi_curs
+        INNER JOIN casa AS ca ON ca.codi_casa=c.codi_casa
+        WHERE qd.codi_qued=?";
+        $params = array($this->codi_qued);
+        return Database::getRows($sql, $params);
+    }
+    public function getReporteFecha($inicio, $final, $casa)
+    {
+        $sql = "SELECT qm.codi_qued, qm.nume_qued, qm.fech_emis, qm.fech_abon, qm.cant_fact, qm.esta_qued 
+        FROM quedan_detalle AS qd
+        INNER JOIN quedan_maestro As qm ON qm.codi_qued=qd.codi_qued 
+        INNER JOIN factura_detalle AS fd ON fd.codi_fact=qd.codi_fact
+		INNER JOIN curso AS c ON c.codi_curs=fd.codi_curs 
+		WHERE c.codi_casa =? AND qm.fech_emis BETWEEN ? AND ?";
+        $params = array($casa, $inicio, $final);
+        return Database::getRows($sql, $params);
+    }
 }

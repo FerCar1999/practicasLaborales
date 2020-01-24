@@ -22,63 +22,82 @@ try {
 		$_POST = $quedanD->validateForm($_POST);
 		//switch para verificar que accion es la que se va a realizar
 		switch ($_POST['accion']) {
-		case 'monto':
-			if ($quedanD->setCodiQued($_POST['codiQued'])) {
-				$data = $quedanD->getMontoQuedan();
-				echo json_encode($data['mont']);
-			} else {
-				echo json_encode(null);
-			}
-			break;
-		case 'create':
-			if ($quedanD->setCodiQued($_POST['codiQued'])) {
-				if ($quedanD->setCodiFact($_POST['codiFact'])) {
-					$cantidad = $quedanD->getCantidadDeQuedanRestantes();
-					if ($cantidad['cant'] > 0) {
-						if ($quedanD->updateEstadoQuedan()) {
-							if ($quedanD->updateFactura(2)) {
-								if ($quedanD->addQuedanDetalle()) {
-									throw new Exception('Exito');
+			case 'monto':
+				if ($quedanD->setCodiQued($_POST['codiQued'])) {
+					$data = $quedanD->getMontoQuedan();
+					echo json_encode($data['mont']);
+				} else {
+					echo json_encode(null);
+				}
+				break;
+			case 'create':
+				if ($quedanD->setCodiQued($_POST['codiQued'])) {
+					if ($quedanD->setCodiFact($_POST['codiFact'])) {
+						$cantidad = $quedanD->getCantidadDeQuedanRestantes();
+						if ($cantidad['cant'] > 0) {
+							if ($quedanD->updateEstadoQuedan()) {
+								if ($quedanD->updateFactura(2)) {
+									if ($quedanD->addQuedanDetalle()) {
+										throw new Exception('Exito');
+									} else {
+										throw new Exception('No se pudo agregarla factura');
+									}
 								} else {
-									throw new Exception('No se pudo agregarla factura');
+									throw new Exception('No se pudo modificar la factura');
 								}
 							} else {
-								throw new Exception('No se pudo modificar la factura');
+								throw new Exception('No se pudo modificar el quedan');
 							}
 						} else {
-							throw new Exception('No se pudo modificar el quedan');
+							throw new Exception('Limite');
 						}
 					} else {
-						throw new Exception('Limite');
+						throw new Exception('Debe de seleccionar una factura');
 					}
-
 				} else {
-					throw new Exception('Debe de seleccionar una factura');
+					throw new Exception('No se encontro el quedan');
 				}
-			} else {
-				throw new Exception('No se encontro el quedan');
-			}
-			break;
-		case 'agregandoQuedan':
-			if ($quedanD->setCodiQued($_POST['codiQuedNoti'])) {
-				$admin = $quedanD->obtenerCorreoEmisor($_SESSION['codi_usua']);
-			$datas = $quedanD->obtenerInfoCasaQuedan();
-			foreach ($datas as $row) {
-				$nombreReceptor = $row['nomb_usua']." ".$row['apel_usua'];
-				enviandoCorreoQuedan($_SESSION['nomb_usua'], $admin['corre_usua'],$_SESSION['nomb_casa'], $nombreReceptor, $row['corre_usua'],$row['nume_qued'],$row['nume_fact']);
-			}
-			throw new Exception("Exito");
-			} else {
-				throw new Exception("No se encontro el quedan");
-			}
-			
-			break;
-		case 'delete':
+				break;
+			case 'agregandoQuedan':
+				if ($quedanD->setCodiQued($_POST['codiQuedNoti'])) {
+					$admin = $quedanD->obtenerCorreoEmisor($_SESSION['codi_usua']);
+					$datas = $quedanD->obtenerInfoCasaQuedan();
+					foreach ($datas as $row) {
+						$nombreReceptor = $row['nomb_usua'] . " " . $row['apel_usua'];
+						enviandoCorreoQuedan($_SESSION['nomb_usua'], $admin['corre_usua'], $_SESSION['nomb_casa'], $nombreReceptor, $row['corre_usua'], $row['nume_qued'], $row['nume_fact']);
+					}
+					throw new Exception("Exito");
+				} else {
+					throw new Exception("No se encontro el quedan");
+				}
 
-			break;
-		case 'update':
+				break;
+			case 'delete':
 
-			break;
+				break;
+			case 'update':
+
+				break;
+			case 'reporteEspecifico':
+				if ($quedanD->setCodiQued($_POST['codiQuedRepo'])) {
+					$data = $quedanD->getReporteQuedan();
+					echo json_encode($data);
+				} else {
+					throw new Exception("No se encontro el quedan");
+				}
+				break;
+			case 'reporteDetalle':
+				if ($quedanD->setCodiQued($_POST['codiQuedRepoX'])) {
+					$data = $quedanD->getReporteQuedanDetalle();
+					echo json_encode($data);
+				} else {
+					throw new Exception("No se encontro el quedan");
+				}
+				break;
+			case 'reporteFecha':
+				$data = $quedanD->getReporteFecha($_POST['fechInicRepoQued'], $_POST['fechFinaRepoQued'], $_SESSION['codi_casa']);
+				echo json_encode($data);
+				break;
 		}
 	}
 } catch (Exception $error) {

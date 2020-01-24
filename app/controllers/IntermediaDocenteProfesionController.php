@@ -45,7 +45,7 @@ try {
 		case 'update':
 			//si se setea con exito el nombre de la categoria
 			if ($intermediaDocenteProfesion->setCodiInteDoceProf($_POST['codiInteDoceProfUpda'])) {
-				if ($intermediaDocenteProfesion->setCodiAcre($_POST['codiProfUpda'])) {
+				if ($intermediaDocenteProfesion->setCodiProf($_POST['codiProfUpda'])) {
 					if ($intermediaDocenteProfesion->setCodiDoce($_POST['codiDoceUpda'])) {
 						//creando nueva categoria
 						if ($intermediaDocenteProfesion->updateIntermediaDocenteProfesion()) {

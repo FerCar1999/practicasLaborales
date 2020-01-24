@@ -44,14 +44,24 @@ try {
 				//si se setea con exito el nombre de la categoria
 				if ($docente->setNombDoce($_POST['nombDoce'])) {
 					if ($docente->setApelDoce($_POST['apelDoce'])) {
-						if ($docente->setCodiCasa($_SESSION['codi_casa'])) {
-							if ($docente->createDocente()) {
-								throw new Exception(Database::getLastRowId());
+						if ($docente->setDuiDoce($_POST['duiDoce'])) {
+							$dui= $docente->verificarExistenciaDui();
+							if ($dui['cantidad']==0) {
+								if ($docente->setCodiCasa($_SESSION['codi_casa'])) {
+									if ($docente->createDocente()) {
+										throw new Exception(Database::getLastRowId());
+									} else {
+										throw new Exception("No se pudo agregar el docente");
+									}
+								} else {
+									throw new Exception("No se encontro la casa");
+								}
 							} else {
-								throw new Exception("No se pudo agregar el docente");
+								# code...
 							}
+							
 						} else {
-							throw new Exception("No se encontro la casa");
+							throw new Exception('Ingrese un DUI correcto');
 						}
 					} else {
 						throw new Exception("Verifique los apellidos del docente");
@@ -67,14 +77,18 @@ try {
 				if ($docente->setCodiDoce($_POST['codiDoceUpda'])) {
 					if ($docente->setNombDoce($_POST['nombDoceUpda'])) {
 						if ($docente->setApelDoce($_POST['apelDoceUpda'])) {
-							if ($docente->setCodiCasa($_SESSION['codi_casa'])) {
-								if ($docente->updateDocente()) {
-									throw new Exception("Exito");
+							if ($docente->setDuiDoce($_POST['duiDoceUpda'])) {
+								if ($docente->setCodiCasa($_SESSION['codi_casa'])) {
+									if ($docente->updateDocente()) {
+										throw new Exception("Exito");
+									} else {
+										throw new Exception("No se pudo agregar el docente");
+									}
 								} else {
-									throw new Exception("No se pudo agregar el docente");
+									throw new Exception("No se encontro la casa");
 								}
 							} else {
-								throw new Exception("No se encontro la casa");
+								throw new Exception("Debe agregar un dui correcto");
 							}
 						} else {
 							throw new Exception("Verifique los apellidos del docente");

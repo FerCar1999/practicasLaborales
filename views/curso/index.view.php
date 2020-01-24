@@ -52,7 +52,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                                             Categoria
                                         </th>
                                         <th>
-                                            Correlativo de Curso
+                                            Correlativo
                                         </th>
                                         <th>
                                             Nombre de Curso
@@ -70,15 +70,28 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                                             mont_esti
                                         </th>
                                         <th>
+                                            desc
+                                        </th>
+                                        <th>
+                                            Estado del Curso
+                                        </th>
+                                        <th>
                                             Opciones
                                         </th>
                                     </tr>
                                 </thead>
                             </table>
                             <div class="fixed-action-btn">
-                                <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large blue darken-2" data-target="addCurso">
-                                    <i class="large material-icons">add</i>
-                                </button>
+                                <?php
+                                if ($_SESSION['codi_tipo_usua'] == 6) {
+                                    # code...
+                                } else {
+                                    print('<button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large blue darken-2" data-target="addCurso">
+                                <i class="large material-icons">add</i>
+                            </button>');
+                                }
+
+                                ?>
                                 <button class="btn modal-trigger waves-effect waves-circle waves-light btn-floating btn-large red darken-1" data-target="reporte">
                                     <i class="large material-icons">picture_as_pdf</i>
                                 </button>
@@ -111,7 +124,7 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
                                             Casa
                                         </th>
                                         <th>
-                                            Correlativo de Curso
+                                            Correlativo
                                         </th>
                                         <th>
                                             Nombre de Curso

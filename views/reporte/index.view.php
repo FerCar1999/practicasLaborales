@@ -75,6 +75,8 @@ include APP_PATH . '/views/templates/sidebar.view.php' ?>
     <?php include APP_PATH . '/views/docente/reporte.view.php' ?>
     <?php include APP_PATH . '/views/evento/reporte.view.php' ?>
     <?php include APP_PATH . '/views/factura/reporte.view.php' ?>
+    <?php include APP_PATH . '/views/quedan/reporte.view.php' ?>
+    <?php include APP_PATH . '/views/curso/reporte.view.php' ?>
 </main>
 
 <!-- AJAX -->

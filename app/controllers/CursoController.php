@@ -13,14 +13,19 @@ try {
 		switch ($_POST['tabla']) {
 			case 'casa':
 				if ($curso->setCodiCasa($_SESSION['codi_casa'])) {
-					if (isset($_POST['fechInic']) && isset($_POST['fechFin'])) {
-						$anioInicial = date('Y', strtotime($_POST['fechInic']));
-						$anioFinal = date('Y', strtotime($_POST['fechFin']));
-						$data = $curso->getCursoCasa($anioInicial, $anioFinal);
+					if ($_SESSION['codi_tipo_usua'] == 8) {
+						$data = $curso->getCursoCasaDetalle(date('Y'), date('Y'));
 						echo $data;
 					} else {
-						$data = $curso->getCursoCasa(date('Y'), date('Y'));
-						echo $data;
+						if (isset($_POST['fechInic']) && isset($_POST['fechFin'])) {
+							$anioInicial = date('Y', strtotime($_POST['fechInic']));
+							$anioFinal = date('Y', strtotime($_POST['fechFin']));
+							$data = $curso->getCursoCasa($anioInicial, $anioFinal);
+							echo $data;
+						} else {
+							$data = $curso->getCursoCasa(date('Y'), date('Y'));
+							echo $data;
+						}
 					}
 				}
 				break;
@@ -186,6 +191,17 @@ try {
 					throw new Exception("No se ha encontrado el curso");
 				}
 				break;
+			case 'updateDetalle':
+				if ($curso->setCodiCurs($_POST['codiCursUpda'])) {
+					if ($curso->updateCursoDetalle($_POST['descCursUpda'])) {
+						throw new Exception("Exito");
+					} else {
+						throw new Exception("No se pudo agregar el detalle del curso, intentelo mas tarde");
+					}
+				} else {
+					throw new Exception("No se encontro el curso");
+				}
+				break;
 			case 'delete':
 				//si se setea con exito el codigo del registro
 				if ($curso->setCodiCurs($_POST['codiCursDele'])) {
@@ -244,6 +260,34 @@ try {
 					}
 				} else {
 					throw new Exception("No se encontro el curso");
+				}
+				break;
+			case 'obtenerCursosCategoria':
+				if ($curso->setCodiCate($_POST['codiCate'])) {
+					$data = $curso->obtenerCursoCategoria($_SESSION['codi_casa']);
+					echo json_encode($data);
+				} else {
+					throw new Exception("No se encontro la categoria");
+				}
+				break;
+			case 'reporteEspecifico':
+				if ($curso->setCodiCurs($_POST['codiRepoCurs'])) {
+					$data = $curso->obtenerReporteEspecifico();
+					echo json_encode($data);
+				} else {
+					throw new Exception("No se encontro el curso");
+				}
+				break;
+			case 'reporteFecha':
+				$data = $curso->obtenerReporteFecha($_SESSION['codi_casa'], $_POST['fechInicRepoCurs'], $_POST['fechFinaRepoCurs']);
+				echo json_encode($data);
+				break;
+			case 'reporteCategoria':
+				if ($curso->setCodiCate($_POST['codiCateRepoCurs'])) {
+					$data = $curso->obtenerReporteCategoria($_SESSION['codi_casa']);
+					echo json_encode($data);
+				} else {
+					throw new Exception("No se encontro la categoria");
 				}
 				break;
 		}

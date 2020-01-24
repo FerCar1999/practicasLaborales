@@ -11,21 +11,15 @@
                         <input type="hidden" name="accion" value="reporte">
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">date_range</i>
-                            <input type="text" class="datepicker" name="fechInicRepoFact" id="fechInicRepoFact">
-                            <label for="fechInicRepoFact">Fecha desde:</label>
+                            <input type="text" class="datepicker" name="fechInicRepoQued" id="fechInicRepoQued">
+                            <label for="fechInicRepoQued">Fecha desde:</label>
                         </div>
                         <div class="input-field col s12 m6">
                             <i class="material-icons prefix">date_range</i>
-                            <input type="text" class="datepicker" name="fechFinaRepoFact" id="fechFinaRepoFact">
-                            <label for="fechFinaRepoFact">Fecha hasta:</label>
+                            <input type="text" class="datepicker" name="fechFinaRepoQued" id="fechFinaRepoQued">
+                            <label for="fechFinaRepoQued">Fecha hasta:</label>
                         </div>
-                        <div class="col s12 m6">
-                            <label for="codiCasaRepoFact">Seleccione la casa:
-                                <select class="select-2 w-100" name="codiCasaRepoFact" id="codiCasaRepoFact" onchange="selectFacturas();">
-                                </select>
-                            </label>
-                        </div>
-                        <div class="col s12 m6">
+                        <div class="col s12 m12">
                             <label for="codiQuedRepo">Seleccione el quedan:
                                 <select class="select-2 w-100" name="codiQuedRepo" id="codiQuedRepo">
                                 </select>

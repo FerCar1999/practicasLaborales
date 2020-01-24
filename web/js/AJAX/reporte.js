@@ -27,6 +27,8 @@ $(document).ready(function () {
     selectSalones();
     //SELECT FACTURA
     selectCategorias();
+    //SELECT QUEDAN
+    obtenerQuedanCasa();
     //OCULTANDO TABLA EVENTO
     $("#tablitaEven").hide();
     //OCULTANDO TABLAS DOCENTE
@@ -37,6 +39,8 @@ $(document).ready(function () {
     $("#tabla2Salo").hide();
     //OCULTANTO FACTURA
     $("#tablaFact").hide();
+    //OCULTANDO TABLA QUEDAN
+    $("#tablaQued").hide();
 });
 
 //TRAER INFORMACION PARA SELECT
@@ -183,8 +187,11 @@ function selectCategorias() {
         success: function (data) {
             $("#codiCateRepoFact").empty().append('whatever');
             $("#codiCateRepoFact").append('<option value="0" selected disabled>Seleccione la categoria:</option>');
+            $("#codiCateRepoCurs").empty().append('whatever');
+            $("#codiCateRepoCurs").append('<option value="0" selected disabled>Seleccione la categoria:</option>');
             for (var i = 0; i < data.length; i++) {
                 $("#codiCateRepoFact").append('<option value=' + data[i].codi_cate + '>' + data[i].nomb_cate + '</option>');
+                $("#codiCateRepoCurs").append('<option value=' + data[i].codi_cate + '>' + data[i].nomb_cate + '</option>');
             }
         },
         error: function (data) {
@@ -213,7 +220,49 @@ function selectFacturas() {
         }
     });
 }
-//REPORTE DE CONTACTO
+//REPORTE DE QUEDAN
+function obtenerQuedanCasa() {
+    $.ajax({
+        type: 'POST',
+        url: '../app/controllers/QuedanController',
+        data: {
+            accion: 'obtenerQuedan'
+        },
+        dataType: 'JSON',
+        success: function (data) {
+            $("#codiQuedRepo").empty().append('whatever');
+            $("#codiQuedRepo").append('<option value="0" selected disabled>Seleccione el quedan:</option>');
+            for (var i = 0; i < data.length; i++) {
+                $("#codiQuedRepo").append('<option value=' + data[i].codi_qued + '>' + data[i].nume_qued + '</option>');
+            }
+        },
+        error: function (data) {
+            console.log("Error al traer datos");
+        }
+    });
+}
+//REPORTE DE CURSOS
+function selectCursos() {
+    $.ajax({
+        type: 'POST',
+        url: '../app/controllers/CursoController',
+        data: {
+            accion: 'obtenerCursosCategoria',
+            codiCate: $('#codiCateRepoCurs').val()
+        },
+        dataType: 'JSON',
+        success: function (data) {
+            $("#codiCursRepo").empty().append('whatever');
+            $("#codiCursRepo").append('<option value="0" selected disabled>Seleccione el curso:</option>');
+            for (var i = 0; i < data.length; i++) {
+                $("#codiCursRepo").append('<option value=' + data[i].codi_curs + '>' + data[i].corr_curs + '</option>');
+            }
+        },
+        error: function (data) {
+            console.log("Error al traer datos");
+        }
+    });
+}
 //posiciones de las cartas
 var x = [10, 115];
 var y = [20, 70, 120, 170, 220];
@@ -1008,18 +1057,13 @@ function generarReporteFacturaEspecifico(factura) {
 }
 //REPORTE DE QUEDAN
 function generarReporteQuedan() {
-    var inicio = $('#fechInicRepoFact').val();
-    var final = $('#fechFinaRepoFact').val();
-    var casa = $('#codiCateRepoFact').val();
-    var quedan = $('#codiFactRepo').val();
-    if (casa == null) {
+    var inicio = $('#fechInicRepoQued').val();
+    var final = $('#fechFinaRepoQued').val();
+    var quedan = $('#codiQuedRepo').val();
+    if (quedan == null) {
         generarReporteFechasQuedan(inicio, final);
     } else {
-        if (quedan == null) {
-            generarReporteCasa(inicio, final, casa);
-        } else {
-            generarReporteQuedanEspecifico(quedan);
-        }
+        generarReporteQuedanEspecifico(quedan);
     }
 }
 function generarReporteFechasQuedan(inicio, final) {
@@ -1028,8 +1072,8 @@ function generarReporteFechasQuedan(inicio, final) {
         method: 'POST',
         data: {
             accion: 'reporteFecha',
-            fechInicRepoFact: inicio,
-            fechFinaRepoFact: final
+            fechInicRepoQued: inicio,
+            fechFinaRepoQued: final
         },
         dataType: 'JSON',
         success: function (data) {
@@ -1043,15 +1087,14 @@ function generarReporteFechasQuedan(inicio, final) {
                     if (e > 0) {
                         doc.addPage();
                     }
-                    $("#tablitaQued tbody").empty();
                     var estado = ["Inactivo", "Quedan Agregado", "Quedan Abonado", "Quedan Pagado"];
                     var textWidth, x;
                     var logo = new Image();
                     logo.src = '../logos/RICALDONE.jpg';
                     doc.addImage(logo, 'JPG', 95, 15, 25, 25)
-                    textWidth = doc.getStringUnitWidth("Quedan: " + data[e].nume_fact) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    textWidth = doc.getStringUnitWidth("Quedan: " + data[e].nume_qued) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                     x = (doc.internal.pageSize.width - textWidth) / 2;
-                    doc.text(x, 50, "Quedan: " + data[e].nume_fact);
+                    doc.text(x, 50, "Quedan: " + data[e].nume_qued);
                     textWidth = "";
                     x = "";
                     doc.setFontSize(13);
@@ -1063,7 +1106,7 @@ function generarReporteFechasQuedan(inicio, final) {
                     doc.setFontSize(13);
                     textWidth = doc.getStringUnitWidth("Fecha de Abono: " + data[e].fech_abon) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                     x = (doc.internal.pageSize.width - textWidth) / 2;
-                    doc.text(x, 66, "Fecha de Abono: " + data[e].fech_emis_abon);
+                    doc.text(x, 66, "Fecha de Abono: " + data[e].fech_abon);
                     textWidth = "";
                     x = "";
                     doc.setFontSize(11);
@@ -1075,30 +1118,12 @@ function generarReporteFechasQuedan(inicio, final) {
                     doc.setFontSize(12);
                     textWidth = doc.getStringUnitWidth("Estado del Quedan: " + estado[data[e].esta_qued]) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                     x = (doc.internal.pageSize.width - textWidth) / 2;
-                    doc.text(x, 82, "Estado del Quedan: " + estado[data[e].esta_fact]);
+                    doc.text(x, 82, "Estado del Quedan: " + estado[data[e].esta_qued]);
                     let finalY = 86;
-                    $.ajax({
-                        url: '../app/controllers/QuedanDetalleController',
-                        method: 'POST',
-                        data: {
-                            accion: 'detalleQuedan',
-                            codiQued: data[e].codi_qued
-                        },
-                        success: function (datax) {
-                            for (var n = 0; n > datax.length; n++) {
-                                $('#tablitaQued tbody').append('<tr>' +
-                                    '<td>' + datax[n].nume_fact + '</td>' +
-                                    '<td>' + datax[n].corr_curs + '</td>' +
-                                    '<td>' + datax[n].nomb_curs + '</td>' +
-                                    '<td>' + datax[n].nomb_casa + '</td>' +
-                                    '</tr>'
-                                );
-                            }
-                        }
-                    })
+                    llenandoTabla(data[e].codi_qued)
                     doc.autoTable({
                         startY: finalY,
-                        html: '#tablitaFact',
+                        html: '#tablitaQued',
                         theme: 'grid'
                     });
                 }
@@ -1112,15 +1137,13 @@ function generarReporteFechasQuedan(inicio, final) {
         }
     });
 }
-function generarReporteCategoria(inicio, final, categoria) {
+function generarReporteQuedanEspecifico(quedan) {
     $.ajax({
-        url: '../app/controllers/FacturaDetalleController',
+        url: '../app/controllers/QuedanDetalleController',
         method: 'POST',
         data: {
-            accion: 'reporteCategoria',
-            fechInicRepoFact: inicio,
-            fechFinaRepoFact: final,
-            codiCateRepoFact: categoria
+            accion: 'reporteEspecifico',
+            codiQuedRepo: quedan
         },
         dataType: 'JSON',
         success: function (data) {
@@ -1134,48 +1157,43 @@ function generarReporteCategoria(inicio, final, categoria) {
                     if (e > 0) {
                         doc.addPage();
                     }
-                    $("#tablitaFact tbody").empty();
-                    var estado = ["Inactivo", "Pendiente de Pago", "Agregado a Quedan"];
+                    var estado = ["Inactivo", "Quedan Agregado", "Quedan Abonado", "Quedan Pagado"];
                     var textWidth, x;
                     var logo = new Image();
                     logo.src = '../logos/RICALDONE.jpg';
                     doc.addImage(logo, 'JPG', 95, 15, 25, 25)
-                    textWidth = doc.getStringUnitWidth("Factura: " + data[e].nume_fact) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    textWidth = doc.getStringUnitWidth("Quedan: " + data[e].nume_qued) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                     x = (doc.internal.pageSize.width - textWidth) / 2;
-                    doc.text(x, 50, "Factura: " + data[e].nume_fact);
-                    textWidth = "";
-                    x = "";
-                    doc.setFontSize(14);
-                    textWidth = doc.getStringUnitWidth("Categoria: " + data[e].nomb_cate) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-                    x = (doc.internal.pageSize.width - textWidth) / 2;
-                    doc.text(x, 58, "Categoria: " + data[e].nomb_cate);
+                    doc.text(x, 50, "Quedan: " + data[e].nume_qued);
                     textWidth = "";
                     x = "";
                     doc.setFontSize(13);
-                    textWidth = doc.getStringUnitWidth("Fecha de Emision: " + data[e].fech_emis_fact) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    textWidth = doc.getStringUnitWidth("Fecha de Emision: " + data[e].fech_emis) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                     x = (doc.internal.pageSize.width - textWidth) / 2;
-                    doc.text(x, 66, "Fecha de Emision: " + data[e].fech_emis_fact);
+                    doc.text(x, 58, "Fecha de Emision: " + data[e].fech_emis);
+                    textWidth = "";
+                    x = "";
+                    doc.setFontSize(13);
+                    textWidth = doc.getStringUnitWidth("Fecha de Abono: " + data[e].fech_abon) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 66, "Fecha de Abono: " + data[e].fech_abon);
                     textWidth = "";
                     x = "";
                     doc.setFontSize(11);
-                    textWidth = doc.getStringUnitWidth("Cantidad de la Factura: $" + data[e].cant_fact) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    textWidth = doc.getStringUnitWidth("Cantidad de Facturas: " + data[e].cant_fact) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                     x = (doc.internal.pageSize.width - textWidth) / 2;
-                    doc.text(x, 74, "Cantidad de la Factura: $" + data[e].cant_fact);
+                    doc.text(x, 74, "Cantidad de Facturas: " + data[e].cant_fact);
                     textWidth = "";
                     x = "";
                     doc.setFontSize(12);
-                    textWidth = doc.getStringUnitWidth("Estado de la Factura: " + estado[data[e].esta_fact]) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    textWidth = doc.getStringUnitWidth("Estado del Quedan: " + estado[data[e].esta_qued]) * doc.internal.getFontSize() / doc.internal.scaleFactor;
                     x = (doc.internal.pageSize.width - textWidth) / 2;
-                    doc.text(x, 82, "Estado de la Factura: " + estado[data[e].esta_fact]);
+                    doc.text(x, 82, "Estado del Quedan: " + estado[data[e].esta_qued]);
+                    llenandoTabla(data[e].codi_qued);
                     let finalY = 86;
-                    $('#tablitaFact tbody').append('<tr>' +
-                        '<td>' + data[e].corr_curs + '</td>' +
-                        '<td>' + data[e].nomb_curs + '</td>' +
-                        '</tr>'
-                    );
                     doc.autoTable({
                         startY: finalY,
-                        html: '#tablitaFact',
+                        html: '#tablitaQued',
                         theme: 'grid'
                     });
                 }
@@ -1189,69 +1207,191 @@ function generarReporteCategoria(inicio, final, categoria) {
         }
     });
 }
-function generarReporteFacturaEspecifico(factura) {
+function llenandoTabla(codi) {
     $.ajax({
-        url: '../app/controllers/FacturaDetalleController',
+        url: '../app/controllers/QuedanDetalleController',
         method: 'POST',
         data: {
-            accion: 'reporteFactura',
-            codiFactRepo: factura
+            accion: 'reporteDetalle',
+            codiQuedRepoX: codi
+        },
+        dataType: 'JSON',
+        success: function (datax) {
+            $("#tablitaQued tbody").empty();
+            for (var n = 0; n < datax.length; n++) {
+                $('#tablitaQued tbody').append('<tr>' +
+                    '<td>' + datax[n].nume_fact + '</td>' +
+                    '<td>' + datax[n].corr_curs + '</td>' +
+                    '<td>' + datax[n].nomb_curs + '</td>' +
+                    '<td>' + datax[n].nomb_casa + '</td>' +
+                    '</tr>'
+                );
+            }
+        }
+    });
+}
+//REPORTE DE CURSO
+function generarReporteCurso() {
+    var inicio = $('#fechInicRepoCurs').val();
+    var final = $('#fechFinaRepoCurs').val();
+    var categoria = $('#codiCateRepoCurs').val();
+    var curso = $('#codiCursRepo').val();
+    if (categoria == null) {
+        generarReporteFechasCurso(inicio, final);
+    } else {
+        if (curso == null) {
+            generarReporteCategoriaCurso(inicio, final, categoria);
+        } else {
+            generarReporteCursoEspecifico(curso);
+        }
+    }
+}
+function generarReporteFechasCurso(inicio, final) {
+    $.ajax({
+        url: '../app/controllers/CursoController',
+        method: 'POST',
+        data: {
+            accion: 'reporteFecha',
+            fechInicRepoCurs: inicio,
+            fechFinaRepoCurs: final
         },
         dataType: 'JSON',
         success: function (data) {
             if (data.length > 0) {
-                $("#tablitaFact tbody").empty();
-                var estado = ["Inactivo", "Pendiente de Pago", "Agregado a Quedan"];
-                var textWidth, x;
                 var doc = new jsPDF({
                     orientation: 'p',
                     unit: 'mm',
                     format: 'letter'
                 });
-                var logo = new Image();
-                logo.src = '../logos/RICALDONE.jpg';
-                doc.addImage(logo, 'JPG', 95, 15, 25, 25)
-                doc.setFontSize(15);
-                textWidth = doc.getStringUnitWidth("Factura: " + data[0].nume_fact) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-                x = (doc.internal.pageSize.width - textWidth) / 2;
-                doc.text(x, 50, "Factura: " + data[0].nume_fact);
-                textWidth = "";
-                x = "";
-                doc.setFontSize(14);
-                textWidth = doc.getStringUnitWidth("Categoria: " + data[0].nomb_cate) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-                x = (doc.internal.pageSize.width - textWidth) / 2;
-                doc.text(x, 58, "Categoria: " + data[0].nomb_cate);
-                textWidth = "";
-                x = "";
-                doc.setFontSize(13);
-                textWidth = doc.getStringUnitWidth("Fecha de Emision: " + data[0].fech_emis_fact) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-                x = (doc.internal.pageSize.width - textWidth) / 2;
-                doc.text(x, 66, "Fecha de Emision: " + data[0].fech_emis_fact);
-                textWidth = "";
-                x = "";
-                doc.setFontSize(11);
-                textWidth = doc.getStringUnitWidth("Cantidad de la Factura: $" + data[0].cant_fact) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-                x = (doc.internal.pageSize.width - textWidth) / 2;
-                doc.text(x, 74, "Cantidad de la Factura: $" + data[0].cant_fact);
-                textWidth = "";
-                x = "";
-                doc.setFontSize(12);
-                textWidth = doc.getStringUnitWidth("Estado de la Factura: " + estado[data[0].esta_fact]) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-                x = (doc.internal.pageSize.width - textWidth) / 2;
-                doc.text(x, 82, "Estado de la Factura: " + estado[data[0].esta_fact]);
-                let finalY = 86;
-                for (var s = 0; s < data.length; s++) {
-                    $('#tablitaFact tbody').append('<tr>' +
-                        '<td>' + data[s].corr_curs + '</td>' +
-                        '<td>' + data[s].nomb_curs + '</td>' +
-                        '</tr>'
-                    );
+                for (var e = 0; e < data.length; e++) {
+                    if (e > 0) {
+                        doc.addPage();
+                    }
+                    var estado = ["Inactivo", "Activo", "Finalizado", "Pendiente de Informe", "Pendiente de Factura", "Facturado"];
+                    var logo = new Image();
+                    logo.src = '../logos/RICALDONE.jpg';
+                    doc.addImage(logo, 'JPG', 95, 15, 25, 25)
+                    doc.setFontSize(15);
+                    textWidth = doc.getStringUnitWidth("Curso: " + data[e].nomb_curs) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 50, "Curso: " + data[e].nomb_curs);
+                    textWidth = "";
+                    x = "";
+                    doc.setFontSize(14);
+                    textWidth = doc.getStringUnitWidth("Correlativo: " + data[e].corr_curs) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 58, "Correlativo: " + data[e].corr_curs);
+                    textWidth = "";
+                    x = "";
+                    doc.setFontSize(13);
+                    textWidth = doc.getStringUnitWidth("Fecha de Inicio: " + data[e].fech_inic) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 66, "Fecha de Inicio: " + data[e].fech_inic);
+                    textWidth = "";
+                    x = "";
+                    doc.setFontSize(13);
+                    textWidth = doc.getStringUnitWidth("Fecha de Finalizacion: " + data[e].fech_fin) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 74, "Fecha de Finalizacion: " + data[e].fech_fin);
+                    textWidth = "";
+                    x = "";
+                    doc.setFontSize(12);
+                    textWidth = doc.getStringUnitWidth("Estado del Curso: " + estado[data[e].esta_curs]) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 82, "Estado del Curso: " + estado[data[e].esta_curs]);
+                    let finalY = 86;
+                    /*for (var s = 0; s < data.length; s++) {
+                        $('#tablitaFact tbody').append('<tr>' +
+                            '<td>' + data[s].corr_curs + '</td>' +
+                            '<td>' + data[s].nomb_curs + '</td>' +
+                            '</tr>'
+                        );
+                    }
+                    doc.autoTable({
+                        startY: finalY,
+                        html: '#tablitaFact',
+                        theme: 'grid'
+                    });*/
                 }
-                doc.autoTable({
-                    startY: finalY,
-                    html: '#tablitaFact',
-                    theme: 'grid'
+                window.open(doc.output('bloburl', 'reporte.pdf'), '_blank');
+            } else {
+                M.toast({ html: 'No se encontro informacion para realizar el reporte' });
+            }
+        },
+        error: function () {
+            M.toast({ html: 'Error al contactar con el servidor' });
+        }
+    });
+}
+function generarReporteCategoriaCurso(inicio, final, categoria) {
+    $.ajax({
+        url: '../app/controllers/CursoController',
+        method: 'POST',
+        data: {
+            accion: 'reporteCategoria',
+            fechInicRepoCurs: inicio,
+            fechFinaRepoCurs: final,
+            codiCateRepoCurs: categoria
+        },
+        dataType: 'JSON',
+        success: function (data) {
+            if (data.length > 0) {
+                var doc = new jsPDF({
+                    orientation: 'p',
+                    unit: 'mm',
+                    format: 'letter'
                 });
+                for (var e = 0; e < data.length; e++) {
+                    if (e > 0) {
+                        doc.addPage();
+                    }
+                    //$("#tablitaFact tbody").empty();
+                    var estado = ["Inactivo", "Activo", "Finalizado", "Pendiente de Informe", "Pendiente de Factura", "Facturado"];
+                    var logo = new Image();
+                    logo.src = '../logos/RICALDONE.jpg';
+                    doc.addImage(logo, 'JPG', 95, 15, 25, 25)
+                    doc.setFontSize(15);
+                    textWidth = doc.getStringUnitWidth("Curso: " + data[e].nomb_curs) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 50, "Curso: " + data[e].nomb_curs);
+                    textWidth = "";
+                    x = "";
+                    doc.setFontSize(14);
+                    textWidth = doc.getStringUnitWidth("Correlativo: " + data[e].corr_curs) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 58, "Correlativo: " + data[e].corr_curs);
+                    textWidth = "";
+                    x = "";
+                    doc.setFontSize(13);
+                    textWidth = doc.getStringUnitWidth("Fecha de Inicio: " + data[e].fech_inic) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 66, "Fecha de Inicio: " + data[e].fech_inic);
+                    textWidth = "";
+                    x = "";
+                    doc.setFontSize(13);
+                    textWidth = doc.getStringUnitWidth("Fecha de Finalizacion: " + data[e].fech_fin) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 74, "Fecha de Finalizacion: " + data[e].fech_fin);
+                    textWidth = "";
+                    x = "";
+                    doc.setFontSize(12);
+                    textWidth = doc.getStringUnitWidth("Estado del Curso: " + estado[data[e].esta_curs]) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                    x = (doc.internal.pageSize.width - textWidth) / 2;
+                    doc.text(x, 82, "Estado del Curso: " + estado[data[e].esta_curs]);
+                    let finalY = 86;
+                    /*for (var s = 0; s < data.length; s++) {
+                        $('#tablitaFact tbody').append('<tr>' +
+                            '<td>' + data[s].corr_curs + '</td>' +
+                            '<td>' + data[s].nomb_curs + '</td>' +
+                            '</tr>'
+                        );
+                    }
+                    doc.autoTable({
+                        startY: finalY,
+                        html: '#tablitaFact',
+                        theme: 'grid'
+                    });*/
+                }
                 window.open(doc.output('bloburl', 'reporte.pdf'), '_blank');
             } else {
                 M.toast({ html: 'No se encontro informacion para realizar el reporte' });
@@ -1262,4 +1402,76 @@ function generarReporteFacturaEspecifico(factura) {
         }
     });
 }
-//REPORTE DE CURSO
+function generarReporteCursoEspecifico(curso) {
+    $.ajax({
+        url: '../app/controllers/CursoController',
+        method: 'POST',
+        data: {
+            accion: 'reporteEspecifico',
+            codiRepoCurs: curso
+        },
+        dataType: 'JSON',
+        success: function (data) {
+            if (data.length > 0) {
+                //$("#tablitaFact tbody").empty();
+                var estado = ["Inactivo", "Activo", "Finalizado", "Pendiente de Informe", "Pendiente de Factura", "Facturado"];
+                var textWidth, x;
+                var doc = new jsPDF({
+                    orientation: 'p',
+                    unit: 'mm',
+                    format: 'letter'
+                });
+                var logo = new Image();
+                logo.src = '../logos/RICALDONE.jpg';
+                doc.addImage(logo, 'JPG', 95, 15, 25, 25)
+                doc.setFontSize(15);
+                textWidth = doc.getStringUnitWidth("Curso: " + data[0].nomb_curs) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                x = (doc.internal.pageSize.width - textWidth) / 2;
+                doc.text(x, 50, "Curso: " + data[0].nomb_curs);
+                textWidth = "";
+                x = "";
+                doc.setFontSize(14);
+                textWidth = doc.getStringUnitWidth("Correlativo: " + data[0].corr_curs) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                x = (doc.internal.pageSize.width - textWidth) / 2;
+                doc.text(x, 58, "Correlativo: " + data[0].corr_curs);
+                textWidth = "";
+                x = "";
+                doc.setFontSize(13);
+                textWidth = doc.getStringUnitWidth("Fecha de Inicio: " + data[0].fech_inic) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                x = (doc.internal.pageSize.width - textWidth) / 2;
+                doc.text(x, 66, "Fecha de Inicio: " + data[0].fech_inic);
+                textWidth = "";
+                x = "";
+                doc.setFontSize(13);
+                textWidth = doc.getStringUnitWidth("Fecha de Finalizacion: " + data[0].fech_fin) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                x = (doc.internal.pageSize.width - textWidth) / 2;
+                doc.text(x, 74, "Fecha de Finalizacion: " + data[0].fech_fin);
+                textWidth = "";
+                x = "";
+                doc.setFontSize(12);
+                textWidth = doc.getStringUnitWidth("Estado del Curso: " + estado[data[0].esta_curs]) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+                x = (doc.internal.pageSize.width - textWidth) / 2;
+                doc.text(x, 82, "Estado del Curso: " + estado[data[0].esta_curs]);
+                let finalY = 86;
+                /*for (var s = 0; s < data.length; s++) {
+                    $('#tablitaFact tbody').append('<tr>' +
+                        '<td>' + data[s].corr_curs + '</td>' +
+                        '<td>' + data[s].nomb_curs + '</td>' +
+                        '</tr>'
+                    );
+                }
+                doc.autoTable({
+                    startY: finalY,
+                    html: '#tablitaFact',
+                    theme: 'grid'
+                });*/
+                window.open(doc.output('bloburl', 'reporte.pdf'), '_blank');
+            } else {
+                M.toast({ html: 'No se encontro informacion para realizar el reporte' });
+            }
+        },
+        error: function () {
+            M.toast({ html: 'Error al contactar con el servidor' })
+        }
+    });
+}

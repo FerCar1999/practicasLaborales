@@ -19,7 +19,7 @@ $(document).ready(function () {
     });
     selectDocentes();
     selectProfesiones();
-    selectAcreditaciones();
+    //selectAcreditaciones();
     //ejecutando la funcion datatable
     dataTable();
     //escondiendo el progress de guardado y modificado
@@ -107,11 +107,7 @@ function dataTable() {
         }, {
             data: 'apel_doce'
         }, {
-            data: 'codi_inte_acre_doce',
-            "visible": false
-        }, {
-            data: 'codi_acre',
-            "visible": false
+            data: 'dui_doce'
         }, {
             data: 'codi_inte_doce_prof',
             "visible": false
@@ -176,15 +172,13 @@ function getDataToUpdate(tbody, table) {
         var data = table.row($(this).parents("tr")).data();
         $("#nombDoceUpda").next("label").addClass("active");
         $("#apelDoceUpda").next("label").addClass("active");
+        $("#duiDoceUpda").next("label").addClass("active");
         var codi_cate = $("#codiDoceUpda").val(data.codi_doce),
             nomb_cate = $("#nombDoceUpda").val(data.nomb_doce),
             apel_doce = $("#apelDoceUpda").val(data.apel_doce),
-            codi_inte_acre_doce = $("#codiInteAcreDoceUpda").val(data.codi_inte_acre_doce),
-            codi_acre = $("#codiAcreUpda").val(data.codi_acre),
+            dui_doce = $("#duiDoceUpda").val(data.dui_doce),
             codi_inte_doce_prof = $("#codiInteDoceProfUpda").val(data.codi_inte_doce_prof),
             codi_prof = $("#codiProfUpda").val(data.codi_prof);
-        $("#codiAcreUpda").change();
-        $("#codiAcreUpda").trigger('change.select2');
         $("#codiProfUpda").change();
         $("#codiProfUpda").trigger('change.select2');
     });
@@ -229,19 +223,6 @@ function create() {
                         $.ajax({
                             method: "POST",
                             url: "../app/controllers/IntermediaDocenteProfesionController.php",
-                            data: datos + '&codiDoce=' + JSON.parse(data),
-                            success: function (dato) {
-                                var resp = data.indexOf("Exito");
-                                if (resp > 0) {
-                                    console.log('');
-                                } else {
-                                    console.log('');
-                                }
-                            }
-                        });
-                        $.ajax({
-                            method: "POST",
-                            url: "../app/controllers/IntermediaAcreditacionDocenteController.php",
                             data: datos + '&codiDoce=' + JSON.parse(data),
                             success: function (dato) {
                                 var resp = data.indexOf("Exito");
@@ -314,20 +295,7 @@ function update() {
                         $('#preloader').show();
                         $.ajax({
                             method: "POST",
-                            url: "../app/controllers/IntermediaAcreditacionDocenteController.php",
-                            data: datos,
-                            success: function (dato) {
-                                var resp = data.indexOf("Exito");
-                                if (resp > 0) {
-                                    console.log('');
-                                } else {
-                                    console.log('');
-                                }
-                            }
-                        });
-                        $.ajax({
-                            method: "POST",
-                            url: "../app/controllers/IntermediaAcreditacionDocenteController.php",
+                            url: "../app/controllers/IntermediaDocenteProfesionController.php",
                             data: datos,
                             success: function (dato) {
                                 var resp = data.indexOf("Exito");
@@ -428,7 +396,7 @@ function selectDocentes() {
             $("#codiDoceRepo").empty().append('whatever');
             $("#codiDoceRepo").append('<option value="0" selected disabled>Seleccione el docente:</option>');
             for (var i = 0; i < data.length; i++) {
-                $("#codiDoceRepo").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + '</option>');
+                $("#codiDoceRepo").append('<option value=' + data[i].codi_doce + '>' + data[i].nomb_doce + ' ' + data[i].apel_doce + ' ('+data[i].dui_doce+')</option>');
             }
         },
         error: function (data) {
@@ -488,7 +456,7 @@ function generarReporteDocente() {
                 });
                 window.open(doc.output('bloburl', 'reporte.pdf'), '_blank');
             } else {
-                M.toast({ html: 'No se han encontrado datos para este salon', classes: 'rounded' });
+                M.toast({ html: 'No se han encontrado datos para este docente', classes: 'rounded' });
             }
         }
     });
@@ -547,4 +515,11 @@ function generarReporteCompletoDocente() {
             }
         }
     });
+}
+function agregarGuionDui() {
+    var dato = $('#duiDoce').val();
+    if (dato.length == 8) {
+        dato+="-";
+    }
+    $('#duiDoce').val(dato);
 }

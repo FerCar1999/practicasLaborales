@@ -88,7 +88,7 @@ class IntermediaDocenteProfesion extends Validator {
 	}
 	public function updateIntermediaDocenteProfesion() {
 		$sql = "UPDATE intermedia_docente_profesion SET codi_prof = ?, codi_doce = ? WHERE codi_inte_doce_prof = ?";
-		$params = array($this->codi_prf, $this->codi_doce, $this->codi_inte_doce_prof);
+		$params = array($this->codi_prof, $this->codi_doce, $this->codi_inte_doce_prof);
 		return Database::executeRow($sql, $params);
 	}
 	public function deleteIntermediaDocenteProfesion() {

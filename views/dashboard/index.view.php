@@ -27,7 +27,7 @@ $page = "Inicio";
 
                     </div>
                     <?php
-                    if ($_SESSION['codi_tipo_usua'] == 4 || $_SESSION['codi_tipo_usua'] == 5) {
+                    if ($_SESSION['codi_tipo_usua'] == 4 || $_SESSION['codi_tipo_usua'] == 5 || $_SESSION['codi_tipo_usua'] == 6) {
                         print('                    <div class="row">
                     <div class="col-sm-12 col-md-6 center">
                         <span class="card-title" id="eventoNombre">
@@ -61,7 +61,7 @@ $page = "Inicio";
 
                     ?>
                     <?php
-                    if ($_SESSION['codi_tipo_usua'] == 4 || $_SESSION['codi_tipo_usua'] == 5) { } else {
+                    if ($_SESSION['codi_tipo_usua'] == 4 || $_SESSION['codi_tipo_usua'] == 5 || $_SESSION['codi_tipo_usua'] == 8) { } else {
                         print('<ul class="collapsible" id="ulPendienteFinalizar">
                         <li>
                             <div class="collapsible-header">
@@ -181,7 +181,7 @@ $page = "Inicio";
 
 <!-- SCRIPTS -->
 <?php
-if ($_SESSION['codi_tipo_usua'] == 4 || $_SESSION['codi_tipo_usua'] == 5) {
+if ($_SESSION['codi_tipo_usua'] == 4 || $_SESSION['codi_tipo_usua'] == 5 || $_SESSION['codi_tipo_usua'] == 6) {
     print('<script src="' . WEB_PATH . 'js/AJAX/dashboardEvento.js"></script>');
 } else {
     print('<script src="' . WEB_PATH . 'js/AJAX/dashboard.js"></script>');

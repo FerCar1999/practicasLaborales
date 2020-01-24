@@ -150,7 +150,7 @@ class Validator
     }
     public function validateCorrelativoCurso($value, $minimum, $maximum)
     {
-        if (preg_match("/^[a-zA-Z0-9ñÑáÁéÉíÍóÓúÚ\s]{" . $minimum . "," . $maximum . "}$/", $value)) {
+        if (preg_match("/^[a-zA-Z0-9ñÑáÁéÉíÍóÓúÚ\s\-]{" . $minimum . "," . $maximum . "}$/", $value)) {
             return true;
         } else {
             return false;
@@ -179,5 +179,15 @@ class Validator
         } else {
             return false;
         }
+    }
+    
+    public function validateDUI($value)
+    {
+        if (strlen($value)==10) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 }
